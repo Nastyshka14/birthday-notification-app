@@ -1,54 +1,64 @@
 import React, { useEffect, useState } from "react";
-import "./CalendarPage.css";
-import { Calendar, Modal } from "antd";
+import "./CalendarPage.scss";
+import { Calendar, Modal, notification } from "antd";
 import "antd/dist/antd.css";
-import { useContentful } from "../../useContentful.ts";
+import { useContentful } from "../../useContentful";
 import type { Moment } from "moment";
 import moment from "moment";
 import dayjs from "dayjs";
-import { postEntry } from "../../postContentful.js";
+import { useCallback } from "react";
 moment.updateLocale("en", { week: { dow: 1 } });
 
 interface ListDataItem {
-  isRead: boolean;
   name: string;
   date: string;
 }
 
 interface BirthdayItem {
-  isRead: boolean;
   name: string;
   date: string;
 }
 
-interface PersonInfo {
-  setIsModalVisible(): void;
-}
 export const CalendarPage = () => {
-  const [birthays, setBirthdays] = useState([]);
+  const [birthdays, setBirthdays] = useState<{ name: string; date: string }[]>([]);
   const { getBirthdays } = useContentful();
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+  const [isRead, setIsRead] = useState<boolean>(false);
 
-  const showModal = () => {
-    setIsModalVisible(true);
-  };
+  const showModal = useCallback(() => {
+    if (isRead === false) {
+      setIsModalVisible(true);
+    }
+  }, [isRead]);
 
-  const handleOk = () => {
+  const handleSubmit = () => {
     setIsModalVisible(false);
+    setIsRead(true);
   };
 
   const handleCancel = () => {
     setIsModalVisible(false);
+    setIsRead(true);
   };
 
+  // const openNotification = () => {
+  //   const args = {
+  //     message: 'Notification Title',
+  //     description:
+  //       'I will never close automatically. This is a purposely very very long description that has many many characters and words.',
+  //     duration: 0,
+  //   };
+  //   notification.open(args);
+  // };
+
   useEffect(() => {
-    getBirthdays().then((response) => setBirthdays(response));
-  }, []);
+    getBirthdays().then((data) => 
+    setBirthdays(data))
+  }, [getBirthdays]);
 
   const getListData = (value: Moment) => {
     const listData: ListDataItem[] = [];
-
-    birthays.forEach((element) => {
+    birthdays.forEach((element: BirthdayItem) => {
       if (element.date === value.format("YYYY-MM-DD")) {
         listData.push(element);
       }
@@ -56,25 +66,23 @@ export const CalendarPage = () => {
     return listData || [];
   };
 
-  const getReminder = () => {
-    birthays.forEach((item) => {
+  const getReminder = useCallback(() => {
+    birthdays.forEach((item: BirthdayItem) => {
       if (item.date === dayjs().format("YYYY-MM-DD")) {
-        showModal()
+        showModal();
       }
     });
-  };
+  }, [birthdays, showModal]);
 
   useEffect(() => {
-    setInterval(() => {
-      getReminder();
-    }, 5000);
-  }, []);
+    getReminder();
+  }, [getReminder]);
 
-  const dateCellRender = (value: any) => {
-    let listData = getListData(value);
+  const dateCellRender = (value: Moment) => {
+    let listData: ListDataItem[] = getListData(value);
     return (
       <ul className="events">
-        {listData.map((item: any) => (
+        {listData.map((item: ListDataItem) => (
           <li key={item.name}>
             <p>{item.name}</p>
           </li>
@@ -84,14 +92,14 @@ export const CalendarPage = () => {
   };
 
   return (
-    <>
-      <Calendar dateCellRender={dateCellRender} />
-      <Modal
+    <div className="calendar">
+      <Calendar dateCellRender={dateCellRender} className='calendar__item' />
+      <Modal className='modal__item'
         title="Basic Modal"
         visible={isModalVisible}
-        onOk={handleOk}
+        onOk={handleSubmit}
         onCancel={handleCancel}
       ></Modal>
-    </>
+    </div>
   );
 };
