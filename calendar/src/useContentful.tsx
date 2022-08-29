@@ -8,7 +8,7 @@ const query = `
   birthdaysCollection {
     items {
       name,
-      date
+      date,
     }
   }
 }`;
@@ -33,7 +33,9 @@ export const useContentful = () => {
             throw new Error("Error fetching birthdays");
           }
           return data.birthdaysCollection.items;
+          
         });
+        
     } catch (error) {
       reportError({ message: error.message });
     }
