@@ -12,7 +12,7 @@
     "baseUrl": "./",
     "incremental": true,
     "jsx": "preserve",
-    "allowJs": true
+    "allowJs": false
   },
   "include": ["./"]
   }

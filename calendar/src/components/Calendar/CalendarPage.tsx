@@ -1,27 +1,21 @@
-import React, { useEffect, useState } from "react";
-import "./CalendarPage.scss";
+import React, { useEffect, useState, useCallback } from "react";
 import { Calendar, notification } from "antd";
-import "antd/dist/antd.css";
 import { useContentful } from "../../useContentful";
 import type { Moment } from "moment";
 import moment from "moment";
-import { useCallback } from "react";
-moment.updateLocale("en", { week: { dow: 1 } });
+import "./CalendarPage.scss";
+import "antd/dist/antd.css";
 
-interface ListDataItem {
-  name: string;
-  date: string;
-}
+moment.updateLocale("en", { week: { dow: 1 } });
 
 interface BirthdayItem {
   name: string;
-  date: string;
+  date: Date;
 }
 
 export const CalendarPage = () => {
-  const [birthdays, setBirthdays] = useState<{ name: string; date: string }[]>(
-    []
-  );
+  const [birthdays, setBirthdays] = useState<{ name: string; date: Date }[]>([]);
+  const [newBirthdaysList, setNewBirthdaysList] = useState<string[]>([]);
   const { getBirthdays } = useContentful();
 
   const openNotification = useCallback((item: string) => {
@@ -38,40 +32,64 @@ export const CalendarPage = () => {
   }, [getBirthdays]);
 
   const getListData = (value: Moment) => {
-    const listData: ListDataItem[] = [];
+    const valueToISOString = moment(value.format("YYYY-MM-DD")).toISOString(true);
+    const listData: BirthdayItem[] = [];
     birthdays.forEach((element: BirthdayItem) => {
-      if (
-        element.date === moment(value.format("YYYY-MM-DD")).toISOString(true)
-      ) {
+      if (element.date.toString() === valueToISOString) {
         listData.push(element);
       }
     });
     return listData || [];
   };
 
+  const pushItem = useCallback(
+    (itemName: string) => {
+      newBirthdaysList.push(itemName);
+      openNotification(itemName);
+      localStorage.setItem(
+        "todayBirthdaysList",
+        JSON.stringify(newBirthdaysList)
+      );
+    },
+    [newBirthdaysList, openNotification]
+  );
+
   const getReminder = useCallback(() => {
+    const valueToISOString = moment(moment().format("YYYY-MM-DD")).toISOString(
+      true
+    );
+    const todayBirthdaysList = JSON.parse(
+      localStorage.getItem("todayBirthdaysList")
+    );
     birthdays.forEach((item: BirthdayItem) => {
-      if (
-        item.date === moment(moment().format("YYYY-MM-DD")).toISOString(true)
-      ) {
-        return openNotification(item.name);
+      if (item.date.toString() === valueToISOString) {
+        if (todayBirthdaysList !== null) {
+          if (!todayBirthdaysList.includes(item.name)) {
+            JSON.parse(localStorage.getItem("todayBirthdaysList"));
+            pushItem(item.name);
+          }
+        } else if (!newBirthdaysList.includes(item.name)) {
+          pushItem(item.name);
+        }
       }
     });
-  }, [birthdays, openNotification]);
+  }, [birthdays, newBirthdaysList, pushItem]);
 
   useEffect(() => {
     getReminder();
   }, [getReminder]);
 
   const dateCellRender = (value: Moment) => {
-    let listData: ListDataItem[] = getListData(value);
+    let listData: BirthdayItem[] = getListData(value);
     return (
       <ul className="events">
-        {listData.map((item: ListDataItem) => (
-          <li key={item.name}>
-            <p>{item.name}</p>
-          </li>
-        ))}
+        {listData.length
+          ? listData.map((item: BirthdayItem) => (
+              <li key={item.name}>
+                <p>{item.name}</p>
+              </li>
+            ))
+          : ""}
       </ul>
     );
   };

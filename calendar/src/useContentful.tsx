@@ -1,28 +1,20 @@
+import { query } from "./constants";
+
 interface BirthdayItem {
   name: string;
-  date: string;
+  date: Date;
 }
-
-const query = `
-{
-  birthdaysCollection {
-    items {
-      name,
-      date,
-    }
-  }
-}`;
 
 export const useContentful = () => {
   const getBirthdays = async (): Promise<BirthdayItem[]> => {
     try {
       return fetch(
-        `https://graphql.contentful.com/content/v1/spaces/g5vcvjt0rgq7/`,
+        `https://graphql.contentful.com/content/v1/spaces/${process.env.REACT_APP_SPACE_ID}/`,
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: "Bearer L482r6IOCJjaooW7x2WDVsyi4XOVy5cHWlFmINREF9w",
+            Authorization: `Bearer ${process.env.REACT_APP_CDA_TOKEN}`,
           },
           body: JSON.stringify({ query }),
         }
@@ -33,9 +25,7 @@ export const useContentful = () => {
             throw new Error("Error fetching birthdays");
           }
           return data.birthdaysCollection.items;
-          
         });
-        
     } catch (error) {
       reportError({ message: error.message });
     }
