@@ -1,6 +1,5 @@
 import { GET_BIRTHDAYS } from "./constants";
 import { message } from "antd";
-import * as contentful from "contentful";
 
 interface BirthdayItem {
   name: string;
