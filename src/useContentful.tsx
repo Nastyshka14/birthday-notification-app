@@ -1,4 +1,6 @@
-import { query } from "./constants";
+import { GET_BIRTHDAYS } from "./constants";
+import { message } from "antd";
+import * as contentful from "contentful";
 
 interface BirthdayItem {
   name: string;
@@ -6,9 +8,10 @@ interface BirthdayItem {
 }
 
 export const useContentful = () => {
+
   const getBirthdays = async (): Promise<BirthdayItem[]> => {
     try {
-      return fetch(
+     return fetch(
         `https://graphql.contentful.com/content/v1/spaces/${process.env.REACT_APP_SPACE_ID}/`,
         {
           method: "POST",
@@ -16,7 +19,7 @@ export const useContentful = () => {
             "Content-Type": "application/json",
             Authorization: `Bearer ${process.env.REACT_APP_CDA_TOKEN}`,
           },
-          body: JSON.stringify({ query }),
+          body: JSON.stringify({ query: GET_BIRTHDAYS }),
         }
       )
         .then((response) => response.json())
@@ -27,8 +30,12 @@ export const useContentful = () => {
           return data.birthdaysCollection.items;
         });
     } catch (error) {
-      reportError({ message: error.message });
+      showMessage(error.message);
     }
   };
   return { getBirthdays };
+};
+
+const showMessage = (msg: string) => {
+  message.error(msg);
 };
