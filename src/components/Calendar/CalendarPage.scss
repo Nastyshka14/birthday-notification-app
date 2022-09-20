@@ -6,6 +6,63 @@
   }
 }
 
+.notification {
+  display: flex;
+  flex-direction: column;
+
+  &__message {
+    font-size: 20px;
+    font-weight: 600;
+  }
+}
+.notification__btn {
+  width: 24px;
+  height: 24px;
+  margin: 2px;
+  border: none;
+  opacity: 0.9;
+
+  &__facebook {
+    background: url(icons/facebook.svg);
+  }
+
+  &__vk {
+    background: url(icons/vk.svg);
+  }
+
+  &__telegram {
+    background: url(icons/telegram.svg);
+  }
+
+  &__email {
+    background: url(icons/email.svg);
+  }
+
+  &__sms {
+    background: url(icons/sms.svg);
+  }
+
+  &__instagram {
+    background: url(icons/instagram.svg);
+  }
+
+  &__viber {
+    background: url(icons/viber.svg);
+  }
+
+  &__whatsapp {
+    background: url(icons/whatsapp.svg);
+  }
+
+  &:hover {
+    transform: scale(1.1);
+    cursor: pointer;
+  }
+
+  &:active {
+    opacity: 1;
+  }
+}
 .events {
   margin: 0;
   padding: 0;
