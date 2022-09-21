@@ -14,7 +14,13 @@
     font-size: 20px;
     font-weight: 600;
   }
+
+  &__sprites {
+    display: flex;
+    align-items: center;
+  }
 }
+
 .notification__btn {
   width: 24px;
   height: 24px;
@@ -22,6 +28,10 @@
   border: none;
   opacity: 0.9;
 
+  &__share {
+    border: none;
+    background: none;
+  }
   &__facebook {
     background: url(icons/facebook.svg);
   }
@@ -63,6 +73,7 @@
     opacity: 1;
   }
 }
+
 .events {
   margin: 0;
   padding: 0;
