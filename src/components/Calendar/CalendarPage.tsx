@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react'
+import React, { useEffect, useState, useCallback, useContext } from 'react'
 import { Calendar, notification, message } from 'antd'
 import { useContentful } from 'src/hooks/useContentful'
 import { GET_BIRTHDAYS } from '../../constants/graphQL'
@@ -29,9 +29,7 @@ export const CalendarPage = () => {
   }
 
   function shareOnTelegram(item: string) {
-    const navUrl = `https://t.me/share/url?url=${
-      window.location.href
-    }&text=Today is ${encodeURIComponent(item)}`
+    const navUrl = `https://t.me/share/url?url=${window.location.href}&text=Today is ${encodeURIComponent(item)}`
     window.open(navUrl, '_blank')
   }
 
@@ -59,43 +57,45 @@ export const CalendarPage = () => {
     return (
       <div className='notification'>
         <div className='notification__message'>Today is {item}</div>
-        <div className='notification__sprites'>
+        <div className='notification__buttons'>
           <button className='notification__btn__share'>Share</button>
-          <button
-            id='facebook'
-            className='notification__btn notification__btn__facebook'
-            onClick={shareOnFacebook}
-          ></button>
-          <button
-            id='vk'
-            className='notification__btn notification__btn__vk'
-            onClick={() => shareOnVK(item)}
-          ></button>
-          <button
-            id='sms'
-            className='notification__btn notification__btn__sms'
-            onClick={() => shareOnSMS(item)}
-          />
-          <button
-            id='email'
-            className='notification__btn notification__btn__email'
-            onClick={() => shareOnEmail(item)}
-          />
-          <button
-            id='telegram'
-            className='notification__btn notification__btn__telegram'
-            onClick={() => shareOnTelegram(item)}
-          />
-          <button
-            id='viber'
-            className='notification__btn notification__btn__viber'
-            onClick={() => shareOnViber(item)}
-          />
-          <button
-            id='whatsapp'
-            className='notification__btn notification__btn__whatsapp'
-            onClick={() => shareOnWhatsApp(item)}
-          />
+          <div className='notification__sprites'>
+            <button
+              data-tooltip='facebook'
+              className='notification__btn notification__btn__facebook'
+              onClick={shareOnFacebook}
+            ></button>
+            <button
+              data-tooltip='vk'
+              className='notification__btn notification__btn__vk'
+              onClick={() => shareOnVK(item)}
+            ></button>
+            <button
+              data-tooltip='sms'
+              className='notification__btn notification__btn__sms'
+              onClick={() => shareOnSMS(item)}
+            />
+            <button
+              data-tooltip='email'
+              className='notification__btn notification__btn__email'
+              onClick={() => shareOnEmail(item)}
+            />
+            <button
+              data-tooltip='telegram'
+              className='notification__btn notification__btn__telegram'
+              onClick={() => shareOnTelegram(item)}
+            />
+            <button
+              data-tooltip='viber'
+              className='notification__btn notification__btn__viber'
+              onClick={() => shareOnViber(item)}
+            />
+            <button
+              data-tooltip='whatsapp'
+              className='notification__btn notification__btn__whatsapp'
+              onClick={() => shareOnWhatsApp(item)}
+            />
+          </div>
         </div>
       </div>
     )

@@ -1,18 +1,20 @@
 {
     "compilerOptions": {
-    "module": "commonjs",// Определяет тип импорта кода в итоговом файле
-    "declaration": true,// Создавать ли соответствующие файлы ".d.ts"?
-    "removeComments": true,// Удалить все комментарии из итогового файла.
-    "emitDecoratorMetadata": true,// Создавать метаданные для объявлений декораторов в исходном коде?
-    "experimentalDecorators": true, // Включить экспериментальную поддержку декораторов EcmaScript?
-    "allowSyntheticDefaultImports": true,// Разрешить импортировать модули не имеющие внутри себя "import default"?
-    "target": "es6",// Тип кода создаваемого итогового файла.
-    "sourceMap": true,// Создавать ли соответствующие source map файлы ".map"?
-    "outDir": "./dist",// Поместить все скомпилированные файлы в данную папку, согласно их вложенности в исходниках. 
-    "baseUrl": "./",// Путь до базовой папки для поиска не относительных путей до файлов.
+    "module": "commonjs",
+    "declaration": true,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "es6",
+    "sourceMap": true,
+    "outDir": "./dist",
+    "baseUrl": "./",
     "incremental": true,
-    "jsx": "preserve",// Включать ли поддержку ".tsx" файлов?
-    "allowJs": false // Разрешать компилировать файлы с JavaScript-кодом?
+    "jsx": "preserve",
+    "allowJs": false 
   },
-  "include": ["./"] // Секция "include" позволяет скомпилировать все файлы, находящиеся в заданных папках.
-  }
+  "include": ["./"] 
+}
+
+  
