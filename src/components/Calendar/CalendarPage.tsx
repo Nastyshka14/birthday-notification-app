@@ -29,7 +29,9 @@ export const CalendarPage = () => {
   }
 
   function shareOnTelegram(item: string) {
-    const navUrl = `https://t.me/share/url?url=${window.location.href}&text=Today is ${encodeURIComponent(item)}`
+    const navUrl = `https://t.me/share/url?url=${
+      window.location.href
+    }&text=Today is ${encodeURIComponent(item)}`
     window.open(navUrl, '_blank')
   }
 
@@ -120,7 +122,13 @@ export const CalendarPage = () => {
   const getBirthdays = useCallback(async () => {
     try {
       const fetchBirthdays = await request({ query: GET_BIRTHDAYS })
-      return setBirthdays(JSON.parse(fetchBirthdays).data.birthdaysCollection.items)
+      const fetchBirthdaysFormat = JSON.parse(fetchBirthdays).data.birthdaysCollection.items.map(
+        (item: { name: string; date: string }) => ({
+          ...item,
+          date: new Date(item.date).toISOString(),
+        }),
+      )
+      return setBirthdays(fetchBirthdaysFormat)
     } catch (error) {
       showMessage(error.message)
     }
@@ -131,12 +139,13 @@ export const CalendarPage = () => {
   }, [])
 
   const valueToISOString = (item: Moment) => {
-    return moment(item.format('YYYY-MM-DD')).toISOString(true)
+    return moment(item.format('YYYY-MM-DD')).toISOString()
   }
 
   const getListData = (value: Moment): BirthdayItem[] => {
     const listData: BirthdayItem[] = []
     birthdays.forEach((element: BirthdayItem) => {
+      console.log(valueToISOString(value))
       if (element.date.toString() === valueToISOString(value)) {
         listData.push(element)
       }
