@@ -13,7 +13,6 @@ const getData = async (query: string): Promise<IDataFromServer> | null => {
     const responseAsJSON = JSON.parse(responseText)
     const responseStatus = response.status
 
-    console.log('response as JSON', responseAsJSON)
     if (responseStatus !== 200) {
       console.log('no data from the server...')
       return null

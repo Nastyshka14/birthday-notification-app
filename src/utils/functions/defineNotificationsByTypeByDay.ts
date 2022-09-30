@@ -1,28 +1,20 @@
 import moment, { Moment } from 'moment'
-import { parseCalendarCellData } from '../../utils/functions/parseCalendarCellData'
-import { dateToDayFormat, momentToDayFormat } from '../../utils/functions/momentToISOString'
-import { Birthday, Meeting, Vacation } from '../events'
+import { parseCalendarCellData } from './parseCalendarCellData'
+import { dateToDayFormat, momentToDayFormat } from './momentToISOString'
 import {
-  INotification,
   IBirthday,
   IMeeting,
   IVacation,
   IEventsCollections,
-  IDataFromServer
+  IDataFromServer,
+  IFilterEvents
 } from '../../domain/types'
 
-type TListEvents = Array<IBirthday> | Array<IMeeting> | Array<IVacation>
-
-interface IFilterEvents {
-  (eventsList: TListEvents, cellDate: Moment): Array<INotification>
+interface INotificationByTypeByDay {
+  (data: IDataFromServer, cellDate: Moment): IEventsCollections
 }
 
-interface ICalendarCell {
-  data: IDataFromServer,
-  cellDate: Moment,
-}
-
-export const CalendarCell = ({ data, cellDate }: ICalendarCell) => {
+export const defineNotificationsByTypeByDay: INotificationByTypeByDay = (data, cellDate) => {
   const { birthdays, meetings, vacations }: IEventsCollections = parseCalendarCellData(data)
 
   const filterEventsByDay: IFilterEvents = (eventsList, cellDate) => {
@@ -49,11 +41,9 @@ export const CalendarCell = ({ data, cellDate }: ICalendarCell) => {
     }
   }
 
-  return (
-    <>
-      <Birthday data={filterEventsByDay(birthdays, cellDate)} />
-      <Meeting data={filterEventsByDay(meetings, cellDate) as Array<IMeeting>} />
-      <Vacation data={filterEventsByDay(vacations, cellDate) as Array<IVacation>} />
-    </>
-  )
+  return {
+    birthdays: filterEventsByDay(birthdays, cellDate) as Array<IBirthday>,
+    meetings: filterEventsByDay(meetings, cellDate) as Array<IMeeting>,
+    vacations: filterEventsByDay(vacations, cellDate) as Array<IVacation>,
+  }
 }

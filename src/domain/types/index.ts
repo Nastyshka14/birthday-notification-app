@@ -1,4 +1,6 @@
+import { Moment } from 'moment'
 
+/*
 interface ITimeRange {
   start: Date
   end: Date
@@ -12,7 +14,7 @@ interface IDaysRange {
   start: Date
   end: Date
 }
-
+*/
 interface INotification {
   type: string
   title: string
@@ -48,4 +50,24 @@ interface IDataFromServer {
   }
 }
 
-export { INotification, IBirthday, IMeeting, IVacation, IEventsCollections, IDataFromServer }
+type TListEvents = Array<IBirthday> | Array<IMeeting> | Array<IVacation>
+
+interface IFilterEvents {
+  (eventsList: TListEvents, cellDate: Moment): Array<INotification>
+}
+interface ICalendarCell {
+  data: IDataFromServer,
+  cellDate: Moment,
+}
+
+export {
+  INotification,
+  IBirthday,
+  IMeeting,
+  IVacation,
+  IEventsCollections,
+  IDataFromServer,
+  IFilterEvents,
+  ICalendarCell,
+  TListEvents
+}
