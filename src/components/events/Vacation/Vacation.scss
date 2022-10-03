@@ -1,3 +1,7 @@
-.vacations-list {
-  border: 1px solid purple;
+.vacations-list__item {
+  background-color: lightskyblue;
+}
+
+.vacations-list__item::before {
+  background: blue;
 }

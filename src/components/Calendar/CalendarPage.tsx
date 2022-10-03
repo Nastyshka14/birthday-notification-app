@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { Calendar, notification } from 'antd'
 import moment, { Moment } from 'moment'
 import graphqlRequest from '../../utils/graphql/graphqlRequest'
@@ -16,13 +16,15 @@ export const CalendarPage = () => {
   const [data, setData] = useState<IDataFromServer | null>(null);
 
   useEffect(() => {
-    const fetchEvents = getData(graphqlRequest)
+    getData(graphqlRequest)
       .then((data): void => {
         setData(data)
       })
   }, [])
 
   useEffect(() => {
+    console.log('start useEffect ', new Date().getMilliseconds())
+
     if (data) {
       const notificationsForToday = defineNotificationsByTypeByDay(data, moment(new Date()))
       let notificationMessage = ''
@@ -49,6 +51,7 @@ export const CalendarPage = () => {
         })
       }
     }
+    console.log('end useEffect ', new Date().getMilliseconds())
   }, [data])
 
   const dateCellRender = (dateCell: Moment): JSX.Element | null => {
@@ -56,7 +59,7 @@ export const CalendarPage = () => {
   }
 
   return (
-    <div className='calendar-wrapper'>
+    <div className='calendar__wrapper'>
       <Calendar dateCellRender={dateCellRender} className='calendar' />
     </div>
   )

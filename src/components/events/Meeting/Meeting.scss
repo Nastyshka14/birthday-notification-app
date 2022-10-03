@@ -1,3 +1,7 @@
-.meetings-list {
-  border: 1px solid palevioletred;
+.meetings-list__item {
+  background-color: yellow;
+}
+
+.meetings-list__item::before {
+  background: darkorange;
 }

@@ -28,15 +28,15 @@ export const defineNotificationsByTypeByDay: INotificationByTypeByDay = (data, c
 
     if (eventType === 'Vacation') {
       return (eventsList as Array<IVacation>).filter((vacation: IVacation): boolean => {
-        return moment(momentToDayFormat(cellDate)).isSameOrAfter(moment(dateToDayFormat(vacation.start))) &&
-          moment(momentToDayFormat(cellDate)).isSameOrBefore(moment(dateToDayFormat(vacation.end)))
+        return (momentToDayFormat(cellDate, true) as Moment).isSameOrAfter(dateToDayFormat(vacation.start, true) as Moment) &&
+          (momentToDayFormat(cellDate, true) as Moment).isSameOrBefore(dateToDayFormat(vacation.end, true) as Moment)
       })
     }
 
     if (eventType === 'Meeting') {
       return (eventsList as Array<IMeeting>).filter((meeting: IMeeting): boolean => {
-        return moment(momentToDayFormat(cellDate)).isSameOrAfter(moment(dateToDayFormat(meeting.start))) &&
-          moment(momentToDayFormat(cellDate)).isSameOrBefore(moment(dateToDayFormat(meeting.end)))
+        return (momentToDayFormat(cellDate, true) as Moment).isSameOrAfter(dateToDayFormat(meeting.start, true) as Moment) &&
+          (momentToDayFormat(cellDate, true) as Moment).isSameOrBefore(dateToDayFormat(meeting.end, true) as Moment)
       })
     }
   }
