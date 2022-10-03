@@ -9,7 +9,6 @@ import { CalendarCellWithEvents } from '../CalendarCellWithEvents'
 import { Notification } from '../Notification'
 import './CalendarPage.scss'
 import 'antd/dist/antd.css'
-import useItems from 'antd/lib/menu/hooks/useItems'
 
 moment.updateLocale('en', { week: { dow: 1 } })
 
@@ -26,19 +25,29 @@ export const CalendarPage = () => {
   useEffect(() => {
     if (data) {
       const notificationsForToday = defineNotificationsByTypeByDay(data, moment(new Date()))
-
       let notificationMessage = ''
+      let isNotification = false
+
       for (const eventCollection in notificationsForToday) {
-        notificationMessage += notificationsForToday[eventCollection]
-          .map((eventItem: INotification) => eventItem.title)
-          .join('\r\n')
+        if (notificationsForToday[eventCollection].length > 0) {
+          isNotification = true
+          break
+        }
       }
 
-      notification.open({
-        message: 'Notification',
-        description: Notification(notificationMessage),
-        duration: 0,
-      })
+      if (isNotification) {
+        for (const eventCollection in notificationsForToday) {
+          notificationMessage += notificationsForToday[eventCollection]
+            .map((eventItem: INotification) => eventItem.title)
+            .join('\r\n')
+        }
+
+        notification.open({
+          message: 'Notification',
+          description: Notification(notificationMessage),
+          duration: 0,
+        })
+      }
     }
   }, [data])
 
