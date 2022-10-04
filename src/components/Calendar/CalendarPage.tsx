@@ -3,10 +3,10 @@ import { Calendar, notification } from 'antd'
 import moment, { Moment } from 'moment'
 import graphqlRequest from '../../utils/graphql/graphqlRequest'
 import getData from '../../utils/services/api'
-import { INotification, IDataFromServer } from '../../domain/types'
+import { IDataFromServer, INotification, IEventsCollections } from '../../domain/types'
 import { defineNotificationsByTypeByDay } from '../../utils/functions/defineNotificationsByTypeByDay'
 import { CalendarCellWithEvents } from '../CalendarCellWithEvents'
-import { Notification } from '../Notification'
+import { Notifications} from '../Notifications'
 import './CalendarPage.scss'
 import 'antd/dist/antd.css'
 
@@ -24,12 +24,13 @@ export const CalendarPage = () => {
     }
 
     runsCounter.current++
+
+    return () => setData(null)
   }, [])
 
   useEffect(() => {
     if (data) {
       const notificationsForToday = defineNotificationsByTypeByDay(data, moment(new Date()))
-      let notificationMessage = ''
       let isNotification = false
 
       for (const eventCollection in notificationsForToday) {
@@ -40,15 +41,18 @@ export const CalendarPage = () => {
       }
 
       if (isNotification) {
-        for (const eventCollection in notificationsForToday) {
-          notificationMessage += notificationsForToday[eventCollection]
-            .map((eventItem: INotification) => eventItem.title)
-            .join('\r\n')
+        let notificationsList: Array<INotification> = []
+
+        for (const notificationCollection in notificationsForToday) {
+          notificationsList = [
+            ...notificationsList,
+            ...(notificationsForToday[notificationCollection] as Array<INotification>),
+          ]
         }
 
         notification.open({
-          message: 'Notification',
-          description: Notification(notificationMessage),
+          message: 'Notifications',
+          description: Notifications(JSON.stringify(notificationsList)),
           duration: 0,
         })
       }
@@ -62,6 +66,7 @@ export const CalendarPage = () => {
   return (
     <div className='calendar__wrapper'>
       <Calendar dateCellRender={dateCellRender} className='calendar' />
+      {}
     </div>
   )
 }

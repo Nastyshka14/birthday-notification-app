@@ -1,0 +1,60 @@
+.notification__btns {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.notification__btn {
+  width: 22px;
+  height: 22px;
+  opacity: 0.9;
+  margin-right: 4px;
+  border: none;
+  background-color: transparent;
+  background-repeat: no-repeat;
+}
+
+.notification__btn:last-child {
+  margin-right: 0;
+}
+
+.notification__btn--facebook {
+  background-image: url(../../assets/icons/facebook.svg);
+}
+
+.notification__btn--vk {
+  background-image: url(../../assets/icons/vk.svg);
+}
+
+.notification__btn--telegram {
+  background-image: url(../../assets/icons/telegram.svg);
+}
+
+.notification__btn--email {
+  background-image: url(../../assets/icons/email.svg);
+}
+
+.notification__btn--sms {
+  background-image: url(../../assets/icons/sms.svg);
+}
+
+.notification__btn--instagram {
+  background-image: url(../../assets/icons/instagram.svg);
+}
+
+.notification__btn--viber {
+  background-image: url(../../assets/icons/viber.svg);
+}
+
+.notification__btn--whatsapp {
+  background-image: url(../../assets/icons/whatsapp.svg);
+}
+
+.notification__btn:hover {
+  transform: scale(1.1);
+  cursor: pointer;
+}
+
+.notification__btn:active {
+  opacity: 1;
+}

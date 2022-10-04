@@ -1,0 +1,15 @@
+.notification-list {
+  padding: 0;
+}
+
+.notification-item {
+  width: 100%;
+  padding-bottom: 10px;
+  border-bottom: 1px solid lightgray;
+}
+
+.notification-item__title {
+  font-size: 16px;
+  line-height: 28px;
+  text-align: right;
+}

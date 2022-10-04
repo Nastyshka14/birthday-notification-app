@@ -1,4 +1,4 @@
-import moment, { Moment } from 'moment'
+import { Moment } from 'moment'
 import { parseCalendarCellData } from './parseCalendarCellData'
 import { dateToDayFormat, momentToDayFormat } from './momentToISOString'
 import {
