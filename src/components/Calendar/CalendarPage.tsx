@@ -13,13 +13,12 @@ import 'antd/dist/antd.css'
 moment.updateLocale('en', { week: { dow: 1 } })
 
 export const CalendarPage = () => {
-  const [data, setData] = useState<IDataFromServer | null>(null);
+  const [data, setData] = useState<IDataFromServer | null>(null)
 
   useEffect(() => {
-    getData(graphqlRequest)
-      .then((data): void => {
-        setData(data)
-      })
+    getData(graphqlRequest).then((data): void => {
+      setData(data)
+    })
   }, [])
 
   useEffect(() => {
@@ -55,7 +54,7 @@ export const CalendarPage = () => {
   }, [data])
 
   const dateCellRender = (dateCell: Moment): JSX.Element | null => {
-    return (data && <CalendarCellWithEvents data={data} cellDate={dateCell} />)
+    return data && <CalendarCellWithEvents data={data} cellDate={dateCell} />
   }
 
   return (

@@ -1,20 +1,4 @@
 import { Moment } from 'moment'
-
-/*
-interface ITimeRange {
-  start: Date
-  end: Date
-}
-
-interface IDay {
-  date: Date
-}
-
-interface IDaysRange {
-  start: Date
-  end: Date
-}
-*/
 interface INotification {
   type: string
   title: string

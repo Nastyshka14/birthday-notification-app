@@ -5,7 +5,6 @@ interface INotificationComponent {
 }
 
 export const Notification: INotificationComponent = (item) => {
-
   function shareOnFacebook() {
     const navUrl = `https://www.facebook.com/sharer/sharer.php?u=https://itra-course-work.herokuapp.com/?kcscmksnkc `
     window.open(navUrl, '_blank')
@@ -17,8 +16,9 @@ export const Notification: INotificationComponent = (item) => {
   }
 
   function shareOnTelegram(item: string) {
-    const navUrl = `https://t.me/share/url?url=${window.location.href
-      }&text=Today is ${encodeURIComponent(item)}`
+    const navUrl = `https://t.me/share/url?url=${
+      window.location.href
+    }&text=Today is ${encodeURIComponent(item)}`
     window.open(navUrl, '_blank')
   }
 
