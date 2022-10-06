@@ -4,7 +4,6 @@ import { GET_BIRTHDAYS } from '../../constants/graphQL'
 import { IBirthdayItem, IGetBirthdaysData } from '../../domain/types/Birthday'
 import { Notification } from '../../components/Notification/Notification'
 import moment, { Moment } from 'moment'
-import { message } from 'antd'
 import '../../components/Calendar/CalendarPage.scss'
 import 'antd/dist/antd.css'
 
@@ -14,26 +13,16 @@ export const getBirthdaysData = (): IGetBirthdaysData => {
   const { openNotification } = Notification()
   const newBirthdaysList: IBirthdayItem[] = []
 
-  const showMessage = (msg: string) => {
-    if (typeof msg === 'string') {
-      message.error(msg)
-    }
-  }
-
   const getBirthdays = useCallback(async (): Promise<void> => {
-    try {
-      const fetchBirthdays = await request({ query: GET_BIRTHDAYS })
-      const fetchBirthdaysFormat = JSON.parse(fetchBirthdays).data.birthdaysCollection.items.map(
-        (item: { name: string; date: Date }) => ({
-          ...item,
-          date: valueToString(item.date),
-        }),
-      )
-      setBirthdays(fetchBirthdaysFormat)
-    } catch (error: string | unknown) {
-      showMessage('Something went wrong')
-    }
-  }, [request])
+    const fetchBirthdays = await request({ query: GET_BIRTHDAYS })
+    const fetchBirthdaysFormat = JSON.parse(fetchBirthdays).data.birthdaysCollection.items.map(
+      (item: { name: string; date: Date }) => ({
+        ...item,
+        date: valueToString(item.date),
+      }),
+    )
+    setBirthdays(fetchBirthdaysFormat)
+  }, [])
 
   useEffect(() => {
     getBirthdays()

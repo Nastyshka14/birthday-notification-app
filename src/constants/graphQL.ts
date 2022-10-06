@@ -7,5 +7,3 @@ export const GET_BIRTHDAYS = `
     }
   }}
 `
-
-

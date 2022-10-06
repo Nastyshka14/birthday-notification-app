@@ -50,7 +50,7 @@ export const CalendarPage = (): JSX.Element => {
   const dateCellRender = (value: Moment): JSX.Element => {
     const listData: IBirthdayItem[] = getListData(value)
     return (
-      <Popover title={title(value)} placement='right' content={content(value)} trigger='click'>
+      <Popover title={title(value)} placement='bottomRight' content={content(value)} trigger='click'>
         <ul className='events'>
           {listData.length
             ? listData.map((item: IBirthdayItem):JSX.Element => (

@@ -1,9 +1,9 @@
 {
   "files": {
-    "main.css": "./static/css/main.986f70db.css",
-    "main.js": "./static/js/main.ed0fde36.js",
+    "main.css": "./static/css/main.e2d358cb.css",
+    "main.js": "./static/js/main.c85c7b9b.js",
     "static/js/787.f4b9e84d.chunk.js": "./static/js/787.f4b9e84d.chunk.js",
-    "static/media/cake2.svg": "./static/media/cake2.33a4a9edebe996529651.svg",
+    "static/media/notificationCake.svg": "./static/media/notificationCake.33a4a9edebe996529651.svg",
     "static/media/cake.svg": "./static/media/cake.d82f7754c24a04c0e95a.svg",
     "static/media/viber.svg": "./static/media/viber.8edd08f674db951198b5.svg",
     "static/media/whatsapp.svg": "./static/media/whatsapp.d3f77e0957f679c639c1.svg",
@@ -13,12 +13,12 @@
     "static/media/share.svg": "./static/media/share.a3a1e1f803c5f78ca3e9.svg",
     "index.html": "./index.html",
     "static/media/vk.svg": "./static/media/vk.94bec4e82fdae3ca6074.svg",
-    "main.986f70db.css.map": "./static/css/main.986f70db.css.map",
-    "main.ed0fde36.js.map": "./static/js/main.ed0fde36.js.map",
+    "main.e2d358cb.css.map": "./static/css/main.e2d358cb.css.map",
+    "main.c85c7b9b.js.map": "./static/js/main.c85c7b9b.js.map",
     "787.f4b9e84d.chunk.js.map": "./static/js/787.f4b9e84d.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.986f70db.css",
-    "static/js/main.ed0fde36.js"
+    "static/css/main.e2d358cb.css",
+    "static/js/main.c85c7b9b.js"
   ]
 }

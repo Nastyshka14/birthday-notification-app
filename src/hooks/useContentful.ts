@@ -1,10 +1,14 @@
 import { useCallback } from 'react'
+import { message } from 'antd'
+import { IUseContentful } from 'src/domain/types/Birthday'
 
-interface useContentfulI {
-  request: (body: { query: string }) => Promise<string>
+const showMessage = (msg: string) => {
+  if (typeof msg === 'string') {
+    message.error(msg)
+  }
 }
 
-export const useContentful = (): useContentfulI => {
+export const useContentful = (): IUseContentful => {
   const request = useCallback(async (body = null): Promise<string> => {
     const apiUrl = `https://graphql.contentful.com/content/v1/spaces/${process.env.REACT_APP_SPACE_ID}/`
     const headers = {
@@ -22,6 +26,7 @@ export const useContentful = (): useContentfulI => {
       const data = response.text()
       return data
     } catch (error) {
+      showMessage(error.message)
       return error
     }
   }, [])
