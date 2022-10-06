@@ -1,0 +1,38 @@
+.notification {
+  display: flex;
+}
+
+.notification__icon {
+  width: 30px;
+  height: 30px;
+  background: url(../../assets/icons/cake2.svg) no-repeat center;
+}
+
+.description {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: black;
+}
+
+.description__btn {
+  width: 15px;
+  height: 15px;
+  margin-left: 5px;
+  background: url(../../assets/icons/share.svg) no-repeat center;
+  border: none;
+}
+
+.message {
+  display: flex;
+  align-items: flex-end;
+  border-bottom: 1px solid #0050b3;
+}
+
+.message__text {
+  height: 1.4em;
+  margin: 0;
+  font-size: 20px;
+  font-weight: 500;
+  color: #0050b3;
+}

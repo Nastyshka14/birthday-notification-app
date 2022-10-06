@@ -2,95 +2,49 @@
   border: 2px solid lightgray;
 }
 
-.notification {
+.title {
   display: flex;
-  flex-direction: column;
-
-  &__message {
-    font-size: 20px;
-    font-weight: 600;
-  }
-
-  &__buttons {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-  }
+  justify-content: space-between;
+  align-items: flex-end;
 }
 
-.notification__btn {
-  width: 22px;
-  height: 22px;
-  margin: 2px;
+.title__day {
+  height: 1.4em;
+  margin: 0;
+  font-size: 20px;
+  font-weight: 500;
+  color: #0050b3;
+}
+
+.title__week {
+  margin: 0;
+  font-weight: normal;
+  color: #0050b3;
+}
+
+.content {
+  width: 150px;
+  list-style-image: url(../../assets/icons/cake.svg);
+}
+
+.content__item {
+  margin-left: 20px;
+  cursor: pointer;
+}
+
+.content__item_name {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: black;
+}
+
+.content__item_btn {
+  width: 15px;
+  height: 15px;
+  margin-left: 5px;
+  background: url(../../assets/icons/share.svg) no-repeat center;
   border: none;
-  opacity: 0.9;
-
-  &__share {
-    border: none;
-    background: none;
-  }
-  &__facebook {
-    background: url(icons/facebook.svg);
-  }
-
-  &__vk {
-    background: url(icons/vk.svg);
-  }
-
-  &__telegram {
-    background: url(icons/telegram.svg);
-  }
-
-  &__email {
-    background: url(icons/email.svg);
-  }
-
-  &__sms {
-    background: url(icons/sms.svg);
-  }
-
-  &__instagram {
-    background: url(icons/instagram.svg);
-  }
-
-  &__viber {
-    background: url(icons/viber.svg);
-  }
-
-  &__whatsapp {
-    background: url(icons/whatsapp.svg);
-  }
-
-  &:hover {
-    transform: scale(1.1);
-    cursor: pointer;
-  }
-
-  &:active {
-    opacity: 1;
-  }
-}
-
-[data-tooltip] {
-  position: relative;
-}
-
-[data-tooltip]::after {
-  content: attr(data-tooltip);
-  position: absolute;
-  width: 35px;
-  left: 0;
-  top: 0;
-  font-size: 8px;
-  background: rgb(83, 83, 83);
-  color: rgb(250, 245, 245);
-  opacity: 0;
-}
-
-[data-tooltip]:hover::after {
-  opacity: 1;
-  top: 3em;
-  left: -0.7em;
 }
 
 .events {
