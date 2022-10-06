@@ -5,8 +5,6 @@ interface INotification {
   description?: string
   date?: Date
 }
-
-
 interface IBirthday extends INotification {
 }
 

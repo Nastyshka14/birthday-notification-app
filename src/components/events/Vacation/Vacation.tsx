@@ -5,11 +5,12 @@ import './Vacation.scss'
 export const Vacation = ({ data: vacations }: { data: Array<IVacation> }): JSX.Element | null => {
   return (
     vacations?.length > 0 && (
-      <ul className='vacations-list  calendar-events__list'>
+      <ul className='vacations-list calendar-events__list'>
         {vacations.map((vacation: IVacation) => (
-          <li className='vacations-list__item' key={vacation.start.toString()}>
+          <li className='vacations-list__item' key={vacation.title + vacation.start.toString()}>
             <Popover placement='right' title={'Vacation'} content={vacation.title}>
-              {vacation.title}
+              <h3>{vacation.title}</h3>
+              <p>{vacation?.description && vacation.description}</p>
             </Popover>
           </li>
         ))}
