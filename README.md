@@ -7,7 +7,7 @@ This is an application for creating birthday  reminders.
 * ````npm install````
 * ````npm start````
 
-## For work with Cordova App Andriod
+## To work with Cordova App Andriod
 
 * ````cd cordovaApp````
 * ````cordova run android````
