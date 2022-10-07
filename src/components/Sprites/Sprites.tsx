@@ -2,69 +2,49 @@ import React from 'react'
 import './Sprites.scss'
 
 export const Sprites = ({ item }): JSX.Element => {
-  function shareOnVK(item: string) {
-    const navUrl = `http://vk.com/share.php?url=${window.location.href}&title=Today is ${item}`
-    window.open(navUrl, '_blank')
-  }
+  
+  const vkUrl = `http://vk.com/share.php?url=${window.location.href}&title=Today is ${item}`
+  const telegramUrl = `https://t.me/share/url?url=${window.location.href}&text=Today is ${encodeURIComponent(item)}`
+  const viberUrl = `viber://forward?text=Today is ${item}`
+  const whatsappUrl = `whatsapp://send?text=Today is ${item}`
+  const emailUrl = `mailto:?subject=Today is ${item}`
+  const smsUrl = `sms:?body=Today is ${item}`
 
-  function shareOnTelegram(item: string) {
-    const navUrl = `https://t.me/share/url?url=${
-      window.location.href
-    }&text=Today is ${encodeURIComponent(item)}`
-    window.open(navUrl, '_blank')
-  }
-
-  function shareOnViber(item: string) {
-    const navUrl = `viber://forward?text=Today is ${item}`
-    window.open(navUrl, '_blank')
-  }
-
-  function shareOnWhatsApp(item: string) {
-    const navUrl = `whatsapp://send?text=Today is ${item}`
-    window.open(navUrl, '_blank')
-  }
-
-  function shareOnEmail(item: string) {
-    const navUrl = `mailto:?subject=Today is ${item}`
-    window.open(navUrl, '_blank')
-  }
-
-  function shareOnSMS(item: string) {
-    const navUrl = `sms:?body=Today is ${item}`
-    window.open(navUrl, '_blank')
+  const share = (url: string) => {
+    window.open(url, '_blank')
   }
 
   return (
     <div className='sprites'>
       <button
         data-tooltip='vk'
-        className='sprites__btn sprites__btn__vk'
-        onClick={() => shareOnVK(item)}
+        className='sprites__btn sprites__btn-vk'
+        onClick={() => share(vkUrl)}
       ></button>
       <button
         data-tooltip='sms'
-        className='sprites__btn sprites__btn__sms'
-        onClick={() => shareOnSMS(item)}
+        className='sprites__btn sprites__btn-sms'
+        onClick={() => share(smsUrl)}
       />
       <button
         data-tooltip='email'
-        className='sprites__btn sprites__btn__email'
-        onClick={() => shareOnEmail(item)}
+        className='sprites__btn sprites__btn-email'
+        onClick={() => share(emailUrl)}
       />
       <button
         data-tooltip='telegram'
-        className='sprites__btn sprites__btn__telegram'
-        onClick={() => shareOnTelegram(item)}
+        className='sprites__btn sprites__btn-telegram'
+        onClick={() => share(telegramUrl)}
       />
       <button
         data-tooltip='viber'
-        className='sprites__btn sprites__btn__viber'
-        onClick={() => shareOnViber(item)}
+        className='sprites__btn sprites__btn-viber'
+        onClick={() => share(viberUrl)}
       />
       <button
         data-tooltip='whatsapp'
-        className='sprites__btn sprites__btn__whatsapp'
-        onClick={() => shareOnWhatsApp(item)}
+        className='sprites__btn sprites__btn-whatsapp'
+        onClick={() => share(whatsappUrl)}
       />
     </div>
   )

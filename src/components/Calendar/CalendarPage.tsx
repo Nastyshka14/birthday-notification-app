@@ -20,15 +20,15 @@ export const CalendarPage = (): JSX.Element => {
         {listData.length
           ? listData.map((item: IBirthdayItem): JSX.Element => (
               <div className='content__component'>
-                <li className='content__item' key={item.name}>
-                  <div className='content__item_name'>
-                    <span className='content__item_text'>{item.name}</span>
+                <li className='content__item' key={item.name + item.date.toString()}>
+                  <div className='content__item-name'>
+                    <span className='content__item-text'>{item.name}</span>
                     <Popover
                       placement='right'
                       content={getNotificationBody(item.name)}
                       trigger='click'
                     >
-                      <button className='content__item_btn'></button>
+                      <button className='content__item-btn'></button>
                     </Popover>
                   </div>
                 </li>
