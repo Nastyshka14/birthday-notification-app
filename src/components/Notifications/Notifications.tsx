@@ -13,7 +13,7 @@ export const Notifications: INotificationComponent = (notifications) => {
     <ul className='notification-list'>
       {notificationsAsArr.map((notification) => {
         return (
-          <div className='notification-item'>
+          <div className='notification-item' key={notification.identifier.id}>
             <h5 className='notification-item__title'>{notification.title}</h5>
             <SocialNetLinks message={notification.title} />
           </div>

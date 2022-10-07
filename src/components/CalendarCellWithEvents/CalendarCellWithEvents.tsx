@@ -5,12 +5,15 @@ import {
   IMeeting,
   IVacation,
   IEventsCollections,
-  ICalendarCell
+  ICalendarCell,
 } from '../../domain/types'
 import './CalendarCellWithEvents.scss'
 
 export const CalendarCellWithEvents = ({ data, cellDate }: ICalendarCell) => {
-  const { birthdays, meetings, vacations }: IEventsCollections = defineNotificationsByTypeByDay(data, cellDate)
+  const { birthdays, meetings, vacations }: IEventsCollections = defineNotificationsByTypeByDay(
+    data,
+    cellDate,
+  )
 
   return (
     <div className='calendar-events'>

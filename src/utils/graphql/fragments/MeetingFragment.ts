@@ -3,7 +3,7 @@ import { gql } from 'graphql-request'
 const MeetingFragment = gql`
   fragment MeetingFragment on Meeting {
     type: __typename
-    sys {
+    identifier: sys {
       id
     }
     title

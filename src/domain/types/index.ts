@@ -2,6 +2,7 @@ import { Moment } from 'moment'
 interface INotification {
   type: string
   title: string
+  identifier: { id: string }
   description?: string
   date?: Date
 }

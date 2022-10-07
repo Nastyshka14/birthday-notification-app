@@ -8,6 +8,10 @@
   border-bottom: 1px solid lightgray;
 }
 
+.notification-item:last-of-type {
+  border-bottom: none;
+}
+
 .notification-item__title {
   font-size: 16px;
   line-height: 28px;
