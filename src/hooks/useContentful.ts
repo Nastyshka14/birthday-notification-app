@@ -23,8 +23,7 @@ export const useContentful = (): IUseContentful => {
       if (!response.ok) {
         throw new Error(response.statusText || 'Something went wrong')
       }
-      const data = response.text()
-      return data
+      return response.text()
     } catch (error) {
       showMessage(error.message)
       return error

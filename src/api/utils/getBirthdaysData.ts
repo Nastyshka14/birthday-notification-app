@@ -54,13 +54,13 @@ export const getBirthdaysData = (): IGetBirthdaysData => {
   const getReminder = useCallback(() => {
     const todayBirthdaysList = JSON.parse(localStorage.getItem('todayBirthdaysList'))
     birthdays.forEach((item: IBirthdayItem) => {
+      const compareBirthdays = () => todayBirthdaysList.find((element: IBirthdayItem) => {
+        const {name, date} = element
+        name !== item.name && date !== item.date
+      })
       if (valueToString(item.date) === valueToString(moment())) {
         if (todayBirthdaysList !== null) {
-          if (
-            todayBirthdaysList.find((element: IBirthdayItem) => {
-              return element.name !== item.name && element.date !== item.date
-            })
-          ) {
+          if (compareBirthdays()) {
             JSON.parse(localStorage.getItem('todayBirthdaysList'))
             pushItem(item.name, item.date)
           }
