@@ -18,7 +18,6 @@ import {
 import { Notifications } from '../../components/Notifications'
 
 export const displayNotifications = (notificationsForToday: IEventsCollections) => {
-  let isNotificationsWithUpdates = false
   let notificationsList: Array<INotification> = []
 
   for (const notificationCollection in notificationsForToday) {
@@ -39,30 +38,30 @@ export const displayNotifications = (notificationsForToday: IEventsCollections) 
         notificationsForTodayFromStorage,
       )
     ) {
-      isNotificationsWithUpdates = true
+      const newEventsForToday = filterUpdatedNotifications(
+        notificationsList,
+        notificationsForTodayFromStorage,
+      )
+
+      newEventsForToday.length > 0 &&
+        notification.open({
+          message: 'Notifications',
+          description: Notifications(JSON.stringify(newEventsForToday)),
+          duration: 0,
+        })
+
+      removeDataFromStorage('notifications')
+      saveDataToStorage('notifications', JSON.stringify(notificationsList))
     }
   } else {
-    isNotificationsWithUpdates = true
-  }
-
-  if (isNotificationsWithUpdates) {
-    const newEventsForToday = filterUpdatedNotifications(
-      notificationsList,
-      notificationsForTodayFromStorage,
-    )
-
-    newEventsForToday.length > 0 &&
-      notification.open({
-        message: 'Notifications',
-        description: Notifications(JSON.stringify(newEventsForToday)),
-        duration: 0,
-      })
-
-    removeDataFromStorage('notifications')
+    notification.open({
+      message: 'Notifications',
+      description: Notifications(JSON.stringify(notificationsList)),
+      duration: 0,
+    })
     saveDataToStorage('notifications', JSON.stringify(notificationsList))
   }
 }
-
 
 const filterUpdatedNotifications = (
   serverNotificationForToday: Array<INotification>,

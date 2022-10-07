@@ -11,6 +11,7 @@
 # production
 /build
 
+
 # misc
 .env
 .DS_Store
@@ -18,6 +19,8 @@
 .env.development.local
 .env.test.local
 .env.production.local
+/.idea
+package-lock.json
 
 npm-debug.log*
 yarn-debug.log*
