@@ -4,7 +4,11 @@ This is an application for creating birthday  reminders.
 
 ## Installation
 
-* Clone the repo https://github.com/Nastyshka14/birthday-notification-app
 * ````npm install````
-* ````npm install react-scripts````
 * ````npm start````
+
+## To work with Cordova App Andriod
+
+* ````cd cordovaApp````
+* ````cordova run android````
+* ````run .apk file on emulator or android (cordovaApp/platforms/android)````

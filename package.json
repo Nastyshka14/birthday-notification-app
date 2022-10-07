@@ -2,8 +2,9 @@
   "name": "calendar",
   "version": "0.1.0",
   "private": true,
+  "homepage": "./",
   "dependencies": {
-    "antd": "^4.22.5",
+    "antd": "^4.23.4",
     "graphql": "^16.6.0",
     "moment": "^2.29.4",
     "react": "^18.2.0",
@@ -12,9 +13,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
+    "build": "react-scripts build && cp -r build/* ./cordovaApp/www",
+    "test": "react-scripts test && jest",
     "lint": "eslint src/**/*.{js,jsx,ts,tsx,json}",
     "lint:fix": "eslint --fix 'src/**/*.{js,jsx,ts,tsx,json}'",
     "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc"
@@ -38,6 +38,9 @@
     ]
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.3.0",
+    "@testing-library/user-event": "^13.5.0",
     "@types/node": "^18.7.6",
     "@typescript-eslint/eslint-plugin": "^5.38.0",
     "@typescript-eslint/parser": "^5.38.0",
@@ -46,11 +49,8 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.31.8",
     "eslint-plugin-react-hooks": "^4.6.0",
-    "sass": "^1.54.8",
     "prettier": "^2.7.1",
-    "typescript": "^4.8.3",
-    "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^13.3.0",
-    "@testing-library/user-event": "^13.5.0"
+    "sass": "^1.54.8",
+    "typescript": "^4.8.3"
   }
 }
