@@ -18,7 +18,7 @@ export const CalendarPage = () => {
 
   useEffect(() => {
     if (runsCounterRef.current === 0) {
-      getData(graphqlRequest).then((data): void => {
+      getData(graphqlRequest).then((data: IDataFromServer): void => {
         setData(data)
       })
     }
@@ -34,8 +34,7 @@ export const CalendarPage = () => {
       let isNotification = false
 
       for (const eventCollection in notificationsForToday) {
-        if (notificationsForToday[eventCollection].length > 0) {
-          isNotification = true
+        if ((isNotification = notificationsForToday[eventCollection].length > 0)) {
           break
         }
       }

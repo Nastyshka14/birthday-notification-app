@@ -10,17 +10,17 @@ const getData = async (query: string): Promise<IDataFromServer> | null => {
   try {
     const response = await fetch(endpoint, { method: 'POST', body: JSON.stringify({ query }), headers })
     const responseText = await response.text()
-    const responseAsJSON = JSON.parse(responseText)
+    const responseAsJSON: IDataFromServer = JSON.parse(responseText)
     const responseStatus = response.status
 
     if (responseStatus !== 200) {
-      console.log('no data from the server...')
+      console.error('no data from the server...')
       return null
     } else {
       return responseAsJSON
     }
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 }
 
