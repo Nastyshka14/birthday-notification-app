@@ -2,7 +2,6 @@ import './SocialNetLinks.scss'
 
 export const SocialNetLinks = ({ message }) => {
   const socialNetLinks = {
-    facebook: `https://www.facebook.com/sharer/sharer.php?u=https://itra-course-work.herokuapp.com/?kcscmksnkc`,
     vk: `http://vk.com/share.php?url=${window.location.href}&title=Today is `,
     telegram: `https://t.me/share/url?url=${window.location.href}&text=Today is `,
     viber: `viber://forward?text=Today is `,
@@ -17,11 +16,6 @@ export const SocialNetLinks = ({ message }) => {
 
   return (
     <div className='notification__btns'>
-      <button
-        data-tooltip='facebook'
-        className='notification__btn notification__btn--facebook'
-        onClick={() => shareWithSocialLink(socialNetLinks.facebook)}
-      />
       <button
         data-tooltip='vk'
         className='notification__btn notification__btn--vk'
