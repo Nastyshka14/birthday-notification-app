@@ -13,11 +13,11 @@ import {
   saveDataToStorage,
   getDataFromStorage,
   removeDataFromStorage,
-} from '../../utils/functions/sessionStorageData'
+} from './sessionStorageData'
 
 import { Notifications } from '../../components/Notifications'
 
-export const displayNotifications = (notificationsForToday: IEventsCollections) => {
+export const filterNotificationsForToday = (notificationsForToday: IEventsCollections) => {
   let notificationsList: Array<INotification> = []
 
   for (const notificationCollection in notificationsForToday) {
@@ -46,7 +46,7 @@ export const displayNotifications = (notificationsForToday: IEventsCollections) 
       newEventsForToday.length > 0 &&
         notification.open({
           message: 'Notifications',
-          description: Notifications(JSON.stringify(newEventsForToday)),
+          description: Notifications(newEventsForToday),
           duration: 0,
         })
 
@@ -56,7 +56,7 @@ export const displayNotifications = (notificationsForToday: IEventsCollections) 
   } else {
     notification.open({
       message: 'Notifications',
-      description: Notifications(JSON.stringify(notificationsList)),
+      description: Notifications(notificationsList),
       duration: 0,
     })
     saveDataToStorage('notifications', JSON.stringify(notificationsList))

@@ -5,7 +5,7 @@ import graphqlRequest from '../../utils/graphql/graphqlRequest'
 import getData from '../../utils/services/api'
 import { IDataFromServer } from '../../domain/types'
 import { defineNotificationsByTypeByDay } from '../../utils/functions/defineNotificationsByTypeByDay'
-import { displayNotifications } from 'src/utils/functions/displayNotifications'
+import { filterNotificationsForToday } from 'src/utils/functions/filterNotificationsForToday'
 import { CalendarCellWithEvents } from '../CalendarCellWithEvents'
 import './CalendarPage.scss'
 import 'antd/dist/antd.css'
@@ -40,7 +40,7 @@ export const CalendarPage = () => {
       }
 
       if (isNotification) {
-        displayNotifications(notificationsForToday)
+        filterNotificationsForToday(notificationsForToday)
       }
     }
   }, [data])

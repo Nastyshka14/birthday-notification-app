@@ -1,24 +1,28 @@
+import { Popover } from 'antd'
 import { INotification } from '../../domain/types'
+import { EventRecord } from '../events'
 import { SocialNetLinks } from '../SocialNetLinks'
 import './Notifications.scss'
 
 interface INotificationComponent {
-  (notifications: string): JSX.Element
+  (notifications: Array<INotification>): JSX.Element
 }
 
-export const Notifications: INotificationComponent = (notifications) => {
-  const notificationsAsArr: Array<INotification> = JSON.parse(notifications)
-
-  return (
-    <ul className='notification-list'>
-      {notificationsAsArr.map((notification) => {
-        return (
-          <div className='notification-item' key={notification.identifier.id}>
-            <h5 className='notification-item__title'>{notification.title}</h5>
-            <SocialNetLinks message={notification.title} />
-          </div>
-        )
-      })}
-    </ul>
-  )
-}
+export const Notifications: INotificationComponent = (notifications) => (
+  <ul className='notification-list'>
+    {notifications.map((notification) => {
+      return (
+        <li className='notification-list__item' key={notification.identifier.id}>
+          <EventRecord eventRecord={notification} />
+          <Popover
+            placement='bottomRight'
+            content={<SocialNetLinks message={notification.title} />}
+            trigger='click'
+          >
+            <div className='notification-list_item-share-btn' />
+          </Popover>
+        </li>
+      )
+    })}
+  </ul>
+)
