@@ -19,6 +19,8 @@ export const defineNotificationsByTypeByDay: INotificationByTypeByDay = (data, c
   const { birthdays, meetings, vacations }: IEventsCollections = parseCalendarCellData(data)
 
   const filterEventsByDay: IFilterEvents = (eventsList, cellDate) => {
+    if (eventsList.length  === 0) return []
+    
     const eventType = eventsList[0].type
 
     if (eventType === EVENTS.birthday) {

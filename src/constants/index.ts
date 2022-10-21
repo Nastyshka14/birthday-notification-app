@@ -1,1 +1,1 @@
-export { EVENTS } from './eventsVariants'
+export { EVENTS, EVENTS_OPERATIONS } from './eventsVariants'

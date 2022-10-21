@@ -34,9 +34,10 @@ interface IDataFromServer {
 }
 
 type TListEvents = Array<IBirthday> | Array<IMeeting> | Array<IVacation>
+type TEvent = IBirthday | IMeeting | IVacation
 
 interface IFilterEvents {
-  (eventsList: TListEvents, cellDate: Moment): Array<INotification>
+  (eventsList: TListEvents, cellDate: Moment): Array<INotification> | []
 }
 interface ICalendarCell {
   data: IDataFromServer,
@@ -52,5 +53,6 @@ export {
   IDataFromServer,
   IFilterEvents,
   ICalendarCell,
-  TListEvents
+  TListEvents,
+  TEvent
 }

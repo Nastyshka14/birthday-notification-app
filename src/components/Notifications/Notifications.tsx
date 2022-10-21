@@ -1,6 +1,6 @@
 import { Popover } from 'antd'
 import { INotification } from '../../domain/types'
-import { EventRecord } from '../events'
+import { EventRecord } from '../calendarEventsUI'
 import { SocialNetLinks } from '../SocialNetLinks'
 import './Notifications.scss'
 

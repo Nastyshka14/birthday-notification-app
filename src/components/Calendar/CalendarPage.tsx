@@ -7,8 +7,8 @@ import { IDataFromServer } from '../../domain/types'
 import { defineNotificationsByTypeByDay } from '../../utils/functions/defineNotificationsByTypeByDay'
 import { filterNotificationsForToday } from 'src/utils/functions/filterNotificationsForToday'
 import { CalendarCellWithEvents } from '../CalendarCellWithEvents'
-import './CalendarPage.scss'
 import 'antd/dist/antd.css'
+import './CalendarPage.scss'
 
 moment.updateLocale('en', { week: { dow: 1 } })
 
