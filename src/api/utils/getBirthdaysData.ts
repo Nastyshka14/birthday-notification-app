@@ -6,7 +6,6 @@ import { Notification } from '../../components/Notification/Notification'
 import moment, { Moment } from 'moment'
 import '../../components/Calendar/CalendarPage.scss'
 import 'antd/dist/antd.css'
-
 export const getBirthdaysData = (): IGetBirthdaysData => {
   const [birthdays, setBirthdays] = useState<IBirthdayItem[]>([])
   const { request } = useContentful()

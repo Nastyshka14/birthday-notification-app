@@ -10,7 +10,7 @@ import 'antd/dist/antd.css'
 moment.updateLocale('en', { week: { dow: 1 } })
 
 export const CalendarPage = (): JSX.Element => {
-  const { getNotificationBody } = Notification()
+  const { getNotificationBody, shareSocials } = Notification()
   const { getListData } = getBirthdaysData()
 
   const content = (value: Moment): JSX.Element => {
@@ -23,13 +23,13 @@ export const CalendarPage = (): JSX.Element => {
                 <li className='content__item' key={item.name + item.date.toString()}>
                   <div className='content__item-name'>
                     <span className='content__item-text'>{item.name}</span>
-                    <Popover
+                    {!window.cordova ? <Popover
                       placement='right'
                       content={getNotificationBody(item.name)}
                       trigger='click'
                     >
                       <button className='content__item-btn'></button>
-                    </Popover>
+                    </Popover> : <button className='content__item-btn' onClick={() => shareSocials(item.name)}></button>}
                   </div>
                 </li>
               </div>
@@ -65,7 +65,7 @@ export const CalendarPage = (): JSX.Element => {
       </Popover>
     )
   }
-
+  
   return (
     <div className='calendar'>
       <Calendar dateCellRender={dateCellRender} className='calendar__item' />

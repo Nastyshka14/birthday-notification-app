@@ -9,7 +9,7 @@ const showMessage = (msg: string) => {
 }
 
 export const useContentful = (): IUseContentful => {
-  const request = useCallback(async (body = null): Promise<string> => {
+  const request = async (body = null): Promise<string> => {
     const apiUrl = `https://graphql.contentful.com/content/v1/spaces/${process.env.REACT_APP_SPACE_ID}/`
     const headers = {
       'Content-Type': 'application/json',
@@ -28,6 +28,6 @@ export const useContentful = (): IUseContentful => {
       showMessage(error.message)
       return error
     }
-  }, [])
+  }
   return { request }
 }
