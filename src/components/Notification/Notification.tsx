@@ -15,13 +15,20 @@ export const Notification = (): INotification => {
     )
   }
 
+ const shareSocials = (item: string) => {
+    window.plugins.socialsharing.shareWithOptions({
+      message: `Today is ${item}`
+    })
+  }
+
   const description = (item: string): JSX.Element => {
     return (
       <div className='description'>
         <span className='description__text'>Today is {item}</span>
+        {!window.cordova ? 
         <Popover placement='bottomRight' content={getNotificationBody(item)} trigger='click'>
           <button className='description__btn'></button>
-        </Popover>
+        </Popover> :  <button className='description__btn' onClick={() => shareSocials(item)}></button>}
       </div>
     )
   }
@@ -46,5 +53,5 @@ export const Notification = (): INotification => {
     [getNotificationBody],
   )
 
-  return { openNotification, getNotificationBody }
+  return { openNotification, getNotificationBody, shareSocials }
 }
