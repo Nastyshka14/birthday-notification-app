@@ -1,1 +1,0 @@
-export { Sprites } from './Sprites';

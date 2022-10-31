@@ -1,0 +1,40 @@
+.item {
+  width: 100%;
+  margin-bottom: 6px;
+  padding: 2px 12px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.item::before {
+  position: absolute;
+  content: '';
+  top: 0;
+  left: 0px;
+  width: 4px;
+  height: 100%;
+}
+
+.item--birthday {
+  background-color: #f6ffed;
+}
+
+.item--birthday::before {
+  background: #c1ee9e;
+}
+
+.item--vacation {
+  background-color: #e6f7ff;
+}
+
+.item--vacation::before {
+  background: #92d5ff;
+}
+
+.item--meeting {
+  background-color: #fffbe6;
+}
+
+.item--meeting::before {
+  background: #ffe58f;
+}
