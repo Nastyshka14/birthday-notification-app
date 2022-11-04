@@ -7,7 +7,6 @@ import './Notifications.scss'
 interface INotificationComponent {
   (notifications: Array<INotification>): JSX.Element
 }
-
 export const Notifications: INotificationComponent = (notifications) => (
   <ul className='notification-list'>
     {notifications.map((notification) => {
