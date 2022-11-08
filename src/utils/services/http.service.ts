@@ -1,7 +1,7 @@
 import { createClient } from 'contentful-management'
 
 const client = createClient({
-  accessToken: 'CFPAT-h3rDsdulFrdjLbGQPB5rwzVPbP-mBoUzy495fphn-0A',
+  accessToken: 'CFPAT-70dkQZ7ta2SQCUWWgoamQkkiezW-zUpLcNZX-ptfzPI' ,
 })
 
 export const getItemById = (id: string): Promise<any> => {
@@ -32,7 +32,7 @@ export const updateEvent = (id: string, event: object) => {
     .then(entry => {
       entry.fields = { ...event }
       entry.update()
-      return entry.publish()
+      entry.publish()
     })
     .catch(error => console.error(error.message))
 }

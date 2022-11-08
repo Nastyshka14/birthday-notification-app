@@ -32,6 +32,7 @@ export const EventsList = <T extends INotification>({
     const isEvent = await isEventWithIDExist(id)
     const isDeleted = isEvent && deleteEventByID(id)
 
+
     if (isDeleted) {
       const deletedElement: T = listOfEvents.find(
         (eventItem: T): boolean => eventItem.identifier.id === id,
@@ -45,6 +46,7 @@ export const EventsList = <T extends INotification>({
   }
 
   return (
+
     <>
       <ul className='events-list'>
         {listOfEvents.map((eventItem: INotification) => (
@@ -61,6 +63,7 @@ export const EventsList = <T extends INotification>({
           </React.Fragment>
         ))}
       </ul>
+
       {isUpdateEventDialog && eventID && (
         <ModalWindow>
           <UpdateEventForm eventID={eventID} />
