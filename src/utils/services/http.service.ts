@@ -32,7 +32,7 @@ export const updateEvent = (id: string, event: object) => {
     .then(entry => {
       entry.fields = { ...event }
       entry.update()
-      entry.publish()
+      return entry.publish()
     })
     .catch(error => console.error(error.message))
 }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { INotification } from '../../../domain/types'
 import { isEventWithIDExist, deleteEventByID } from '../../../utils/services/http.service'
 import { EVENTS_OPERATIONS } from '../../../constants'

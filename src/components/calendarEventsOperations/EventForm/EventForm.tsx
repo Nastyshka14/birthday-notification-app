@@ -59,8 +59,10 @@ export const EventForm = ({ ID }: { ID?: string }): JSX.Element => {
 
     const createdEvent =
       !isEvent && operation === EVENTS_OPERATIONS.create && createEvent(type, eventID, event)
+      console.log(type, eventID, event)
     const updatedEvent =
       isEvent && operation === EVENTS_OPERATIONS.update && updateEvent(eventID, event)
+      console.log(event)
   }
 
   const handleInput = (e: Event & { target: HTMLInputElement }): void => {
