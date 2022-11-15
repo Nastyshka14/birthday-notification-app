@@ -1,0 +1,36 @@
+.google-logout {
+    border: none !important;
+    background-color: unset !important;
+    box-shadow: none !important;
+
+span {
+    padding: 0 !important;
+    font-weight: 500;
+    font-size: 15px;
+    color: black !important;
+    text-decoration:none;
+    text-transform: uppercase;
+    display: inline-block;
+    line-height: 1;
+
+    &:after {
+        margin-top: 1px;
+        display: block;
+        content: "";
+        height: 3px;
+        width: 0%;
+        background-color: black;
+        transition: width 0.4s ease-in-out;
+    }
+
+    &:hover {
+        color: dimgrey;
+    }
+
+    &:hover:after,
+    &:focus:after {
+        width: 100%;
+    }
+}
+
+}

@@ -1,11 +1,32 @@
-import React from 'react'
-import { CalendarPage } from './components/Calendar/CalendarPage'
+import React, { useEffect, useState } from 'react'
+import { Route, Routes } from 'react-router-dom'
+import { gapi } from 'gapi-script'
+import { Login } from './pages/Login/Login'
+import { Home } from './pages/Home/Home'
 
 function App() {
+  const [login, setLogin] = useState<object>(
+    localStorage.getItem('login') ? JSON.parse(localStorage.getItem('login')) : null,
+  )
+
+  useEffect(() => {
+    const initClient = () => {
+      gapi.client.init({
+        clientId: `${process.env.REACT_APP_GOOGLE_AUTH_CLIENT_ID}`,
+        scope: '',
+      })
+    }
+
+    gapi.load('client:auth2', initClient)
+  })
+
   return (
-    <div id='app-root'>
-      <CalendarPage />
-    </div>
+    <>
+      <Routes>
+        <Route path='/' element={<Home login={login} setLogin={setLogin} />} />
+        <Route path='/login' element={<Login setLogin={setLogin} />} />
+      </Routes>
+    </>
   )
 }
 
