@@ -90,6 +90,12 @@
       background-color: rgb(14, 14, 14);
       color: rgb(255, 255, 255);
       min-height: 44px;
+      transition: all ease-out 0.15s;
+      border: none;
+
+      &:hover {
+        background-color: rgb(60, 60, 60);
+      }
     }
   }
 
@@ -134,9 +140,16 @@
         border: 1px solid black !important;
         cursor: pointer;
         min-height: 44px;
+        opacity: 1 !important;
+        transition: all ease 0.15s;
+
+        &:hover {
+          background-color: rgb(180, 180, 180) !important;
+        }
       }
 
       div {
+        background-color: transparent !important;
         padding: 10px 10px 5px 15px !important;
         margin: 0 !important;
       }
