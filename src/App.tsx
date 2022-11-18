@@ -5,8 +5,9 @@ import { Login } from './pages/Login/Login'
 import { Home } from './pages/Home/Home'
 
 function App() {
+  const loginItem: string = localStorage.getItem('login');
   const [login, setLogin] = useState<object>(
-    localStorage.getItem('login') ? JSON.parse(localStorage.getItem('login')) : null,
+    loginItem ? JSON.parse(loginItem) : null,
   )
 
   useEffect(() => {

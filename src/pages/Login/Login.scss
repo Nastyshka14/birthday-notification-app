@@ -10,8 +10,31 @@
     height: 70px;
     background-color: #e6f7ff;
 
-    &__item {
+    .auth--text {
+      font-weight: 500;
+      font-size: 15px;
       color: black;
+      text-decoration: none;
+      display: inline-block;
+      line-height: 1;
+
+      &:after {
+        display: block;
+        content: "";
+        height: 3px;
+        width: 0;
+        background-color: black;
+        transition: width 0.4s ease-in-out;
+      }
+
+      &:hover {
+        color: dimgrey;
+      }
+
+      &:hover:after,
+      &:focus:after {
+        width: 100%;
+      }
     }
   }
 
@@ -129,45 +152,42 @@
     align-items: center;
     width: 100%;
 
-    .google {
+    .btn {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      max-width: 325px;
+      height: auto;
+      padding: 0 70px 0 10px;
+      letter-spacing: 0;
+      text-align: center;
+      border: 1px solid black;
+      cursor: pointer;
+      min-height: 44px;
+      opacity: 1;
+      transition: all ease 0.15s;
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 22px;
+      color: rgb(0, 0, 0);
 
-      button {
-        width: 100%;
-        max-width: 325px;
-        height: auto;
-        letter-spacing: 0;
-        text-align: center;
-        border: 1px solid black !important;
-        cursor: pointer;
-        min-height: 44px;
-        opacity: 1 !important;
-        transition: all ease 0.15s;
-
-        &:hover {
-          background-color: rgb(180, 180, 180) !important;
-        }
+      &:hover {
+        background-color: rgb(180, 180, 180);
       }
+    }
 
-      div {
-        background-color: transparent !important;
-        padding: 10px 10px 5px 15px !important;
-        margin: 0 !important;
-      }
-
-      span {
-        width: 100%;
-        font-size: 14px !important;
-        font-weight: 700 !important;
-        line-height: 22px;
-        color: rgb(0, 0, 0) !important;
-      }
+    .icon {
+      width: 32px;
+      height: 32px;
+      background: url('../../assets/icons/google.svg') no-repeat;
+      background-size: cover;
     }
   }
 }
 
 @media screen and (max-width: 768px) {
   .login {
-
     &__navbar {
       padding-left: 10px;
     }
@@ -188,9 +208,7 @@
     }
 
     &__social {
-
       .google {
-
         button {
           max-width: 375px;
         }

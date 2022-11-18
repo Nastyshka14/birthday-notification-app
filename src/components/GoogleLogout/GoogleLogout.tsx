@@ -22,7 +22,9 @@ export const GoogleOut = ({ setLogin }: LoginProps) => {
       clientId={`${process.env.REACT_APP_GOOGLE_AUTH_CLIENT_ID}`}
       buttonText={'Log out'}
       onLogoutSuccess={onSuccess}
-      icon={false}
+      render={renderProps => (
+          <button className="google-logout__btn" onClick={renderProps.onClick}>Log out</button>
+      )}
     />
   )
 }

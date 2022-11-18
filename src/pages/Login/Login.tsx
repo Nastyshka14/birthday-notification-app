@@ -29,7 +29,7 @@ export const Login = ({ setLogin }: LoginProps) => {
   return (
     <div className='login'>
       <div className='login__navbar'>
-        <Link to='/' className='navbar__item'>
+        <Link to='/' className='navbar auth--text'>
           BACK
         </Link>
       </div>
@@ -56,10 +56,12 @@ export const Login = ({ setLogin }: LoginProps) => {
             <div className='login__social google'>
               <GoogleLogin
                 clientId={`${process.env.REACT_APP_GOOGLE_AUTH_CLIENT_ID}`}
-                buttonText={'Continue with Google'}
                 onSuccess={onSuccess}
                 cookiePolicy={'single_host_origin'}
                 isSignedIn={true}
+                render={renderProps => (
+                    <button className="login__google btn" onClick={renderProps.onClick}><div className="login__google icon" />Continue with Google</button>
+                )}
               />
             </div>
           </div>
