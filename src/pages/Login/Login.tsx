@@ -4,7 +4,7 @@ import './Login.scss'
 import { Link, useNavigate } from 'react-router-dom'
 
 type LoginProps = {
-  setLogin: (value: object) => void
+  setLogin: (loginData: object) => void
 }
 
 export const Login = ({ setLogin }: LoginProps) => {
@@ -59,8 +59,11 @@ export const Login = ({ setLogin }: LoginProps) => {
                 onSuccess={onSuccess}
                 cookiePolicy={'single_host_origin'}
                 isSignedIn={true}
-                render={renderProps => (
-                    <button className="login__google btn" onClick={renderProps.onClick}><div className="login__google icon" />Continue with Google</button>
+                render={(renderProps) => (
+                  <button className='login__google btn' onClick={renderProps.onClick}>
+                    <div className='login__google icon' />
+                    Continue with Google
+                  </button>
                 )}
               />
             </div>

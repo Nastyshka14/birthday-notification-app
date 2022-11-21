@@ -6,14 +6,14 @@ import './Home.scss'
 
 type LoginProps = {
   login: object
-  setLogin: (value: object) => void
+  setLogin: (setLogin: object) => void
 }
 
 export const Home = ({ login, setLogin }: LoginProps) => {
   return (
     <div>
       {login ? (
-        <div className="home">
+        <div className='home'>
           <div className='home__navbar logout'>
             <GoogleOut setLogin={setLogin} />
           </div>
@@ -30,7 +30,7 @@ export const Home = ({ login, setLogin }: LoginProps) => {
           </div>
           <div className='home__container'>
             <div className='container overlay' />
-              <CalendarPage />
+            <CalendarPage />
           </div>
         </div>
       )}

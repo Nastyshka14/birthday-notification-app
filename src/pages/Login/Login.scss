@@ -20,7 +20,7 @@
 
       &:after {
         display: block;
-        content: "";
+        content: '';
         height: 3px;
         width: 0;
         background-color: black;
@@ -172,7 +172,8 @@
       line-height: 22px;
       color: rgb(0, 0, 0);
 
-      &:hover {
+      &:hover,
+      &:focus {
         background-color: rgb(180, 180, 180);
       }
     }
