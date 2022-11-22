@@ -3,7 +3,7 @@ export const InputDate = ({ value, label, name, onChange }) => {
 
   return (
     <div>
-      <input type='date' value={value} name={name} />
+      <input type='date' value={value} name={name} onChange={handleOnChange}/>
       <label htmlFor={name}>{label}:</label>
     </div>
   )

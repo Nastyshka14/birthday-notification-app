@@ -26,14 +26,15 @@ export const createEvent = (type: string, id: string, event: object) => {
 }
 
 export const updateEvent = (id: string, event: object) => {
-  client.getSpace('g5vcvjt0rgq7')
+  return client.getSpace('g5vcvjt0rgq7')
     .then(space => space.getEnvironment('master'))
     .then(environment => environment.getEntry(id))
     .then(entry => {
       entry.fields = { ...event }
-      entry.update()
-      return entry.publish()
-    })
+      return entry.update()
+
+    }).then((entry) => {entry.publish()})
+    .then(result => true, reason => false)
     .catch(error => console.error(error.message))
 }
 

@@ -11,38 +11,48 @@ import { InputDate } from '../../core/InputDate'
 import { Select } from '../../core/Select'
 import { Button } from '../../core/Button'
 
-export const EventForm = ({ ID }: { ID?: string }): JSX.Element => {
-  const operation = ID ? EVENTS_OPERATIONS.update : EVENTS_OPERATIONS.create
-  const [type, setType] = useState<string>('')
-  const eventID = ID || '6AD4Pi1mnKZHyRDhEaPl3L' // todo - generate ID
+export const EventForm = ({
+  ID,
+  onOk,
+  collection,
+}: {
+  ID?: string
+  onOk?: any
+  collection?: any
+}): JSX.Element => {
 
-  const counterRef = useRef(0)
+  const [type, setType] = useState<string>('')
   const [title, setTitle] = useState<string>('')
   const [description, setDescription] = useState<string>('')
+  const [listOfEvents, setListOfEvents] = useState(collection)
   const [start, setStart] = useState<Date | undefined>(undefined)
   const [end, setEnd] = useState<Date | undefined>(undefined)
   const [date, setDate] = useState<Date | undefined>(undefined)
+  const operation = ID ? EVENTS_OPERATIONS.update : EVENTS_OPERATIONS.create
+  const eventID = ID || Math.floor(Math.random() * 100).toString()
+  const counterRef = useRef(0)
 
-  useEffect(() => {
-    if (counterRef.current === 0) {
-      getItemById(eventID).then((eventWithID) => {
-        if (eventWithID) {
-          const type = eventWithID.sys.contentType.sys.id
-          setType(type)
-          setTitle(eventWithID.fields.title['en-US'])
+  // useEffect(() => {
+  //   if (counterRef.current === 0) {
+  //     console.log(collection)
+  //     getItemById(eventID).then((eventWithID) => {
+  //       if (eventWithID) {
+  //         const type = eventWithID.sys.contentType.sys.id
+  //         setType(type)
+  //         setTitle(eventWithID.fields.title['en-US'])
 
-          if (type === EVENTS.birthday) {
-            setDate(eventWithID.fields.date['en-US'])
-          } else {
-            setDescription(eventWithID.fields.description['en-US'])
-            setStart(eventWithID.fields.start['en-US'])
-            setEnd(eventWithID.fields.end['en-US'])
-          }
-        }
-      })
-    }
-    counterRef.current++
-  }, [])
+  //         if (type === EVENTS.birthday) {
+  //           setDate(eventWithID.fields.date['en-US'])
+  //         } else {
+  //           setDescription(eventWithID.fields.description['en-US'])
+  //           setStart(eventWithID.fields.start['en-US'])
+  //           setEnd(eventWithID.fields.end['en-US'])
+  //         }
+  //       }
+  //     })
+  //   }
+  //   counterRef.current++
+  // }, [])
 
   const handleSubmit = async () => {
     const isEvent = await isEventWithIDExist(eventID)
@@ -59,10 +69,11 @@ export const EventForm = ({ ID }: { ID?: string }): JSX.Element => {
 
     const createdEvent =
       !isEvent && operation === EVENTS_OPERATIONS.create && createEvent(type, eventID, event)
-      console.log(type, eventID, event)
+
     const updatedEvent =
       isEvent && operation === EVENTS_OPERATIONS.update && updateEvent(eventID, event)
-      console.log(event)
+
+    onOk()
   }
 
   const handleInput = (e: Event & { target: HTMLInputElement }): void => {
@@ -93,6 +104,7 @@ export const EventForm = ({ ID }: { ID?: string }): JSX.Element => {
   const handleEventTypeSelection = (e: Event & { target: HTMLInputElement }) => {
     setType(e.target.value)
   }
+
   return (
     <div className={`${operation}-event-form`}>
       {operation}
@@ -123,5 +135,6 @@ export const EventForm = ({ ID }: { ID?: string }): JSX.Element => {
       )}
       <Button onClick={handleSubmit} />
     </div>
-  )
+    
+      )
 }
