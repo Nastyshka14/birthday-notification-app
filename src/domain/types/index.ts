@@ -16,7 +16,7 @@ interface IVacation extends INotification {
 
 interface IMeeting extends INotification {
   start: Date
-  end: Date
+  end: Date 
 }
 
 interface IEventsCollections {

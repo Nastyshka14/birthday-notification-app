@@ -24,14 +24,14 @@ export const EventsItem = <T extends INotification>({
   }
 
   return (
-    <Popover
-      placement='right'
-      title={eventItem.type}
-      content={<EventRecord eventRecord={eventItem} />}
-    >
+    // <Popover
+    //   placement='right'
+    //   title={eventItem.type}
+    //   content={<EventRecord eventRecord={eventItem} />}
+    // >
       <li className={`item ${eventStyles.join(' ')}`}>
         <h3 className='item__title'>{eventItem.title}</h3>
       </li>
-    </Popover>
+    // </Popover>
   )
 }

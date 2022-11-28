@@ -5,11 +5,12 @@ import { EventsItem } from '../EventItem'
 import { EventRecord } from '../EventRecord'
 import { Button } from '../../core/Button'
 import { Popover } from 'antd'
-import './EventsList.scss'
-import { EventsDayList } from '../EventsDayList'
+import './EventsDayList.scss'
 
-export const EventsList = <T extends INotification>({
+export const EventsDayList = <T extends INotification>({
   collection,
+  handleRemoveEvent,
+  handleUpdateEvent,
 }): JSX.Element => {
 
   return (
@@ -18,6 +19,14 @@ export const EventsList = <T extends INotification>({
         {collection.map((eventItem: INotification) => ( 
           <React.Fragment key={eventItem.identifier.id}>
             <EventsItem eventItem={eventItem} />
+            <Button
+              type={EVENTS_OPERATIONS.delete}
+              onClick={() => handleRemoveEvent(eventItem.identifier.id)}
+            />
+            <Button
+              type={EVENTS_OPERATIONS.update}
+              onClick={() => handleUpdateEvent(eventItem.identifier.id)}
+            />
           </React.Fragment>
         ))}
       </ul>   
