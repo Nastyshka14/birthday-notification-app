@@ -1,0 +1,1 @@
+export { GoogleOut } from './GoogleLogout'
