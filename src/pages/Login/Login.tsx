@@ -7,7 +7,7 @@ import UserPool from '../../UserPool'
 import classNames from 'classnames'
 
 type LoginProps = {
-  setLogin: (value: object) => void
+  setLogin: (loginData: object) => void
 }
 
 export const Login = ({ setLogin }: LoginProps) => {
@@ -106,7 +106,7 @@ export const Login = ({ setLogin }: LoginProps) => {
   return (
     <div className='login'>
       <div className='login__navbar'>
-        <Link to='/' className='navbar__item'>
+        <Link to='/' className='navbar auth--text'>
           BACK
         </Link>
       </div>
@@ -156,10 +156,10 @@ export const Login = ({ setLogin }: LoginProps) => {
                 cookiePolicy={'single_host_origin'}
                 isSignedIn={true}
                 render={(renderProps) => (
-                    <button className='login__google btn' onClick={renderProps.onClick}>
-                      <div className='login__google icon' />
-                      Continue with Google
-                    </button>
+                  <button className='login__google btn' onClick={renderProps.onClick}>
+                    <div className='login__google icon' />
+                    Continue with Google
+                  </button>
                 )}
               />
             </div>

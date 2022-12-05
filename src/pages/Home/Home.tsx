@@ -11,29 +11,29 @@ type LoginProps = {
 
 export const Home = ({ login, setLogin }: LoginProps) => {
   return (
-      <div>
-        {login ? (
-            <div className='home'>
-              <div className='home__navbar logout'>
-                <GoogleOut setLogin={setLogin} />
-              </div>
-              <div id='app-root'>
-                <CalendarPage />
-              </div>
-            </div>
-        ) : (
-            <div className='home'>
-              <div className='home__navbar'>
-                <Link to='/login' className='navbar auth--text'>
-                  LOG IN
-                </Link>
-              </div>
-              <div className='home__container'>
-                <div className='container overlay' />
-                <CalendarPage />
-              </div>
-            </div>
-        )}
-      </div>
+    <div>
+      {login ? (
+        <div className='home'>
+          <div className='home__navbar logout'>
+            <GoogleOut setLogin={setLogin} />
+          </div>
+          <div id='app-root'>
+            <CalendarPage />
+          </div>
+        </div>
+      ) : (
+        <div className='home'>
+          <div className='home__navbar'>
+            <Link to='/login' className='navbar auth--text'>
+              LOG IN
+            </Link>
+          </div>
+          <div className='home__container'>
+            <div className='container overlay' />
+            <CalendarPage />
+          </div>
+        </div>
+      )}
+    </div>
   )
 }
