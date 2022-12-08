@@ -1,0 +1,44 @@
+.event-record {
+  display: flex;
+}
+
+.event-record__title {
+  padding-top: 8px;
+}
+
+.event-record__date {
+  font-size: 11px;
+  color: rgb(180, 180, 180);
+}
+
+.event-record__description {
+  color: rgb(131, 131, 131);
+}
+
+.event-record__image--birthdays {
+  width: 30px;
+  height: 30px;
+  margin: 10px;
+  background: url(../../../assets/icons/notificationCake.svg) no-repeat center center;
+}
+
+.event-record__image--vacation {
+  width: 30px;
+  height: 30px;
+  margin: 10px;
+  background: url(../../../assets/icons/coconut.svg) no-repeat center center;
+}
+
+.event-record__image--meeting {
+  width: 30px;
+  height: 30px;
+  margin: 10px;
+  background: url(../../../assets/icons/meeting.svg) no-repeat center center;
+}
+
+.event-record__image--reminder {
+  width: 30px;
+  height: 30px;
+  margin: 10px;
+  background: url(../../../assets/icons/alert.svg) no-repeat center center;
+}

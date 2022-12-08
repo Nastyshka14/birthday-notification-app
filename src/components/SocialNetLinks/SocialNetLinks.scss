@@ -1,0 +1,105 @@
+@import '../../scss/variables/colors';
+
+.notification__btns {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.notification__btn {
+  width: 18px;
+  height: 18px;
+  margin: 0px 2px;
+  padding: 6px;
+  border: none;
+  border-radius: 15%;
+  opacity: 0.9;
+}
+
+.notification__btn:hover {
+  transition: 0.3s;
+  transform: scale(1.1);
+  cursor: pointer;
+}
+
+.notification__btn:active {
+  opacity: 1;
+}
+
+.notification__btn:last-child {
+  margin-right: 0;
+}
+
+.notification__btn--vk {
+  background: url(../../assets/icons/vk.svg) $gray-dark;
+}
+
+.notification__btn--vk:hover {
+  background: url(../../assets/icons/vk.svg) $blue-vk;
+}
+
+.notification__btn--telegram {
+  background: url(../../assets/icons/telegram.svg) $gray-dark;
+}
+
+.notification__btn--telegram:hover {
+  background: url(../../assets/icons/telegram.svg) $blue-telegram;
+}
+
+.notification__btn--email {
+  border: 3px solid $gray-dark;
+  background: url(../../assets/icons/email.svg) $gray-dark;
+}
+
+.notification__btn--email:hover {
+  border: 3px solid $gray-middle;
+  background: url(../../assets/icons/email.svg) $gray-middle;
+}
+
+.notification__btn--sms {
+  border: 1px solid $gray-dark;
+  background: url(../../assets/icons/sms.svg) $gray-dark;
+}
+
+.notification__btn--sms:hover {
+  border: 1px solid $purple-bright;
+  background: url(../../assets/icons/sms.svg) $purple-bright;
+}
+
+.notification__btn--viber {
+  background: url(../../assets/icons/viber.svg) $gray-dark;
+}
+
+.notification__btn--viber:hover {
+  background: url(../../assets/icons/viber.svg) $purple;
+}
+
+.notification__btn--whatsapp {
+  background: url(../../assets/icons/whatsapp.svg) $gray-dark;
+}
+
+.notification__btn--whatsapp:hover {
+  background: url(../../assets/icons/whatsapp.svg) $green-light;
+}
+
+[data-tooltip] {
+  position: relative;
+}
+
+[data-tooltip]::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  width: 35px;
+  left: 0;
+  top: 0;
+  font-size: 8px;
+  background: rgb(83, 83, 83);
+  color: rgb(250, 245, 245);
+  opacity: 0;
+}
+
+[data-tooltip]:hover::after {
+  opacity: 1;
+  top: 3em;
+  left: -0.7em;
+}

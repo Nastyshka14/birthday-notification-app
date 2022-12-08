@@ -1,0 +1,26 @@
+.title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title__date {
+  display: flex;
+  flex-direction: column;
+}
+
+.title__day {
+  height: 28px;
+  margin: 0;
+  font-size: 20px;
+  font-weight: 500;
+  color: #0050b3;
+}
+
+.title__week {
+  margin: 0;
+  font-weight: normal;
+  color: #0050b3;
+}
+
+

@@ -1,0 +1,100 @@
+.modal__main {
+  display: flex;
+  flex-direction: column;
+}
+
+.modal__section {
+  display: flex;
+  align-items: center;
+  margin: 5px 0;
+}
+
+.modal__section--type-img {
+  width: 18px;
+  height: 18px;
+  margin-right: 10px;
+  background: url(../../../assets/icons/type.svg) no-repeat center center;
+}
+
+.modal__section--title-img {
+  width: 18px;
+  height: 18px;
+  margin-right: 10px;
+  background: url(../../../assets/icons/edi.svg) no-repeat center center;
+}
+
+.modal__section--description-img {
+  width: 18px;
+  height: 18px;
+  margin-right: 10px;
+  background: url(../../../assets/icons/job-description.svg) no-repeat center center;
+}
+
+.modal__section--date-img {
+  width: 18px;
+  height: 18px;
+  margin-right: 10px;
+  background: url(../../../assets/icons/date.svg) no-repeat center center;
+}
+
+.modal__section--time-img {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+  background: url(../../../assets/icons/time.svg) no-repeat center center;
+}
+
+.modal__section--arrow-img {
+  width: 18px;
+  height: 18px;
+  margin: 0 10px;
+  background: url(../../../assets/icons/arrow.svg) no-repeat center center;
+}
+
+.modal__section--input {
+  width: 90%;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #909090;
+}
+
+.modal__section--markdown {
+  display: flex;
+  align-items: flex-start;
+  margin: 5px 0;
+}
+
+.modal__section--type-input {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #909090;
+}
+
+.modal__section--time-input {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #909090;
+}
+
+.modal__section--date-input {
+  width: 90%;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #909090;
+}
+
+.modal__section--date-group {
+  width: 90%;
+  display: flex;
+  align-items: center;
+}
+
+.modal__section--start-input {
+  border-bottom: 1px solid #909090;
+}
+
+.modal__section--end-input {
+  border-bottom: 1px solid #909090;
+}
+
+
