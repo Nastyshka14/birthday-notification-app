@@ -1,13 +1,60 @@
-.event-record__title {
-  padding-top: 8px;
-  color: chocolate;
+.events {
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
-.event-record__date {
-  font-size: 11px;
-  color: cadetblue;
+.events .ant-badge-status {
+  width: 100%;
+  overflow: hidden;
+  font-size: 12px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
-.event-record__description {
-  color: burlywood;
+.notes-month {
+  font-size: 28px;
+  text-align: center;
+}
+
+.notes-month section {
+  font-size: 28px;
+}
+
+.popover__badge {
+  height: 25px;
+}
+
+.content__item--buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.content__item--delete-btn {
+  width: 29px;
+  height: 29px;
+  border: none;
+  background: url(../../../assets/icons/delete.svg);
+}
+
+.content__item--edit-btn {
+  width: 24px;
+  height: 24px;
+  border: none;
+  background: url(../../../assets/icons/edit.svg);
+}
+
+.list__item--date {
+  margin: 0 15px 10px;
+  color: rgb(200, 200, 200);
+}
+
+.list__item--description {
+  margin: 0 15px;
+  color: rgb(200, 200, 200);
+}
+
+.list__item:active {
+  background: radial-gradient(at top, rgb(234, 234, 234), #feffff);
 }

@@ -1,7 +1,9 @@
-// .calendar__wrapper > * {
-//   position: relative;
-//   top: 200px;
-// }
-.header__btn {
+.calendar__wrapper{
+    display: flex;
+}
 
+.calendar__buttons{
+    padding: 8;
+    display: flex;
+    justify-content: flex-end;
 }

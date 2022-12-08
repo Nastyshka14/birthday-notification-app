@@ -15,11 +15,13 @@
   border-radius: 15%;
   opacity: 0.9;
 }
+
 .notification__btn:hover {
   transition: 0.3s;
   transform: scale(1.1);
   cursor: pointer;
 }
+
 .notification__btn:active {
   opacity: 1;
 }
@@ -43,6 +45,7 @@
 .notification__btn--telegram:hover {
   background: url(../../assets/icons/telegram.svg) $blue-telegram;
 }
+
 .notification__btn--email {
   border: 3px solid $gray-dark;
   background: url(../../assets/icons/email.svg) $gray-dark;
@@ -52,6 +55,7 @@
   border: 3px solid $gray-middle;
   background: url(../../assets/icons/email.svg) $gray-middle;
 }
+
 .notification__btn--sms {
   border: 1px solid $gray-dark;
   background: url(../../assets/icons/sms.svg) $gray-dark;

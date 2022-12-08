@@ -1,21 +1,8 @@
-/**
- * 1) the notifications for current day are showing just ones
- * 2) do not repeat displaying notifications for user, notifications data is stored in session storage
- * 3) every time reading notifications for from Contenful the notifications data is synchronized with data from session storage data
- * 4) the checking algorithm compare data by identifier first to check if new entity was created or deleted
- *  after that for the notifications with the same identifier checking by fields is implemented to define updated entities
- * 5) comparison is implemented for different types of events with different field set
- */
-
-import { notification } from 'antd'
-import { IEventsCollections, INotification } from '../../domain/types'
-import {
-  saveDataToStorage,
-  getDataFromStorage,
-  removeDataFromStorage,
-} from './sessionStorageData'
-
 import { Notifications } from '../../components/Notifications'
+import { NotificationTitle } from 'src/components/core/NotificationTitle.tsx'
+import { saveDataToStorage, getDataFromStorage, removeDataFromStorage } from './sessionStorageData'
+import { IEventsCollections, INotification } from '../../domain/types'
+import { notification } from 'antd'
 
 export const filterNotificationsForToday = (notificationsForToday: IEventsCollections) => {
   let notificationsList: Array<INotification> = []
@@ -43,10 +30,22 @@ export const filterNotificationsForToday = (notificationsForToday: IEventsCollec
         notificationsForTodayFromStorage,
       )
 
-      newEventsForToday.length > 0 &&
+      newEventsForToday.filter((item: INotification): boolean => item.type === 'Birthdays').length > 0 &&
         notification.open({
-          message: 'Notifications',
-          description: Notifications(newEventsForToday),
+          message: NotificationTitle(),
+          description: Notifications(newEventsForToday.filter((item) => item.type === 'Birthdays')),
+          duration: 0,
+        })
+      newEventsForToday.filter((item: INotification): boolean => item.type === 'Meeting').length > 0 &&
+        notification.open({
+          message: NotificationTitle(),
+          description: Notifications(newEventsForToday.filter((item) => item.type === 'Meeting')),
+          duration: 0,
+        })
+      newEventsForToday.filter((item: INotification): boolean => item.type === 'Vacation').length > 0 &&
+        notification.open({
+          message: NotificationTitle(),
+          description: Notifications(newEventsForToday.filter((item) => item.type === 'Vacation')),
           duration: 0,
         })
 
@@ -54,11 +53,24 @@ export const filterNotificationsForToday = (notificationsForToday: IEventsCollec
       saveDataToStorage('notifications', JSON.stringify(notificationsList))
     }
   } else {
-    notification.open({
-      message: 'Notifications',
-      description: Notifications(notificationsList),
-      duration: 0,
-    })
+    notificationsList.filter((item) => item.type === 'Vacation').length > 0 &&
+      notification.open({
+        message: NotificationTitle(),
+        description: Notifications(notificationsList.filter((item) => item.type === 'Vacation')),
+        duration: 0,
+      })
+    notificationsList.filter((item) => item.type === 'Birthdays').length > 0 &&
+      notification.open({
+        message: NotificationTitle(),
+        description: Notifications(notificationsList.filter((item) => item.type === 'Birthdays')),
+        duration: 0,
+      })
+    notificationsList.filter((item) => item.type === 'Meeting').length > 0 &&
+      notification.open({
+        message: NotificationTitle(),
+        description: Notifications(notificationsList.filter((item) => item.type === 'Meeting')),
+        duration: 0,
+      })
     saveDataToStorage('notifications', JSON.stringify(notificationsList))
   }
 }

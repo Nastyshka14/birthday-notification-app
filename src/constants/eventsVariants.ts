@@ -1,7 +1,8 @@
 export const EVENTS = {
   birthday: 'Birthdays',
   vacation: 'Vacation',
-  meeting: 'Meeting'
+  meeting: 'Meeting',
+  reminder: 'Reminder',
 }
 
 export const EVENTS_OPERATIONS = {

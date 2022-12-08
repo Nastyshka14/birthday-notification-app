@@ -1,36 +1,98 @@
 import React from 'react'
-import { INotification } from '../../../domain/types'
-import { EVENTS_OPERATIONS } from '../../../constants'
-import { EventsItem } from '../EventItem'
-import { EventRecord } from '../EventRecord'
-import { Button } from '../../core/Button'
-import { Popover } from 'antd'
+import moment from 'moment'
+import { IEventsDayList, INotification } from 'src/domain/types'
+import MarkdownEditor from '@uiw/react-markdown-editor'
+import { Popover, Badge, BadgeProps } from 'antd'
 import './EventsDayList.scss'
 
-export const EventsDayList = <T extends INotification>({
+export const EventsDayList = ({
   collection,
   handleRemoveEvent,
   handleUpdateEvent,
-}): JSX.Element => {
+}: IEventsDayList): JSX.Element => {
+  
+  const color = (value: string): string => {
+    if (value === 'Birthdays') {
+      return '#91caff'
+    }
+    if (value === 'Meeting') {
+      return '#d3adf7'
+    }
+    if (value === 'Vacation') {
+      return '#ffadd2'
+    }
+    if (value === 'Reminder') {
+      return '#b7eb8f'
+    }
+  }
 
   return (
-    <>
-      <ul className='events-list'>
-        {collection.map((eventItem: INotification) => ( 
-          <React.Fragment key={eventItem.identifier.id}>
-            <EventsItem eventItem={eventItem} />
-            <Button
-              type={EVENTS_OPERATIONS.delete}
-              onClick={() => handleRemoveEvent(eventItem.identifier.id)}
-            />
-            <Button
-              type={EVENTS_OPERATIONS.update}
-              onClick={() => handleUpdateEvent(eventItem.identifier.id)}
-            />
-          </React.Fragment>
-        ))}
-      </ul>   
+    <div>
+      <ul className='events'>
+        {collection.map(<T extends INotification>(eventItem: T ): JSX.Element => (
+          <Popover
+            placement='right'
+            title={
+              <>
+                <Badge.Ribbon text={eventItem.type} color={color(eventItem.type)}>
+                  <div className='popover__badge'></div>
+                </Badge.Ribbon>
+                <div className='popover__title'>{eventItem.title}</div>
+              </>
+            }
+            content={
+              <div className='content__item'>
+                {eventItem.type === 'Reminder' && (
+                  <MarkdownEditor.Markdown source={eventItem.description} />
+                )}
+                {eventItem.type === 'Meeting' ||
+                  eventItem.type === 'Vacation' && (<p className='content__item--description'>{eventItem.description}</p>)}
 
-    </>
+                <p className='content__item--date'>
+                  {eventItem.type === 'Meeting' ||
+                    eventItem.type === 'Vacation' &&
+                      (moment(eventItem.start).format('D MMM') +
+                        ' - ' +
+                        moment(eventItem.end).format('D MMM'))}
+                  {eventItem.type === 'Reminder' && moment(eventItem.date).format('D MMM HH:mm')}
+                </p>
+                <div className='content__item--buttons'>
+                  <button
+                    className='content__item--edit-btn'
+                    onClick={() => handleUpdateEvent(eventItem.identifier.id)}
+                  />
+                  <button
+                    className='content__item--delete-btn'
+                    onClick={() => handleRemoveEvent(eventItem.identifier.id)}
+                  />
+                </div>
+              </div>
+            }
+          >
+            <div className='list'>
+              <li className='list__item'>
+                <Badge
+                  status={'default' as BadgeProps['status']}
+                  title={eventItem.title}
+                  text={eventItem.title}
+                  color={color(eventItem.type)}
+                />
+                {eventItem.type === 'Meeting' ||
+                  (eventItem.type === 'Vacation' && (
+                    <p className='list__item--date'>
+                      {moment(eventItem.start).format('D MMM') +
+                        ' - ' +
+                        moment(eventItem.end).format('D MMM')}
+                    </p>
+                  ))}
+                {eventItem.type === 'Reminder' && (
+                  <p className='list__item--date'>{moment(eventItem.date).format('D MMM HH:mm')}</p>
+                )}
+              </li>
+            </div>
+          </Popover>
+        ))}
+      </ul>
+    </div>
   )
 }

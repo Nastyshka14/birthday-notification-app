@@ -1,27 +1,18 @@
 import React from 'react'
-import { INotification } from '../../../domain/types'
-import { EVENTS_OPERATIONS } from '../../../constants'
+import { IEventsList, INotification } from '../../../domain/types'
 import { EventsItem } from '../EventItem'
-import { EventRecord } from '../EventRecord'
-import { Button } from '../../core/Button'
-import { Popover } from 'antd'
 import './EventsList.scss'
-import { EventsDayList } from '../EventsDayList'
 
-export const EventsList = <T extends INotification>({
-  collection,
-}): JSX.Element => {
-
+export const EventsList = ({ collection }: IEventsList): JSX.Element => {
   return (
     <>
-      <ul className='events-list'>
-        {collection.map((eventItem: INotification) => ( 
+      <ul className='events'>
+        {collection.map((eventItem: INotification): JSX.Element => (
           <React.Fragment key={eventItem.identifier.id}>
             <EventsItem eventItem={eventItem} />
           </React.Fragment>
         ))}
-      </ul>   
-
+      </ul>
     </>
   )
 }
