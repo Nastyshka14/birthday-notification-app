@@ -1,11 +1,11 @@
 import React from 'react'
-import { defineNotificationsByTypeByDay } from '../../utils/functions/defineNotificationsByTypeByDay'
-import { EventsList } from '../calendarEventsUI'
-import { EventsDayList } from '../calendarEventsUI/EventsDayList'
+import { defineNotificationsByTypeByDay } from 'utils/functions/defineNotificationsByTypeByDay'
+import { EventsList } from 'components/calendarEventsUI'
+import { EventsDayList } from 'components/calendarEventsUI/EventsDayList'
 import { Popover, Button } from 'antd'
 import { PlusOutlined } from '@ant-design/icons'
 import './CalendarCellWithEvents.scss'
-import { ICalendarCell } from 'src/domain/types'
+import { ICalendarCell } from '@domain/types'
 
 export const CalendarCellWithEvents = ({ data, cellDate, removeEvent, clickUpdate, showModal }: ICalendarCell): JSX.Element => {
   const collections = defineNotificationsByTypeByDay(data, cellDate)

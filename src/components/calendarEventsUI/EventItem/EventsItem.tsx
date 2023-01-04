@@ -1,5 +1,5 @@
 import { BadgeProps, Badge } from 'antd'
-import { INotification } from '../../../domain/types'
+import { INotification } from '@domain/types'
 import './EventsItem.scss'
 
 export const EventsItem = <T extends INotification>({

@@ -1,3 +1,5 @@
+@import '../../../scss/variables/colors';
+
 .modal__main {
   display: flex;
   flex-direction: column;
@@ -67,20 +69,20 @@
 .modal__section--type-input {
   display: flex;
   align-items: center;
-  border-bottom: 1px solid #909090;
+  border-bottom: 1px solid $gray-middle;
 }
 
 .modal__section--time-input {
   display: flex;
   align-items: center;
-  border-bottom: 1px solid #909090;
+  border-bottom: 1px solid $gray-middle;
 }
 
 .modal__section--date-input {
   width: 90%;
   display: flex;
   align-items: center;
-  border-bottom: 1px solid #909090;
+  border-bottom: 1px solid $gray-middle;
 }
 
 .modal__section--date-group {
@@ -90,11 +92,11 @@
 }
 
 .modal__section--start-input {
-  border-bottom: 1px solid #909090;
+  border-bottom: 1px solid $gray-middle;
 }
 
 .modal__section--end-input {
-  border-bottom: 1px solid #909090;
+  border-bottom: 1px solid $gray-middle;
 }
 
 

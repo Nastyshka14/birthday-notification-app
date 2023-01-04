@@ -1,5 +1,5 @@
 import { createClient } from 'contentful-management'
-import { IItemFromContentful } from 'src/domain/types'
+import { IItemFromContentful } from '@domain/types'
 
 const client = createClient({
   accessToken: 'CFPAT-70dkQZ7ta2SQCUWWgoamQkkiezW-zUpLcNZX-ptfzPI',
