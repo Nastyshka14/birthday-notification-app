@@ -1,13 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { GoogleLogin } from 'react-google-login'
-import './Login.scss'
 import { Link, useNavigate } from 'react-router-dom'
 
-type LoginProps = {
-  setLogin: (loginData: object) => void
-}
+import { LoginProps, LoginState } from '../../domain/types'
 
-export const Login = ({ setLogin }: LoginProps) => {
+import './Login.scss'
+
+export const Login = ({ setLogin }: LoginState) => {
+  const [failed, setFailed] = useState<boolean>(false)
   const navigate = useNavigate()
 
   const onSuccess = async (res) => {
@@ -20,10 +20,14 @@ export const Login = ({ setLogin }: LoginProps) => {
         'Content-Type': 'application/json',
       },
     })
-    const loginData: object = await data.json()
+    const loginData: LoginProps = await data.json()
     setLogin(loginData)
     localStorage.setItem('login', JSON.stringify(loginData))
     navigate('/')
+  }
+
+  const onFailure = () => {
+    setFailed(true)
   }
 
   return (
@@ -35,6 +39,7 @@ export const Login = ({ setLogin }: LoginProps) => {
       </div>
       <div className='login__container'>
         <h1 className='login__info'>Log into Calendar</h1>
+        {failed ? <p className='login__failed'>Login failed</p> : ''}
         <div className='login__area'>
           <form className='login__inputs'>
             <div className='login__inputs item'>
@@ -57,6 +62,7 @@ export const Login = ({ setLogin }: LoginProps) => {
               <GoogleLogin
                 clientId={`${process.env.REACT_APP_GOOGLE_AUTH_CLIENT_ID}`}
                 onSuccess={onSuccess}
+                onFailure={onFailure}
                 cookiePolicy={'single_host_origin'}
                 isSignedIn={true}
                 render={(renderProps) => (

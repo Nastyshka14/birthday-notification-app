@@ -1,13 +1,12 @@
 import React from 'react'
 import { GoogleLogout } from 'react-google-login'
 import { useNavigate } from 'react-router-dom'
+
+import { LoginState } from '../../domain/types'
+
 import './GoogleLogout.scss'
 
-type LoginProps = {
-  setLogin: (p: object) => void
-}
-
-export const GoogleOut = ({ setLogin }: LoginProps) => {
+export const GoogleOut = ({ setLogin }: LoginState) => {
   const navigate = useNavigate()
 
   const onSuccess = () => {

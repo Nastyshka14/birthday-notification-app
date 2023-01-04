@@ -23,7 +23,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "server": "node server.ts",
+    "server": "node server.js",
     "build": "react-scripts build && cp -r build/* ./cordovaApp/www",
     "test": "react-scripts test && jest",
     "lint": "eslint src/**/*.{js,jsx,ts,tsx,json}",
@@ -60,6 +60,7 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.31.8",
     "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-simple-import-sort": "^8.0.0",
     "jest-fetch-mock": "^3.0.3",
     "prettier": "^2.7.1",
     "sass": "^1.54.8",
