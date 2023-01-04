@@ -3,9 +3,7 @@ import { CalendarPage } from './components/Calendar/CalendarPage'
 
 function App() {
   return (
-    <div>
       <CalendarPage />
-    </div>
   )
 }
 

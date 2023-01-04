@@ -1,3 +1,4 @@
+@import '../../../scss/variables/colors';
 .events {
   margin: 0;
   padding: 0;
@@ -56,5 +57,5 @@
 }
 
 .list__item:active {
-  background: radial-gradient(at top, rgb(234, 234, 234), #feffff);
+  background: radial-gradient(at top, $gray-white, $white);
 }

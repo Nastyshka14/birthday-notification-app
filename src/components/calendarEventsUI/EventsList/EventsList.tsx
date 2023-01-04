@@ -1,5 +1,5 @@
 import React from 'react'
-import { IEventsList, INotification } from '../../../domain/types'
+import { IEventsList, INotification } from '@domain/types'
 import { EventsItem } from '../EventItem'
 import './EventsList.scss'
 

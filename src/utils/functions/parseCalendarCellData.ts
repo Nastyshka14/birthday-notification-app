@@ -1,5 +1,5 @@
 
-import { IDataFromServer } from '../../domain/types'
+import { IDataFromServer } from '@domain/types'
 
 export const parseCalendarCellData = (data: IDataFromServer) => {
   const { data: {

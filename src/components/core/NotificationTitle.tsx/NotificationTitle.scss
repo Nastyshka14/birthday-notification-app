@@ -1,8 +1,10 @@
+@import '../../../scss/variables/colors';
+
 .message {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
-  border-bottom: 1px solid #0050b3;
+  border-bottom: 1px solid $blue;
 }
 
 .message__text {
@@ -10,5 +12,5 @@
   margin: 10px;
   font-size: 20px;
   font-weight: 500;
-  color: #0050b3;
+  color: $blue;
 }

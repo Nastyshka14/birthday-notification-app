@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react'
 import moment, { Moment } from 'moment'
-import { IBirthday, IDataFromServer, IMeeting, IReminder, IVacation } from '../../domain/types'
-import { EVENTS_OPERATIONS, EVENTS } from '../../constants'
-import { defineNotificationsByTypeByDay } from '../../utils/functions/defineNotificationsByTypeByDay'
-import { filterNotificationsForToday } from 'src/utils/functions/filterNotificationsForToday'
+import { IBirthday, IDataFromServer, IMeeting, IReminder, IVacation } from '@domain/types'
+import { EVENTS_OPERATIONS, EVENTS } from 'constants/eventVariants'
+import { defineNotificationsByTypeByDay } from 'utils/functions/defineNotificationsByTypeByDay'
+import { filterNotificationsForToday } from 'utils/functions/filterNotificationsForToday'
 import { CalendarCellWithEvents } from '../CalendarCellWithEvents'
 import { ModalWindow } from '../core/ModalWindow'
 import { NotificationTitle } from '../core/NotificationTitle.tsx'
@@ -14,10 +14,10 @@ import {
   updateEvent,
   getItemById,
   deleteEventByID,
-} from '../../utils/services/http.service'
-import graphqlRequest from '../../utils/graphql/graphqlRequest'
-import getData from '../../utils/services/api'
-import { defineReminderNotificationsByTime } from 'src/utils/functions/defineReminderNotificationsByTime'
+} from 'utils/services/http.service'
+import graphqlRequest from 'utils/graphql/graphqlRequest'
+import getData from 'utils/services/api'
+import { defineReminderNotificationsByTime } from 'utils/functions/defineReminderNotificationsByTime'
 import { Calendar, Col, Row, Select, Button, notification } from 'antd'
 import type { DatePickerProps } from 'antd/es/date-picker';
 import 'antd/dist/antd.css'
