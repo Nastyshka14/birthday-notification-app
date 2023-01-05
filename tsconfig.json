@@ -1,9 +1,14 @@
 {
-    "compilerOptions": {
+  "compilerOptions": {
     "module": "commonjs",
     "baseUrl": "./src",
     "paths": {
+      "@components/*": ["components/*"],
       "@domain/*": ["domain/*"],
+      "@constants/*": ["constants/*"],
+      "@assets/*": ["assets/*"],
+      "@scss/*": ["scss/*"],
+      "@utils/*": ["utils/*"]
     },
     "declaration": true,
     "removeComments": true,
@@ -15,7 +20,7 @@
     "outDir": "./dist",
     "incremental": true,
     "jsx": "preserve",
-    "allowJs": false 
+    // "allowJs": false
   },
-  "include": ["./"] 
+  "include": ["./"]
 }

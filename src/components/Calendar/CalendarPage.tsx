@@ -1,23 +1,23 @@
 import React, { useState, useEffect, useRef } from 'react'
 import moment, { Moment } from 'moment'
-import { IBirthday, IDataFromServer, IMeeting, IReminder, IVacation } from '@domain/types'
-import { EVENTS_OPERATIONS, EVENTS } from 'constants/eventVariants'
-import { defineNotificationsByTypeByDay } from 'utils/functions/defineNotificationsByTypeByDay'
-import { filterNotificationsForToday } from 'utils/functions/filterNotificationsForToday'
-import { CalendarCellWithEvents } from '../CalendarCellWithEvents'
-import { ModalWindow } from '../core/ModalWindow'
-import { NotificationTitle } from '../core/NotificationTitle.tsx'
-import { Notifications } from '../Notifications'
+import { CalendarCellWithEvents } from '@components/CalendarCellWithEvents'
+import { ModalWindow } from '@components/core/ModalWindow'
+import { NotificationTitle } from '@components/core/NotificationTitle.tsx'
+import { Notifications } from '@components/Notifications'
+import { EVENTS_OPERATIONS, EVENTS }  from '@constants/eventVariants'
+import { defineNotificationsByTypeByDay }  from '@utils/functions/defineNotificationsByTypeByDay'
+import { filterNotificationsForToday } from '@utils/functions/filterNotificationsForToday'
+import { defineReminderNotificationsByTime } from '@utils/functions/defineReminderNotificationsByTime'
+import graphqlRequest from '@utils/graphql/graphqlRequest'
 import {
   createEvent,
   isEventWithIDExist,
   updateEvent,
   getItemById,
   deleteEventByID,
-} from 'utils/services/http.service'
-import graphqlRequest from 'utils/graphql/graphqlRequest'
-import getData from 'utils/services/api'
-import { defineReminderNotificationsByTime } from 'utils/functions/defineReminderNotificationsByTime'
+} from '@utils/services/http.service'
+import getData from '@utils/services/api'
+import { IBirthday, IDataFromServer, IMeeting, IReminder, IVacation } from '@domain/types'
 import { Calendar, Col, Row, Select, Button, notification } from 'antd'
 import type { DatePickerProps } from 'antd/es/date-picker';
 import 'antd/dist/antd.css'
