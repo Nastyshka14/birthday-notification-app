@@ -1,6 +1,6 @@
-import { parseCalendarCellData } from './parseCalendarCellData'
-import {EVENTS} from 'constants/eventVariants'
-import { dateToDayFormat, momentToDayFormat } from './momentToISOString'
+import { parseCalendarCellData } from '@utils/functions/parseCalendarCellData'
+import {EVENTS} from '@constants/eventVariants'
+import { dateToDayFormat, momentToDayFormat } from '@utils/functions/momentToISOString'
 import { Moment } from 'moment'
 import {
   IBirthday,
@@ -12,7 +12,7 @@ import {
   INotificationByTypeByDay,
 } from '@domain/types'
 
-export const defineNotificationsByTypeByDay: INotificationByTypeByDay = (data, cellDate) => {
+ export const defineNotificationsByTypeByDay: INotificationByTypeByDay = (data, cellDate) => {
   const { birthdays, meetings, vacations, reminders }: IEventsCollections =
     parseCalendarCellData(data)
 

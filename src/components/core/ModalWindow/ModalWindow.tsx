@@ -1,5 +1,5 @@
 import { IModalWindow } from '@domain/types';
-import { EVENTS } from 'constants/eventVariants'
+import { EVENTS } from '@constants/eventVariants'
 import { Modal, Select, DatePicker, Input } from 'antd'
 import MarkdownEditor from '@uiw/react-markdown-editor'
 import moment from 'moment'

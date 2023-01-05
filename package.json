@@ -11,14 +11,15 @@
     "graphql-request": "^5.0.0",
     "moment": "^2.29.4",
     "nodemailer": "^6.8.0",
+    "path": "^0.12.7",
     "react": "^18.2.0",
     "react-markdown": "^8.0.4",
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build && cp -r build/* ./cordovaApp/www",
+    "start": "craco start",
+    "build": "craco build && cp -r build/* ./cordovaApp/www",
     "test": "react-scripts test && jest",
     "lint": "eslint src/**/*.{js,jsx,ts,tsx,json}",
     "lint:fix": "eslint --fix 'src/**/*.{js,jsx,ts,tsx,json}'",
@@ -43,6 +44,7 @@
     ]
   },
   "devDependencies": {
+    "@craco/craco": "^7.0.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^13.5.0",
@@ -52,11 +54,15 @@
     "@typescript-eslint/parser": "^5.38.0",
     "eslint": "^8.23.1",
     "eslint-config-prettier": "^8.5.0",
+    "eslint-import-resolver-typescript": "^3.5.2",
+    "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.31.8",
     "eslint-plugin-react-hooks": "^4.6.0",
     "jest-fetch-mock": "^3.0.3",
     "prettier": "^2.7.1",
+    "react-app-rewire-alias": "^1.1.7",
+    "react-app-rewired": "^2.2.1",
     "sass": "^1.54.8",
     "typescript": "^4.8.3"
   }

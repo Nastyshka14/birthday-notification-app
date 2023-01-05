@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { INotification, IMeeting, IVacation, IReminder } from '@domain/types'
-import { EVENTS } from 'constants/eventVariants'
+import { EVENTS } from '@constants/eventVariants'
 import moment from 'moment'
 import './EventRecord.scss'
 
