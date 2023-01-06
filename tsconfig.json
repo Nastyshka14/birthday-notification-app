@@ -1,14 +1,14 @@
 {
   "compilerOptions": {
     "module": "commonjs",
-    "baseUrl": "./src",
+    "baseUrl": "./",
     "paths": {
-      "@components/*": ["components/*"],
-      "@domain/*": ["domain/*"],
-      "@constants/*": ["constants/*"],
-      "@assets/*": ["assets/*"],
-      "@scss/*": ["scss/*"],
-      "@utils/*": ["utils/*"]
+      "@components/*": ["src/components/*"],
+      "@domain/*": ["src/domain/*"],
+      "@constants/*": ["src/constants/*"],
+      "@assets/*": ["src/assets/*"],
+      "@scss/*": ["src/scss/*"],
+      "@utils/*": ["src/utils/*"]
     },
     "declaration": true,
     "removeComments": true,
