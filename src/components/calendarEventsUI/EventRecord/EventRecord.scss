@@ -17,30 +17,24 @@
   color: $gray-dark;
 }
 
-.event-record__image--birthdays {
+.event-record__image {
   width: 30px;
   height: 30px;
   margin: 10px;
-  background: url(../../../assets/icons/notificationCake.svg) no-repeat center center;
+}
+
+.event-record__image--birthdays {
+  background: url(../../../assets/icons/cake.svg) no-repeat center center;
 }
 
 .event-record__image--vacation {
-  width: 30px;
-  height: 30px;
-  margin: 10px;
   background: url(../../../assets/icons/coconut.svg) no-repeat center center;
 }
 
 .event-record__image--meeting {
-  width: 30px;
-  height: 30px;
-  margin: 10px;
   background: url(../../../assets/icons/meeting.svg) no-repeat center center;
 }
 
 .event-record__image--reminder {
-  width: 30px;
-  height: 30px;
-  margin: 10px;
   background: url(../../../assets/icons/alert.svg) no-repeat center center;
 }

@@ -4,7 +4,18 @@ import { Modal, Select, DatePicker, Input } from 'antd'
 import MarkdownEditor from '@uiw/react-markdown-editor'
 import moment from 'moment'
 import './ModalWindow.scss'
+
 const { Option } = Select
+
+const typeOptions = Object.values(EVENTS).map((item) => (
+  <Option
+    value={item.toLocaleLowerCase()}
+    label={item.toLocaleLowerCase()}
+    key={item}
+  >
+    {item}
+  </Option>
+))
 
 export const ModalWindow = ({
   handleOk,
@@ -37,7 +48,7 @@ export const ModalWindow = ({
       onOk={handleOk}
     >
       <div className='modal__section'>
-        <div className='modal__section--type-img'></div>
+        <div className='modal__section-img modal__section--type-img'></div>
         <div className='modal__section--type-input'>
           {operation === 'update' ? (
             <Select
@@ -47,15 +58,7 @@ export const ModalWindow = ({
               disabled
               value={type}
             >
-              {Object.values(EVENTS).map((item) => (
-                <Option
-                  value={item.toLocaleLowerCase()}
-                  label={item.toLocaleLowerCase()}
-                  key={item}
-                >
-                  {item}
-                </Option>
-              ))}
+              {typeOptions}
             </Select>
           ) : (
             <Select
@@ -64,32 +67,16 @@ export const ModalWindow = ({
               onChange={handleTypeInput}
               value={type}
             >
-              {Object.values(EVENTS).map((item) => (
-                <Option
-                  value={item.toLocaleLowerCase()}
-                  label={item.toLocaleLowerCase()}
-                  key={item}
-                >
-                  {item}
-                </Option>
-              ))}
-              <Option
-                disabled={true}
-                value={'Choose a type'}
-                label={'Choose a type'}
-                key={'Choose a type'}
-              >
-                Choose a type
-              </Option>
+              {typeOptions}
             </Select>
           )}
         </div>
       </div>
 
-      {(type && type.toLocaleLowerCase() === EVENTS.vacation.toLocaleLowerCase() && (
+      {(type && (type.toLocaleLowerCase() === EVENTS.vacation.toLocaleLowerCase() || type.toLocaleLowerCase() === EVENTS.meeting.toLocaleLowerCase()) && (
         <div className='modal__main'>
           <div className='modal__section'>
-            <div className='modal__section--title-img'></div>
+            <div className='modal__section-img modal__section--title-img'></div>
             <div className='modal__section--input'>
               <Input
                 bordered={false}
@@ -101,7 +88,7 @@ export const ModalWindow = ({
             </div>
           </div>
           <div className='modal__section'>
-            <div className='modal__section--description-img'></div>
+            <div className='modal__section-img modal__section--description-img'></div>
             <div className='modal__section--input'>
               <Input
                 bordered={false}
@@ -113,7 +100,7 @@ export const ModalWindow = ({
             </div>
           </div>
           <div className='modal__section'>
-            <div className='modal__section--date-img'></div>
+            <div className='modal__section-img modal__section--date-img'></div>
             <div className='modal__section--date-group'>
               <div className='modal__section--start-input'>
                 <DatePicker
@@ -136,60 +123,10 @@ export const ModalWindow = ({
           </div>
         </div>
       )) ||
-        (type && type.toLocaleLowerCase() === EVENTS.meeting.toLocaleLowerCase() && (
-          <div className='modal__main'>
-            <div className='modal__section'>
-              <div className='modal__section--title-img'></div>
-              <div className='modal__section--input'>
-                <Input
-                  bordered={false}
-                  value={title}
-                  name='title'
-                  onChange={handleTextInput}
-                  placeholder='Add title'
-                />
-              </div>
-            </div>
-            <div className='modal__section'>
-              <div className='modal__section--description-img'></div>
-              <div className='modal__section--input'>
-                <Input
-                  bordered={false}
-                  value={description}
-                  name='description'
-                  onChange={handleTextInput}
-                  placeholder='Add description'
-                />
-              </div>
-            </div>
-            <div className='modal__section'>
-              <div className='modal__section--date-img'></div>
-              <div className='modal__section--date-group'>
-                <div className='modal__section--start-input'>
-                  <DatePicker
-                    bordered={false}
-                    value={moment(start)}
-                    name='start'
-                    onChange={handleStartInput}
-                  />
-                </div>
-                <div className='modal__section--arrow-img'></div>
-                <div className='modal__section--end-input'>
-                  <DatePicker
-                    bordered={false}
-                    value={moment(end)}
-                    name='end'
-                    onChange={handleEndInput}
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        )) ||
         (type && type.toLocaleLowerCase() === EVENTS.birthday.toLocaleLowerCase() && (
           <div className='modal__main'>
             <div className='modal__section'>
-              <div className='modal__section--title-img'></div>
+              <div className='modal__section-img modal__section--title-img'></div>
               <div className='modal__section--input'>
                 <Input
                   bordered={false}
@@ -201,7 +138,7 @@ export const ModalWindow = ({
               </div>
             </div>
             <div className='modal__section'>
-              <div className='modal__section--date-img'></div>
+              <div className='modal__section-img modal__section--date-img'></div>
               <div className='modal__section--input'>
                 <DatePicker
                   bordered={false}
@@ -215,7 +152,7 @@ export const ModalWindow = ({
         (type && type.toLocaleLowerCase() === EVENTS.reminder.toLocaleLowerCase() && (
           <div className='modal__main'>
             <div className='modal__section'>
-              <div className='modal__section--title-img'></div>
+              <div className='modal__section-img modal__section--title-img'></div>
               <div className='modal__section--input'>
                 <Input
                   bordered={false}
@@ -227,7 +164,7 @@ export const ModalWindow = ({
               </div>
             </div>
             <div className='modal__section'>
-              <div className='modal__section--date-img'></div>
+              <div className='modal__section-img modal__section--date-img'></div>
               <div className='modal__section--input'>
                 <DatePicker
                   bordered={false}
@@ -238,7 +175,7 @@ export const ModalWindow = ({
               </div>
             </div>
             <div className='modal__section--markdown'>
-              <div className='modal__section--description-img'></div>
+              <div className='modal__section-img modal__section--description-img'></div>
               <div>
                 <MarkdownEditor value={description} onChange={handleMarkdownInput} />
               </div>
