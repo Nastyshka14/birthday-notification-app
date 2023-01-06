@@ -33,7 +33,7 @@ export const EventRecord = ({ eventRecord }: { eventRecord: INotification }): JS
     </div>
   )
   const getImage = (type: string): string => {
-    return `event-record__image--${type.toLowerCase()}`
+    return `event-record__image event-record__image--${type.toLowerCase()}`
   }
 
   return (

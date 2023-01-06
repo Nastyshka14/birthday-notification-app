@@ -11,31 +11,25 @@
   margin: 5px 0;
 }
 
-.modal__section--type-img {
+.modal__section-img {
   width: 18px;
   height: 18px;
   margin-right: 10px;
+}
+
+.modal__section--type-img {
   background: url(../../../assets/icons/type.svg) no-repeat center center;
 }
 
 .modal__section--title-img {
-  width: 18px;
-  height: 18px;
-  margin-right: 10px;
   background: url(../../../assets/icons/edi.svg) no-repeat center center;
 }
 
 .modal__section--description-img {
-  width: 18px;
-  height: 18px;
-  margin-right: 10px;
   background: url(../../../assets/icons/job-description.svg) no-repeat center center;
 }
 
 .modal__section--date-img {
-  width: 18px;
-  height: 18px;
-  margin-right: 10px;
   background: url(../../../assets/icons/date.svg) no-repeat center center;
 }
 
@@ -66,12 +60,7 @@
   margin: 5px 0;
 }
 
-.modal__section--type-input {
-  display: flex;
-  align-items: center;
-  border-bottom: 1px solid $gray-middle;
-}
-
+.modal__section--type-input,
 .modal__section--time-input {
   display: flex;
   align-items: center;
@@ -91,12 +80,7 @@
   align-items: center;
 }
 
-.modal__section--start-input {
-  border-bottom: 1px solid $gray-middle;
-}
-
+.modal__section--start-input,
 .modal__section--end-input {
   border-bottom: 1px solid $gray-middle;
 }
-
-

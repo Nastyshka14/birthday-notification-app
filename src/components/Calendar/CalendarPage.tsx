@@ -168,18 +168,12 @@ export const CalendarPage = (): JSX.Element => {
         date: { 'en-US': date },
         description: { 'en-US': description },
       }) ||
-      (type.toLocaleLowerCase() === EVENTS.meeting.toLowerCase() && {
+      ((type.toLocaleLowerCase() === EVENTS.meeting.toLowerCase() || type.toLocaleLowerCase() === EVENTS.vacation.toLowerCase()) && {
         title: { 'en-US': title },
         description: { 'en-US': description },
         start: { 'en-US': start },
         end: { 'en-US': end },
-      }) ||
-      (type.toLocaleLowerCase() === EVENTS.vacation.toLowerCase() && {
-        title: { 'en-US': title },
-        description: { 'en-US': description },
-        start: { 'en-US': start },
-        end: { 'en-US': end },
-      })
+      }) 
 
     isEvent && updateEvent(eventID, event)
 
