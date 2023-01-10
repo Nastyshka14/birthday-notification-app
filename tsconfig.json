@@ -20,7 +20,7 @@
     "outDir": "./dist",
     "incremental": true,
     "jsx": "preserve",
-    // "allowJs": false
+    "allowJs": false
   },
   "include": ["./"]
 }

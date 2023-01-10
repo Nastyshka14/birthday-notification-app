@@ -1,7 +1,7 @@
-import { Notifications } from '@components/Notifications'
-import { NotificationTitle } from '@components/core/NotificationTitle.tsx'
-import { saveDataToStorage, getDataFromStorage, removeDataFromStorage } from '@utils/functions/sessionStorageData'
 import { IEventsCollections, INotification } from '@domain/types'
+import { getDataFromStorage, removeDataFromStorage, saveDataToStorage } from '@utils/functions/sessionStorageData'
+import { NotificationTitle } from '@components/core/NotificationTitle.tsx'
+import { Notifications } from '@components/Notifications'
 import { notification } from 'antd'
 
 export const filterNotificationsForToday = (notificationsForToday: IEventsCollections) => {

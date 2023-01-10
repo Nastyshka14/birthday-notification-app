@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react'
-import { INotification, IMeeting, IVacation, IReminder } from '@domain/types'
-import { EVENTS } from '@constants/eventVariants'
+import { useEffect, useState } from 'react'
 import moment from 'moment'
+
+import { IMeeting, INotification, IReminder, IVacation } from '@domain/types'
+import { EVENTS } from '@constants/eventVariants'
 import './EventRecord.scss'
 
 export const EventRecord = ({ eventRecord }: { eventRecord: INotification }): JSX.Element => {

@@ -1,8 +1,9 @@
-import { IModalWindow } from '@domain/types';
-import { EVENTS } from '@constants/eventVariants'
-import { Modal, Select, DatePicker, Input } from 'antd'
-import MarkdownEditor from '@uiw/react-markdown-editor'
 import moment from 'moment'
+
+import { DatePicker, Input, Modal, Select } from 'antd'
+import { EVENTS } from '@constants/eventVariants'
+import { IModalWindow } from '@domain/types';
+import MarkdownEditor from '@uiw/react-markdown-editor'
 import './ModalWindow.scss'
 
 const { Option } = Select

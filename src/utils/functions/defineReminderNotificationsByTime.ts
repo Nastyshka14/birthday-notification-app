@@ -1,7 +1,8 @@
-import { parseCalendarCellData } from '@utils/functions/parseCalendarCellData'
-import { IDefineReminderNotifictionsByTime, IEventsCollections, IReminder, TEvent } from '@domain/types'
-import { EVENTS } from '@constants/eventVariants'
 import { Moment } from 'moment'
+
+import { IDefineReminderNotifictionsByTime, IEventsCollections, IReminder } from '@domain/types'
+import { EVENTS } from '@constants/eventVariants'
+import { parseCalendarCellData } from '@utils/functions/parseCalendarCellData'
 
 export const defineReminderNotificationsByTime: IDefineReminderNotifictionsByTime = (data, cellDate) => {
   const { reminders }: IEventsCollections = parseCalendarCellData(data)

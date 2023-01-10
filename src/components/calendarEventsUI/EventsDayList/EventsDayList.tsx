@@ -1,8 +1,9 @@
 import React from 'react'
 import moment from 'moment'
+
+import { Badge, BadgeProps, Popover } from 'antd'
 import { IEventsDayList, INotification } from '@domain/types'
 import MarkdownEditor from '@uiw/react-markdown-editor'
-import { Popover, Badge, BadgeProps } from 'antd'
 import './EventsDayList.scss'
 
 export const EventsDayList = ({

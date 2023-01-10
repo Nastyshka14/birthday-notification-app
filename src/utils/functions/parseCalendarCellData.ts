@@ -1,4 +1,3 @@
-
 import { IDataFromServer } from '@domain/types'
 
 export const parseCalendarCellData = (data: IDataFromServer) => {

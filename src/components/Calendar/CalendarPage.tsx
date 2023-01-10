@@ -1,28 +1,28 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import moment, { Moment } from 'moment'
+
+import { Button, Calendar, Col, Row, Select, notification } from 'antd'
+import { EVENTS, EVENTS_OPERATIONS }  from '@constants/eventVariants'
+import { IBirthday, IDataFromServer, IMeeting, IReminder, IVacation } from '@domain/types'
+import {
+  createEvent,
+  deleteEventByID,
+  getItemById,
+  isEventWithIDExist,
+  updateEvent,
+} from '@utils/services/http.service'
 import { CalendarCellWithEvents } from '@components/CalendarCellWithEvents'
+import type { DatePickerProps } from 'antd/es/date-picker';
 import { ModalWindow } from '@components/core/ModalWindow'
 import { NotificationTitle } from '@components/core/NotificationTitle.tsx'
 import { Notifications } from '@components/Notifications'
-import { EVENTS_OPERATIONS, EVENTS }  from '@constants/eventVariants'
 import { defineNotificationsByTypeByDay }  from '@utils/functions/defineNotificationsByTypeByDay'
-import { filterNotificationsForToday } from '@utils/functions/filterNotificationsForToday'
 import { defineReminderNotificationsByTime } from '@utils/functions/defineReminderNotificationsByTime'
-import graphqlRequest from '@utils/graphql/graphqlRequest'
-import {
-  createEvent,
-  isEventWithIDExist,
-  updateEvent,
-  getItemById,
-  deleteEventByID,
-} from '@utils/services/http.service'
+import { filterNotificationsForToday } from '@utils/functions/filterNotificationsForToday'
 import getData from '@utils/services/api'
-import { IBirthday, IDataFromServer, IMeeting, IReminder, IVacation } from '@domain/types'
-import { Calendar, Col, Row, Select, Button, notification } from 'antd'
-import type { DatePickerProps } from 'antd/es/date-picker';
+import graphqlRequest from '@utils/graphql/graphqlRequest'
 import 'antd/dist/antd.css'
 import './CalendarPage.scss'
-
 
 moment.updateLocale('en', { week: { dow: 1 } })
 

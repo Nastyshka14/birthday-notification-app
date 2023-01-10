@@ -1,6 +1,6 @@
-import { Popover } from 'antd'
-import { INotification, INotificationComponent } from '@domain/types'
 import { EventRecord } from '@components/calendarEventsUI/EventRecord'
+import { INotificationComponent } from '@domain/types'
+import { Popover } from 'antd'
 import { SocialNetLinks } from '@components/SocialNetLinks'
 import './Notifications.scss'
 
