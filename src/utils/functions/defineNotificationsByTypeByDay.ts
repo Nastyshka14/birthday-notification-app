@@ -1,23 +1,25 @@
-import { parseCalendarCellData } from '@utils/functions/parseCalendarCellData'
-import {EVENTS} from '@constants/eventVariants'
-import { dateToDayFormat, momentToDayFormat } from '@utils/functions/momentToISOString'
 import { Moment } from 'moment'
+
 import {
   IBirthday,
-  IMeeting,
-  IVacation,
   IEventsCollections,
   IFilterEvents,
-  IReminder,
+  IMeeting,
   INotificationByTypeByDay,
+  IReminder,
+  IVacation,
 } from '@domain/types'
+import { dateToDayFormat, momentToDayFormat } from '@utils/functions/momentToISOString'
+import { EVENTS } from '@constants/eventVariants'
+import { parseCalendarCellData } from '@utils/functions/parseCalendarCellData'
+
 
  export const defineNotificationsByTypeByDay: INotificationByTypeByDay = (data, cellDate) => {
   const { birthdays, meetings, vacations, reminders }: IEventsCollections =
     parseCalendarCellData(data)
 
   const filterEventsByDay: IFilterEvents = (eventsList, cellDate) => {
-    if (eventsList.length === 0) return []
+    (eventsList.length === 0 ? [] : null)
 
     const eventType = eventsList[0].type
 

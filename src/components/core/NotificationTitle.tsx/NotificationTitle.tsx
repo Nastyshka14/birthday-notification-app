@@ -1,4 +1,5 @@
 import moment from 'moment'
+
 import './NotificationTitle.scss'
 
  export const NotificationTitle = (): JSX.Element => {
