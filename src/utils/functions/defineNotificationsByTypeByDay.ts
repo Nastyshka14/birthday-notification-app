@@ -15,6 +15,17 @@ import { parseCalendarCellData } from '@utils/functions/parseCalendarCellData'
 
 
  export const defineNotificationsByTypeByDay: INotificationByTypeByDay = (data, cellDate) => {
+
+  const getTimeInterval = (start: Date, end: Date): boolean => {
+    return (
+      (momentToDayFormat(cellDate, true) as Moment).isSameOrAfter(
+        dateToDayFormat(start, true) as Moment,
+      ) &&
+      (momentToDayFormat(cellDate, true) as Moment).isSameOrBefore(
+        dateToDayFormat(end, true) as Moment,
+      )
+    )
+  }
   const { birthdays, meetings, vacations, reminders }: IEventsCollections =
     parseCalendarCellData(data)
 
@@ -31,27 +42,13 @@ import { parseCalendarCellData } from '@utils/functions/parseCalendarCellData'
 
     if (eventType === EVENTS.vacation) {
       return (eventsList as Array<IVacation>).filter((vacation: IVacation): boolean => {
-        return (
-          (momentToDayFormat(cellDate, true) as Moment).isSameOrAfter(
-            dateToDayFormat(vacation.start, true) as Moment,
-          ) &&
-          (momentToDayFormat(cellDate, true) as Moment).isSameOrBefore(
-            dateToDayFormat(vacation.end, true) as Moment,
-          )
-        )
+       return getTimeInterval(vacation.start, vacation.end)
       })
     }
 
     if (eventType === EVENTS.meeting) {
       return (eventsList as Array<IMeeting>).filter((meeting: IMeeting): boolean => {
-        return (
-          (momentToDayFormat(cellDate, true) as Moment).isSameOrAfter(
-            dateToDayFormat(meeting.start, true) as Moment,
-          ) &&
-          (momentToDayFormat(cellDate, true) as Moment).isSameOrBefore(
-            dateToDayFormat(meeting.end, true) as Moment,
-          )
-        )
+        return getTimeInterval(meeting.start, meeting.end)
       })
     }
     if (eventType === EVENTS.reminder) {
