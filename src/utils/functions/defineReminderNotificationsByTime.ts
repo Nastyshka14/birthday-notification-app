@@ -1,39 +1,48 @@
-import { Moment } from 'moment'
+import moment, { Moment } from 'moment'
 
 import { IDefineReminderNotifictionsByTime, IEventsCollections, IReminder } from '@domain/types'
 import { EVENTS } from '@constants/eventVariants'
 import { parseCalendarCellData } from '@utils/functions/parseCalendarCellData'
 
-export const defineReminderNotificationsByTime: IDefineReminderNotifictionsByTime = (data, cellDate) => {
+export const defineReminderNotificationsByTime: IDefineReminderNotifictionsByTime = (
+  data,
+  cellDate,
+) => {
   const { reminders }: IEventsCollections = parseCalendarCellData(data)
 
+  const getParsedDate = (date: Moment | Date) => {
+    return Date.parse(date.toLocaleString())
+  }
+
   const filterRemindersByDate = (eventsList: Array<IReminder>, cellDate: Moment): IReminder[] => {
-    if (eventsList.length === 0) return []
+    eventsList.length === 0 && []
 
     const eventType = eventsList[0].type
 
     if (eventType === EVENTS.reminder) {
       return (eventsList as Array<IReminder>).filter((reminder: IReminder): boolean => {
         return (
-          Date.parse(reminder.date.toLocaleString()) -
-            (Date.parse(reminder.date.toLocaleString()) % 60000) ===
-          Date.parse(cellDate.toLocaleString()) - (Date.parse(cellDate.toLocaleString()) % 60000)
+          getParsedDate(reminder.date) - (getParsedDate(reminder.date) % 60000) ===
+          getParsedDate(cellDate) - (getParsedDate(cellDate) % 60000)
         )
       })
     }
   }
-  const filterRemindersByNotifies = (eventsList: Array<IReminder>, cellDate: Moment): IReminder[] => {
-    if (eventsList.length === 0) return []
+  const filterRemindersByNotifies = (
+    eventsList: Array<IReminder>,
+    cellDate: Moment,
+  ): IReminder[] => {
+    eventsList.length === 0 && []
 
     const eventType = eventsList[0].type
 
     if (eventType === EVENTS.reminder) {
       return (eventsList as Array<IReminder>).filter((reminder: IReminder): boolean => {
         return (
-          Date.parse(reminder.date.toLocaleString()) -
+          getParsedDate(reminder.date) -
             reminder.time * 60000 -
-            (Date.parse(reminder.date.toLocaleString()) % 10000) ===
-          Date.parse(cellDate.toLocaleString()) - (Date.parse(cellDate.toLocaleString()) % 10000)
+            (getParsedDate(reminder.date) % 10000) ===
+          getParsedDate(cellDate) - (getParsedDate(cellDate) % 10000)
         )
       })
     }
