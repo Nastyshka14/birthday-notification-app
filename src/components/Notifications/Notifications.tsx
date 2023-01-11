@@ -1,12 +1,8 @@
+import { EventRecord } from '@components/calendarEventsUI/EventRecord'
+import { INotificationComponent } from '@domain/types'
 import { Popover } from 'antd'
-import { INotification } from '../../domain/types'
-import { EventRecord } from '../calendarEventsUI'
-import { SocialNetLinks } from '../SocialNetLinks'
+import { SocialNetLinks } from '@components/SocialNetLinks'
 import './Notifications.scss'
-
-interface INotificationComponent {
-  (notifications: Array<INotification>): JSX.Element
-}
 
 export const Notifications: INotificationComponent = (notifications) => (
   <ul className='notification-list'>

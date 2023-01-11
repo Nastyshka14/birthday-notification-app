@@ -1,4 +1,4 @@
-import { IDataFromServer } from '../../../domain/types'
+import { IDataFromServer } from '@domain/types'
 
 const getData = async (query: string): Promise<IDataFromServer> | null => {
   const endpoint = `https://graphql.contentful.com/content/v1/spaces/${process.env.REACT_APP_SPACE_ID}/`

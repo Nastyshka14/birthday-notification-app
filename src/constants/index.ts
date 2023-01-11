@@ -1,1 +1,0 @@
-export { EVENTS, EVENTS_OPERATIONS } from './eventsVariants'
