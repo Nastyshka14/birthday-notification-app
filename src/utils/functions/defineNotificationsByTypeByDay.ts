@@ -48,6 +48,7 @@ export const defineNotificationsByTypeByDay: INotificationByTypeByDay = (data, c
     }
     if (eventType === EVENTS.reminder) {
       return eventsList.filter((reminder: INotification): boolean => {
+        console.log(dateToDayFormat(reminder.date))
         return dateToDayFormat(reminder.date) === momentToDayFormat(cellDate)
       })
     }

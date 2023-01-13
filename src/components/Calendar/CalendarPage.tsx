@@ -65,6 +65,7 @@ export const CalendarPage = (): JSX.Element => {
     if (runsCounterRef.current === 0) {
       getData(graphqlRequest).then((data: IDataFromServer): void => {
         setData(data)
+        console.log('ggg', data)
       })
     }
     runsCounterRef.current++

@@ -10,4 +10,4 @@ enum EVENTS_OPERATIONS {
   update = 'update',
   delete = 'delete',
 }
-export {EVENTS, EVENTS_OPERATIONS}
+export { EVENTS, EVENTS_OPERATIONS }
