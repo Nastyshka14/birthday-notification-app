@@ -1,0 +1,56 @@
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+@mixin flex-start {
+  display: flex;
+  justify-content: flex-start;
+}
+
+@mixin flex-end {
+  display: flex;
+  justify-content: flex-end;
+}
+
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+}
+
+@mixin small-image {
+  width: 18px;
+  height: 18px;
+}
+
+@mixin large-image {
+  width: 20px;
+  height: 20px;
+}
+
+@mixin extra-large-image {
+  width: 30px;
+  height: 30px;
+}
+
+@mixin extra-small-button {
+  width: 18px;
+  height: 18px;
+  margin: 0px 2px;
+  padding: 6px;
+  border: none;
+  border-radius: 15%;
+  opacity: 0.9;
+}
+
+@mixin small-button {
+  width: 24px;
+  height: 24px;
+  border: none;
+}
+
+@mixin large-button {
+  width: 29px;
+  height: 29px;
+  border: none;
+}

@@ -1,10 +1,11 @@
 @import '@scss/variables/colors';
+@import '@scss/variables/borders';
+@import '@scss/variables/mixins';
 
 .message {
-  display: flex;
-  align-items: flex-end;
+  @include flex-end;
   justify-content: space-between;
-  border-bottom: 1px solid $blue;
+  border-bottom: $border-bottom-blue;
 }
 
 .message__text {

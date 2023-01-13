@@ -1,19 +1,14 @@
 @import '@scss/variables/colors';
+@import '@scss/variables/borders';
+@import '@scss/variables/mixins';
 
 .notification__btns {
-  display: flex;
-  align-items: center;
+  @include flex-center;
   justify-content: flex-end;
 }
 
 .notification__btn {
-  width: 18px;
-  height: 18px;
-  margin: 0px 2px;
-  padding: 6px;
-  border: none;
-  border-radius: 15%;
-  opacity: 0.9;
+  @include extra-small-button;
 }
 
 .notification__btn:hover {
@@ -47,22 +42,22 @@
 }
 
 .notification__btn--email {
-  border: 3px solid $gray-dark;
+  border: $border-bottom-gray-dark-thick;
   background: url(../../assets/icons/email.svg) $gray-dark;
 }
 
 .notification__btn--email:hover {
-  border: 3px solid $gray-middle;
+  border: $border-bottom-gray-thick;
   background: url(../../assets/icons/email.svg) $gray-middle;
 }
 
 .notification__btn--sms {
-  border: 1px solid $gray-dark;
+  border: $border-bottom-gray-dark-thin;
   background: url(../../assets/icons/sms.svg) $gray-dark;
 }
 
 .notification__btn--sms:hover {
-  border: 1px solid $purple-bright;
+  border: $border-bottom-purple;
   background: url(../../assets/icons/sms.svg) $purple-bright;
 }
 
