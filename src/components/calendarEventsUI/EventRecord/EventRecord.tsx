@@ -1,34 +1,34 @@
 import { useEffect, useState } from 'react'
 import moment from 'moment'
 
-import { IMeeting, INotification, IReminder, IVacation } from '@domain/types'
 import { EVENTS } from '@constants/eventVariants'
+import { INotification } from '@domain/types'
 import './EventRecord.scss'
 
 export const EventRecord = ({ eventRecord }: { eventRecord: INotification }): JSX.Element => {
-  const [meeting, setMeeting] = useState<IMeeting>(null)
-  const [vacation, setVacation] = useState<IVacation>(null)
-  const [reminder, setReminder] = useState<IReminder>(null)
+  const [meeting, setMeeting] = useState<INotification>(null)
+  const [vacation, setVacation] = useState<INotification>(null)
+  const [reminder, setReminder] = useState<INotification>(null)
 
   useEffect(() => {
     if (eventRecord.type === EVENTS.meeting) {
-      setMeeting(eventRecord as IMeeting)
+      setMeeting(eventRecord)
     }
     if (eventRecord.type === EVENTS.vacation) {
-      setVacation(eventRecord as IVacation)
+      setVacation(eventRecord)
     }
     if (eventRecord.type === EVENTS.reminder) {
-      setReminder(eventRecord as IReminder)
+      setReminder(eventRecord)
     }
   }, [])
 
-  const eventDateIntervalLayout = (eventItem: IMeeting | IVacation): JSX.Element => (
+  const eventDateIntervalLayout = (eventItem: INotification): JSX.Element => (
     <div className='event-record__date'>
       {`${moment(eventItem.start).format('MMM Do YYYY')}`} -{' '}
       {`${moment(eventItem.end).format('MMM Do YYYY')}`}
     </div>
   )
-  const eventDateLayout = (eventItem: IReminder): JSX.Element => (
+  const eventDateLayout = (eventItem: INotification): JSX.Element => (
     <div className='event-record__date'>
       {`${moment(eventItem.date).format('MMM D YYYY HH:mm')}`}
     </div>

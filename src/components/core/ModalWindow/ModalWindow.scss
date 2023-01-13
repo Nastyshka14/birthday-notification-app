@@ -1,19 +1,18 @@
 @import '@scss/variables/colors';
+@import '@scss/variables/borders';
+@import '@scss/variables/mixins';
 
 .modal__main {
-  display: flex;
-  flex-direction: column;
+  @include flex-column;
 }
 
 .modal__section {
-  display: flex;
-  align-items: center;
+  @include flex-center;
   margin: 5px 0;
 }
 
 .modal__section-img {
-  width: 18px;
-  height: 18px;
+  @include small-image;
   margin-right: 10px;
 }
 
@@ -34,53 +33,46 @@
 }
 
 .modal__section--time-img {
-  width: 20px;
-  height: 20px;
+  @include large-image;
   margin-right: 10px;
   background: url(../../../assets/icons/time.svg) no-repeat center center;
 }
 
 .modal__section--arrow-img {
-  width: 18px;
-  height: 18px;
+  @include small-image;
   margin: 0 10px;
   background: url(../../../assets/icons/arrow.svg) no-repeat center center;
 }
 
 .modal__section--input {
   width: 90%;
-  display: flex;
-  align-items: center;
-  border-bottom: 1px solid #909090;
+  @include flex-center;
+  border-bottom: $border-bottom-gray-thin;
 }
 
 .modal__section--markdown {
-  display: flex;
-  align-items: flex-start;
+  @include flex-start;
   margin: 5px 0;
 }
 
 .modal__section--type-input,
 .modal__section--time-input {
-  display: flex;
-  align-items: center;
-  border-bottom: 1px solid $gray-middle;
+  @include flex-center;
+  border-bottom: $border-bottom-gray-thin;
 }
 
 .modal__section--date-input {
   width: 90%;
-  display: flex;
-  align-items: center;
-  border-bottom: 1px solid $gray-middle;
+  @include flex-center;
+  border-bottom: $border-bottom-gray-thin;
 }
 
 .modal__section--date-group {
   width: 90%;
-  display: flex;
-  align-items: center;
+  @include flex-center;
 }
 
 .modal__section--start-input,
 .modal__section--end-input {
-  border-bottom: 1px solid $gray-middle;
+  border-bottom: $border-bottom-gray-thin;
 }

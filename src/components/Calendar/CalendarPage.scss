@@ -1,9 +1,10 @@
-.calendar__wrapper{
-    display: flex;
+@import '@scss/variables/mixins';
+
+.calendar__wrapper {
+  display: flex;
 }
 
-.calendar__buttons{
-    padding: 8;
-    display: flex;
-    justify-content: flex-end;
+.calendar__buttons {
+  padding: 8;
+  @include flex-end;
 }

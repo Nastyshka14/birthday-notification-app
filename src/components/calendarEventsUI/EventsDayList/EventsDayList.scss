@@ -1,4 +1,5 @@
 @import '@scss/variables/colors';
+@import '@scss/variables/mixins';
 
 .events {
   margin: 0;
@@ -28,33 +29,28 @@
 }
 
 .content__item--buttons {
-  display: flex;
+  @include flex-center;
   justify-content: space-between;
-  align-items: center;
 }
 
 .content__item--delete-btn {
-  width: 29px;
-  height: 29px;
-  border: none;
+  @include large-button;
   background: url(../../../assets/icons/delete.svg);
 }
 
 .content__item--edit-btn {
-  width: 24px;
-  height: 24px;
-  border: none;
+  @include small-button;
   background: url(../../../assets/icons/edit.svg);
 }
 
 .list__item--date {
   margin: 0 15px 10px;
-  color: rgb(200, 200, 200);
+  color: $gray-middle;
 }
 
 .list__item--description {
   margin: 0 15px;
-  color: rgb(200, 200, 200);
+  color: $gray-middle;
 }
 
 .list__item:active {

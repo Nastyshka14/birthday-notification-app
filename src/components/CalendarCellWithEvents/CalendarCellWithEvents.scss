@@ -1,14 +1,14 @@
 @import '@scss/variables/colors';
+@import '@scss/variables/mixins';
 
 .title {
-  display: flex;
+  @include flex-center;
   justify-content: space-between;
-  align-items: center;
+
 }
 
 .title__date {
-  display: flex;
-  flex-direction: column;
+  @include flex-column;
 }
 
 .title__day {

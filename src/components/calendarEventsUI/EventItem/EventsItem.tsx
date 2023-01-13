@@ -1,4 +1,4 @@
-import { Badge, BadgeProps} from 'antd'
+import { Badge, BadgeProps } from 'antd'
 import { INotification } from '@domain/types'
 import './EventsItem.scss'
 

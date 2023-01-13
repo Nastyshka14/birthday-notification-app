@@ -5,7 +5,7 @@ export const parseCalendarCellData = (data: IDataFromServer) => {
     birthdaysCollection: { items: birthdays },
     meetingCollection: { items: meetings },
     vacationCollection: { items: vacations },
-    reminderCollection: {items: reminders}
+    reminderCollection: { items: reminders }
   } } = data
 
 

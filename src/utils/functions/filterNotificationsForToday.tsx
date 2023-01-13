@@ -1,6 +1,6 @@
 import { IEventsCollections, INotification } from '@domain/types'
 import { getDataFromStorage, removeDataFromStorage, saveDataToStorage } from '@utils/functions/sessionStorageData'
-import { NotificationTitle } from '@components/core/NotificationTitle.tsx'
+import { NotificationTitle } from '@components/core/NotificationTitle'
 import { Notifications } from '@components/Notifications'
 import { notification } from 'antd'
 
@@ -32,19 +32,19 @@ export const filterNotificationsForToday = (notificationsForToday: IEventsCollec
 
       newEventsForToday.filter((item: INotification): boolean => item.type === 'Birthdays').length > 0 &&
         notification.open({
-          message: NotificationTitle(),
+          message: <NotificationTitle />,
           description: Notifications(newEventsForToday.filter((item) => item.type === 'Birthdays')),
           duration: 0,
         })
       newEventsForToday.filter((item: INotification): boolean => item.type === 'Meeting').length > 0 &&
         notification.open({
-          message: NotificationTitle(),
+          message: <NotificationTitle />,
           description: Notifications(newEventsForToday.filter((item) => item.type === 'Meeting')),
           duration: 0,
         })
       newEventsForToday.filter((item: INotification): boolean => item.type === 'Vacation').length > 0 &&
         notification.open({
-          message: NotificationTitle(),
+          message: <NotificationTitle />,
           description: Notifications(newEventsForToday.filter((item) => item.type === 'Vacation')),
           duration: 0,
         })
@@ -55,19 +55,19 @@ export const filterNotificationsForToday = (notificationsForToday: IEventsCollec
   } else {
     notificationsList.filter((item) => item.type === 'Vacation').length > 0 &&
       notification.open({
-        message: NotificationTitle(),
+        message: <NotificationTitle />,
         description: Notifications(notificationsList.filter((item) => item.type === 'Vacation')),
         duration: 0,
       })
     notificationsList.filter((item) => item.type === 'Birthdays').length > 0 &&
       notification.open({
-        message: NotificationTitle(),
+        message: <NotificationTitle />,
         description: Notifications(notificationsList.filter((item) => item.type === 'Birthdays')),
         duration: 0,
       })
     notificationsList.filter((item) => item.type === 'Meeting').length > 0 &&
       notification.open({
-        message: NotificationTitle(),
+        message: <NotificationTitle />,
         description: Notifications(notificationsList.filter((item) => item.type === 'Meeting')),
         duration: 0,
       })

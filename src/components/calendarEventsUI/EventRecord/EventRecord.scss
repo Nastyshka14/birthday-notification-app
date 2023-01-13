@@ -1,4 +1,5 @@
 @import '@scss/variables/colors';
+@import '@scss/variables/mixins';
 
 .event-record {
   display: flex;
@@ -18,8 +19,7 @@
 }
 
 .event-record__image {
-  width: 30px;
-  height: 30px;
+  @include extra-large-image;
   margin: 10px;
 }
 

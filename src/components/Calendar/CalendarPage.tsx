@@ -2,8 +2,8 @@ import React, { useEffect, useRef, useState } from 'react'
 import moment, { Moment } from 'moment'
 
 import { Button, Calendar, Col, Row, Select, notification } from 'antd'
-import { EVENTS, EVENTS_OPERATIONS }  from '@constants/eventVariants'
-import { IBirthday, IDataFromServer, IMeeting, IReminder, IVacation } from '@domain/types'
+import { EVENTS, EVENTS_OPERATIONS } from '@constants/eventVariants'
+import { IDataFromServer, INotification } from '@domain/types'
 import {
   createEvent,
   deleteEventByID,
@@ -12,11 +12,11 @@ import {
   updateEvent,
 } from '@utils/services/http.service'
 import { CalendarCellWithEvents } from '@components/CalendarCellWithEvents'
-import type { DatePickerProps } from 'antd/es/date-picker';
+import type { DatePickerProps } from 'antd/es/date-picker'
 import { ModalWindow } from '@components/core/ModalWindow'
-import { NotificationTitle } from '@components/core/NotificationTitle.tsx'
+import { NotificationTitle } from '@components/core/NotificationTitle'
 import { Notifications } from '@components/Notifications'
-import { defineNotificationsByTypeByDay }  from '@utils/functions/defineNotificationsByTypeByDay'
+import { defineNotificationsByTypeByDay } from '@utils/functions/defineNotificationsByTypeByDay'
 import { defineReminderNotificationsByTime } from '@utils/functions/defineReminderNotificationsByTime'
 import { filterNotificationsForToday } from '@utils/functions/filterNotificationsForToday'
 import getData from '@utils/services/api'
@@ -89,20 +89,24 @@ export const CalendarPage = (): JSX.Element => {
   useEffect(() => {
     if (data) {
       const remindersForEveryDay = defineReminderNotificationsByTime(data, moment(new Date()))
-      {remindersForEveryDay.reminders.length > 0 && 
-      (notification.open({
-          message: NotificationTitle(),
-          description: Notifications(remindersForEveryDay.reminders),
-          duration: 0,
-        }) )}
-  
-       {remindersForEveryDay.notificationsBeforeReminders.length > 0 && 
-      (notification.open({
-        message: NotificationTitle(),
-        description: Notifications(remindersForEveryDay.notificationsBeforeReminders),
-        duration: 0,
-      }) 
-      )}}
+      {
+        remindersForEveryDay.reminders.length > 0 &&
+          notification.open({
+            message: <NotificationTitle />,
+            description: Notifications(remindersForEveryDay.reminders),
+            duration: 0,
+          })
+      }
+
+      {
+        remindersForEveryDay.notificationsBeforeReminders.length > 0 &&
+          notification.open({
+            message: <NotificationTitle />,
+            description: Notifications(remindersForEveryDay.notificationsBeforeReminders),
+            duration: 0,
+          })
+      }
+    }
   }, [data])
 
   const handleRemoveEvent = async (id: string): Promise<void> => {
@@ -168,28 +172,31 @@ export const CalendarPage = (): JSX.Element => {
         date: { 'en-US': date },
         description: { 'en-US': description },
       }) ||
-      ((type.toLocaleLowerCase() === EVENTS.meeting.toLowerCase() || type.toLocaleLowerCase() === EVENTS.vacation.toLowerCase()) && {
+      ((type.toLocaleLowerCase() === EVENTS.meeting.toLowerCase() ||
+        type.toLocaleLowerCase() === EVENTS.vacation.toLowerCase()) && {
         title: { 'en-US': title },
         description: { 'en-US': description },
         start: { 'en-US': start },
         end: { 'en-US': end },
-      }) 
+      })
 
     isEvent && updateEvent(eventID, event)
 
-    const updatedBirthdays = data.data.birthdaysCollection.items.map((eventItem: IBirthday): IBirthday =>
-      eventItem.identifier.id === eventID
-        ? {
+    const updatedBirthdays = data.data.birthdaysCollection.items.map(
+      (eventItem: INotification): INotification =>
+        eventItem.identifier.id === eventID
+          ? {
             ...eventItem,
             type: type[0].toUpperCase() + type.slice(1),
             title: title,
             date: date,
           }
-        : eventItem,
+          : eventItem,
     )
-    const updatedVacations = data.data.vacationCollection.items.map((eventItem: IVacation): IVacation =>
-      eventItem.identifier.id === eventID
-        ? {
+    const updatedVacations = data.data.vacationCollection.items.map(
+      (eventItem: INotification): INotification =>
+        eventItem.identifier.id === eventID
+          ? {
             ...eventItem,
             type: type[0].toUpperCase() + type.slice(1),
             title: title,
@@ -197,11 +204,12 @@ export const CalendarPage = (): JSX.Element => {
             end: end,
             description: description,
           }
-        : eventItem,
+          : eventItem,
     )
-    const updatedMeetings = data.data.meetingCollection.items.map((eventItem: IMeeting): IMeeting =>
-      eventItem.identifier.id === eventID
-        ? {
+    const updatedMeetings = data.data.meetingCollection.items.map(
+      (eventItem: INotification): INotification =>
+        eventItem.identifier.id === eventID
+          ? {
             ...eventItem,
             type: type[0].toUpperCase() + type.slice(1),
             title: title,
@@ -209,11 +217,12 @@ export const CalendarPage = (): JSX.Element => {
             end: end,
             description: description,
           }
-        : eventItem,
+          : eventItem,
     )
-    const updatedReminders = data.data.reminderCollection.items.map((eventItem: IReminder): IReminder =>
-      eventItem.identifier.id === eventID
-        ? {
+    const updatedReminders = data.data.reminderCollection.items.map(
+      (eventItem: INotification): INotification =>
+        eventItem.identifier.id === eventID
+          ? {
             ...eventItem,
             type: type[0].toUpperCase() + type.slice(1),
             title: title,
@@ -221,7 +230,7 @@ export const CalendarPage = (): JSX.Element => {
             date: date,
             time: time,
           }
-        : eventItem,
+          : eventItem,
     )
     setData({
       data: {
@@ -241,7 +250,7 @@ export const CalendarPage = (): JSX.Element => {
     setDescription(value)
   }
 
-  const handleDateWithTimeInput = (value: DatePickerProps['value'])=> {
+  const handleDateWithTimeInput = (value: DatePickerProps['value']) => {
     setDate(new Date(value.toDate()))
   }
 
@@ -266,14 +275,14 @@ export const CalendarPage = (): JSX.Element => {
     const eventFieldValue: string = e.target.value
 
     switch (eventFieldName) {
-      case 'title':
-        setTitle(eventFieldValue)
-        break
-      case 'description':
-        setDescription(eventFieldValue)
-        break
-      default:
-        console.error('field isnt exist')
+    case 'title':
+      setTitle(eventFieldValue)
+      break
+    case 'description':
+      setDescription(eventFieldValue)
+      break
+    default:
+      console.error('field isnt exist')
     }
   }
 
@@ -290,13 +299,8 @@ export const CalendarPage = (): JSX.Element => {
         time: { 'en-US': time },
         description: { 'en-US': description },
       }) ||
-      (type.toLocaleLowerCase() === EVENTS.meeting.toLowerCase() && {
-        title: { 'en-US': title },
-        description: { 'en-US': description },
-        start: { 'en-US': start },
-        end: { 'en-US': end },
-      }) ||
-      (type.toLocaleLowerCase() === EVENTS.vacation.toLowerCase() && {
+      ((type.toLocaleLowerCase() === EVENTS.meeting.toLowerCase() ||
+        type.toLocaleLowerCase() === EVENTS.vacation.toLowerCase()) && {
         title: { 'en-US': title },
         description: { 'en-US': description },
         start: { 'en-US': start },
@@ -308,56 +312,56 @@ export const CalendarPage = (): JSX.Element => {
     const dataWithNewBirthday =
       type === 'birthdays'
         ? [
-            {
-              type: type[0].toUpperCase() + type.slice(1),
-              identifier: { id: ID },
-              title: title,
-              date: date,
-            },
-            ...data.data.birthdaysCollection.items,
-          ]
+          {
+            type: type[0].toUpperCase() + type.slice(1),
+            identifier: { id: ID },
+            title: title,
+            date: date,
+          },
+          ...data.data.birthdaysCollection.items,
+        ]
         : [...data.data.birthdaysCollection.items]
     const dataWithNewMeeting =
       type === 'meeting'
         ? [
-            {
-              type: type[0].toUpperCase() + type.slice(1),
-              identifier: { id: ID },
-              title: title,
-              start: start,
-              end: end,
-              description: description,
-            },
-            ...data.data.meetingCollection.items,
-          ]
+          {
+            type: type[0].toUpperCase() + type.slice(1),
+            identifier: { id: ID },
+            title: title,
+            start: start,
+            end: end,
+            description: description,
+          },
+          ...data.data.meetingCollection.items,
+        ]
         : [...data.data.meetingCollection.items]
     const dataWithNewVacation =
       type === 'vacation'
         ? [
-            {
-              type: type[0].toUpperCase() + type.slice(1),
-              identifier: { id: ID },
-              title: title,
-              start: start,
-              end: end,
-              description: description,
-            },
-            ...data.data.vacationCollection.items,
-          ]
+          {
+            type: type[0].toUpperCase() + type.slice(1),
+            identifier: { id: ID },
+            title: title,
+            start: start,
+            end: end,
+            description: description,
+          },
+          ...data.data.vacationCollection.items,
+        ]
         : [...data.data.vacationCollection.items]
     const dataWithNewReminder =
       type === 'reminder'
         ? [
-            {
-              type: type[0].toUpperCase() + type.slice(1),
-              identifier: { id: ID },
-              title: title,
-              description: description,
-              date: date,
-              time: time,
-            },
-            ...data.data.reminderCollection.items,
-          ]
+          {
+            type: type[0].toUpperCase() + type.slice(1),
+            identifier: { id: ID },
+            title: title,
+            description: description,
+            date: date,
+            time: time,
+          },
+          ...data.data.reminderCollection.items,
+        ]
         : [...data.data.reminderCollection.items]
     setData({
       data: {
