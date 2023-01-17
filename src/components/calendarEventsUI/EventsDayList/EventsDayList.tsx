@@ -36,7 +36,7 @@ export const EventsDayList = ({
             title={
               <>
                 <Badge.Ribbon text={eventItem.type} color={color(eventItem.type)}>
-                  <div className='popover__badge'></div>
+                  <div className='popover__badge' />
                 </Badge.Ribbon>
                 <div className='popover__title'>{eventItem.title}</div>
               </>

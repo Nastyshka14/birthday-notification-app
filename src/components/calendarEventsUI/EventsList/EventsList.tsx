@@ -8,7 +8,7 @@ export const EventsList = ({ collection }: IEventsList): JSX.Element => {
   return (
     <>
       <ul className='events'>
-        {collection.map((eventItem: INotification): JSX.Element => (
+        {collection.map((eventItem: INotification) => (
           <React.Fragment key={eventItem.identifier.id}>
             <EventsItem eventItem={eventItem} />
           </React.Fragment>

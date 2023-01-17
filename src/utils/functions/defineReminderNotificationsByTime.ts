@@ -1,6 +1,6 @@
 import { Moment } from 'moment'
 
-import { IDefineReminderNotifictionsByTime, IEventsCollections, IFilterEvents, INotification } from '@domain/types'
+import { IDefineReminderNotifictionsByTime, IEventsCollections, INotification } from '@domain/types'
 import { EVENTS } from '@constants/eventVariants'
 import { parseCalendarCellData } from '@utils/functions/parseCalendarCellData'
 
@@ -14,13 +14,13 @@ export const defineReminderNotificationsByTime: IDefineReminderNotifictionsByTim
     return Date.parse(date.toLocaleString())
   }
 
-  const filterRemindersByDate: IFilterEvents = (eventsList, cellDate) => {
-    eventsList.length === 0 && []
+  reminders.length === 0 && []
 
-    const eventType = eventsList[0].type
+  const eventType = reminders[0].type
 
+  const filterRemindersByDate = (): INotification[] => {
     if (eventType === EVENTS.reminder) {
-      return eventsList.filter((reminder: INotification): boolean => {
+      return reminders.filter((reminder: INotification): boolean => {
         return (
           getParsedDate(reminder.date) - (getParsedDate(reminder.date) % 60000) ===
           getParsedDate(cellDate) - (getParsedDate(cellDate) % 60000)
@@ -28,28 +28,21 @@ export const defineReminderNotificationsByTime: IDefineReminderNotifictionsByTim
       })
     }
   }
-  const filterRemindersByNotifies: IFilterEvents = (
-    eventsList,
-    cellDate,
-  ) => {
-    eventsList.length === 0 && []
-
-    const eventType = eventsList[0].type
-
+  const filterRemindersByNotifies = (): INotification[] => {
     if (eventType === EVENTS.reminder) {
-      return eventsList.filter((reminder: INotification): boolean => {
+      return reminders.filter((reminder: INotification): boolean => {
         return (
-          (getParsedDate(reminder.date) -
+          getParsedDate(reminder.date) -
             reminder.time * 60000 -
-            (getParsedDate(reminder.date) % 10000)) ===
-          (getParsedDate(cellDate) - (getParsedDate(cellDate) % 10000))
+            (getParsedDate(reminder.date) % 10000) ===
+          getParsedDate(cellDate) - (getParsedDate(cellDate) % 10000)
         )
       })
     }
   }
 
   return {
-    reminders: filterRemindersByDate(reminders, cellDate),
-    notificationsBeforeReminders: filterRemindersByNotifies(reminders, cellDate),
+    reminders: filterRemindersByDate(),
+    notificationsBeforeReminders: filterRemindersByNotifies(),
   }
 }

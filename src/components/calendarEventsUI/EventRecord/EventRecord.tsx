@@ -39,7 +39,7 @@ export const EventRecord = ({ eventRecord }: { eventRecord: INotification }): JS
 
   return (
     <div className='event-record'>
-      <div className={getImage(eventRecord.type)}></div>
+      <div className={getImage(eventRecord.type)} />
       <div className='event-record__details'>
         <p className='event-record__title'>{eventRecord.title}</p>
         {eventRecord?.description && (
