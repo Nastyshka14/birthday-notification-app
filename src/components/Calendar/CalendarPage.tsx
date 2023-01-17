@@ -89,7 +89,6 @@ export const CalendarPage = (): JSX.Element => {
   useEffect(() => {
     if (data) {
       const remindersForEveryDay = defineReminderNotificationsByTime(data, moment(new Date()))
-      console.log('kkk', remindersForEveryDay)
       {
         remindersForEveryDay.reminders.length > 0 &&
           notification.open({

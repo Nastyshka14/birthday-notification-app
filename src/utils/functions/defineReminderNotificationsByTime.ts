@@ -34,8 +34,8 @@ export const defineReminderNotificationsByTime: IDefineReminderNotifictionsByTim
         return (
           getParsedDate(reminder.date) -
             reminder.time * 60000 -
-            (getParsedDate(reminder.date) % 10000) ===
-          getParsedDate(cellDate) - (getParsedDate(cellDate) % 10000)
+            ((getParsedDate(reminder.date) - reminder.time * 60000) % 60000) ===
+          getParsedDate(cellDate) - (getParsedDate(cellDate) % 60000)
         )
       })
     }
