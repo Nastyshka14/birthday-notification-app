@@ -11,7 +11,7 @@ export const Home = ({ login, setLogin }: LoginState) => (
   <div>
     {login ? (
       <div className='home'>
-        <div className='home__navbar logout'>
+        <div className='navbar navbar_logout'>
           <GoogleOut setLogin={setLogin} />
         </div>
         <div id='app-root'>
@@ -20,13 +20,13 @@ export const Home = ({ login, setLogin }: LoginState) => (
       </div>
     ) : (
       <div className='home'>
-        <div className='home__navbar'>
-          <Link to='/login' className='navbar auth--text'>
+        <div className='navbar'>
+          <Link to='/login' className='navbar__auth-text'>
             LOG IN
           </Link>
         </div>
-        <div className='home__container'>
-          <div className='container overlay' />
+        <div className='container'>
+          <div className='container__overlay' />
           <CalendarPage />
         </div>
       </div>
