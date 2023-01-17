@@ -9,6 +9,6 @@ const BirthdayFragment = gql`
     title: name
     date
   }
-`;
+`
 
 export default BirthdayFragment

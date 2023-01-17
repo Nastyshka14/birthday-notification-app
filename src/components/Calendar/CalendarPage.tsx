@@ -89,6 +89,7 @@ export const CalendarPage = (): JSX.Element => {
   useEffect(() => {
     if (data) {
       const remindersForEveryDay = defineReminderNotificationsByTime(data, moment(new Date()))
+      console.log('kkk', remindersForEveryDay)
       {
         remindersForEveryDay.reminders.length > 0 &&
           notification.open({
@@ -438,7 +439,7 @@ export const CalendarPage = (): JSX.Element => {
           return (
             <div className='calendar__buttons'>
               <Row gutter={8}>
-                <Col></Col>
+                <Col />
                 <Button onClick={showModal}>Create</Button>
                 <Col>
                   <Select

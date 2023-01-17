@@ -11,6 +11,6 @@ const ReminderFragment = gql`
     date
     time
   }
-`;
+`
 
 export default ReminderFragment

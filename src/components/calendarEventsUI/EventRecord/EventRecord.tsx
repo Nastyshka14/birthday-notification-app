@@ -20,17 +20,17 @@ export const EventRecord = ({ eventRecord }: { eventRecord: INotification }): JS
     if (eventRecord.type === EVENTS.reminder) {
       setReminder(eventRecord)
     }
-  }, [])
+  }, [eventRecord])
 
   const eventDateIntervalLayout = (eventItem: INotification): JSX.Element => (
     <div className='event-record__date'>
-      {`${moment(eventItem.start).format('MMM Do YYYY')}`} -{' '}
-      {`${moment(eventItem.end).format('MMM Do YYYY')}`}
+      {moment(eventItem.start).format('MMM Do YYYY')} -
+      {moment(eventItem.end).format('MMM Do YYYY')}
     </div>
   )
   const eventDateLayout = (eventItem: INotification): JSX.Element => (
     <div className='event-record__date'>
-      {`${moment(eventItem.date).format('MMM D YYYY HH:mm')}`}
+      {moment(eventItem.date).format('MMM D YYYY HH:mm')}
     </div>
   )
   const getImage = (type: string): string => {
@@ -39,7 +39,7 @@ export const EventRecord = ({ eventRecord }: { eventRecord: INotification }): JS
 
   return (
     <div className='event-record'>
-      <div className={getImage(eventRecord.type)}></div>
+      <div className={getImage(eventRecord.type)} />
       <div className='event-record__details'>
         <p className='event-record__title'>{eventRecord.title}</p>
         {eventRecord?.description && (

@@ -35,27 +35,27 @@ export const EventsDayList = ({
             placement='right'
             title={
               <>
-                <Badge.Ribbon text={eventItem?.type} color={color(eventItem?.type)}>
-                  <div className='popover__badge'></div>
+                <Badge.Ribbon text={eventItem.type} color={color(eventItem.type)}>
+                  <div className='popover__badge' />
                 </Badge.Ribbon>
                 <div className='popover__title'>{eventItem.title}</div>
               </>
             }
             content={
               <div className='content__item'>
-                {eventItem?.type === 'Reminder' && (
+                {eventItem.type === 'Reminder' && (
                   <MarkdownEditor.Markdown source={eventItem.description} />
                 )}
-                {(eventItem?.type === 'Meeting' ||
-                  eventItem?.type === 'Vacation') && (<p className='content__item--description'>{eventItem.description}</p>)}
+                {(eventItem.type === 'Meeting' ||
+                  eventItem.type === 'Vacation') && (<p className='content__item--description'>{eventItem.description}</p>)}
 
                 <p className='content__item--date'>
-                  {(eventItem?.type === 'Meeting' ||
-                    eventItem?.type === 'Vacation') &&
+                  {(eventItem.type === 'Meeting' ||
+                    eventItem.type === 'Vacation') &&
                       (moment(eventItem.start).format('D MMM') +
                         ' - ' +
                         moment(eventItem.end).format('D MMM'))}
-                  {eventItem?.type === 'Reminder' && moment(eventItem.date).format('D MMM HH:mm')}
+                  {eventItem.type === 'Reminder' && moment(eventItem.date).format('D MMM HH:mm')}
                 </p>
                 <div className='content__item--buttons'>
                   <button
@@ -76,7 +76,7 @@ export const EventsDayList = ({
                   status={'default' as BadgeProps['status']}
                   title={eventItem.title}
                   text={eventItem.title}
-                  color={color(eventItem?.type)}
+                  color={color(eventItem.type)}
                 />
                 {(eventItem?.type === 'Meeting' ||
                   eventItem?.type === 'Vacation') && (

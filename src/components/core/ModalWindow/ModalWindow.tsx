@@ -48,15 +48,15 @@ export const ModalWindow = ({
           {operation === 'update' ? (
             <Select
               bordered={false}
-              style={{ width: 120 }}
               onChange={handleTypeInput}
               disabled
               value={type}
+              className='modal__section-select'
             >
               {typeOptions}
             </Select>
           ) : (
-            <Select bordered={false} style={{ width: 120 }} onChange={handleTypeInput} value={type}>
+            <Select bordered={false} onChange={handleTypeInput} value={type} className='modal__section-select'>
               {typeOptions}
             </Select>
           )}

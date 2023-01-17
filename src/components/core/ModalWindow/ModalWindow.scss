@@ -11,6 +11,10 @@
   margin: 5px 0;
 }
 
+.modal__section-select {
+  width: 120px;
+}
+
 .modal__section-img {
   @include small-image;
   margin-right: 10px;

@@ -1,3 +1,5 @@
+import moment from 'moment'
+
 import {
   IEventsCollections,
   IFilterEvents,
@@ -8,24 +10,22 @@ import { dateToDayFormat, momentToDayFormat } from '@utils/functions/momentToISO
 import { EVENTS } from '@constants/eventVariants'
 import { parseCalendarCellData } from '@utils/functions/parseCalendarCellData'
 
-
-export const defineNotificationsByTypeByDay: INotificationByTypeByDay = (data, cellDate): IEventsCollections => {
-
+export const defineNotificationsByTypeByDay: INotificationByTypeByDay = (
+  data,
+  cellDate,
+): IEventsCollections => {
   const getTimeInterval = (start: Date, end: Date): boolean => {
     return (
-      (momentToDayFormat(cellDate, true)).isSameOrAfter(
-        dateToDayFormat(start, true),
-      ) &&
-      (momentToDayFormat(cellDate, true)).isSameOrBefore(
-        dateToDayFormat(end, true),
-      )
+      moment(momentToDayFormat(cellDate)).isSameOrAfter(moment(dateToDayFormat(start))) &&
+      moment(momentToDayFormat(cellDate)).isSameOrBefore(moment(dateToDayFormat(end)))
     )
   }
+
   const { birthdays, meetings, vacations, reminders }: IEventsCollections =
     parseCalendarCellData(data)
 
   const filterEventsByDay: IFilterEvents = (eventsList, cellDate) => {
-    (eventsList.length === 0 && [])
+    eventsList.length === 0 && []
 
     const eventType = eventsList[0].type
 
