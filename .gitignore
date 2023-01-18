@@ -21,7 +21,7 @@
 .env.production.local
 /.idea
 package-lock.json
-/server.ts/server.js
+server.js
 
 npm-debug.log*
 yarn-debug.log*
