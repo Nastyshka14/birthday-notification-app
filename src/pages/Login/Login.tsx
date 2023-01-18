@@ -26,9 +26,7 @@ export const Login = ({ setLogin }: LoginState) => {
     navigate('/')
   }
 
-  const onFailure = () => {
-    setFailed(true)
-  }
+  const onFailure = () => setFailed(true)
 
   return (
     <div className='container'>
@@ -39,7 +37,7 @@ export const Login = ({ setLogin }: LoginState) => {
       </div>
       <div className='login'>
         <h1 className='login__info'>Log into Calendar</h1>
-        {failed ? <p className='login__failed'>Login failed</p> : ''}
+        {failed && <p className='login__failed'>Login failed</p>}
         <div className='login__area'>
           <form className='login__inputs'>
             <div className='login__item'>

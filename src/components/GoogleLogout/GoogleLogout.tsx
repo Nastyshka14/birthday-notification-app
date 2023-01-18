@@ -1,18 +1,15 @@
 import React from 'react'
 import { GoogleLogout } from 'react-google-login'
-import { useNavigate } from 'react-router-dom'
 
 import { LoginState } from '../../domain/types'
 
 import './GoogleLogout.scss'
 
 export const GoogleOut = ({ setLogin }: LoginState) => {
-  const navigate = useNavigate()
 
   const onSuccess = () => {
     localStorage.removeItem('login')
     setLogin(null)
-    navigate(0)
   }
 
   return (

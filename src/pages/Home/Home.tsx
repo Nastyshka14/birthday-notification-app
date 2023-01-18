@@ -7,29 +7,31 @@ import { LoginState } from '../../domain/types'
 
 import './Home.scss'
 
-export const Home = ({ login, setLogin }: LoginState) => (
-  <div>
-    {login ? (
-      <div className='home'>
+export const Home = ({ login, setLogin }: LoginState) => {
+  function authentication(): JSX.Element {
+    if (login) {
+      return (
         <div className='navbar navbar_logout'>
           <GoogleOut setLogin={setLogin} />
         </div>
-        <div id='app-root'>
-          <CalendarPage />
-        </div>
+      )
+    }
+    return (
+      <div className='navbar'>
+        <Link to='/login' className='navbar__auth-text'>
+          LOG IN
+        </Link>
       </div>
-    ) : (
-      <div className='home'>
-        <div className='navbar'>
-          <Link to='/login' className='navbar__auth-text'>
-            LOG IN
-          </Link>
-        </div>
-        <div className='container'>
-          <div className='container__overlay' />
-          <CalendarPage />
-        </div>
+    )
+  }
+
+  return (
+    <div className='home'>
+      {authentication()}
+      <div id='app-root' className={!login && 'container'}>
+        {!login && <div className='container__overlay' />}
+        <CalendarPage />
       </div>
-    )}
-  </div>
-)
+    </div>
+  )
+}
