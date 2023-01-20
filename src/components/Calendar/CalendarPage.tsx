@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import moment, { Moment } from 'moment'
 
-import { Button, Calendar, Col, Row, Select, notification } from 'antd'
+import { Button, Calendar, Col, Row, Select } from 'antd'
 import { EVENTS, EVENTS_OPERATIONS } from '@constants/eventVariants'
 import { IDataFromServer, INotification } from '@domain/types'
 import {
@@ -14,10 +14,9 @@ import {
 import { CalendarCellWithEvents } from '@components/CalendarCellWithEvents'
 import type { DatePickerProps } from 'antd/es/date-picker'
 import { ModalWindow } from '@components/core/ModalWindow'
-import { NotificationTitle } from '@components/core/NotificationTitle'
-import { Notifications } from '@components/Notifications'
+import { defineNotificationsByTime } from '@utils/functions/defineNotificationsByTime'
 import { defineNotificationsByTypeByDay } from '@utils/functions/defineNotificationsByTypeByDay'
-import { defineReminderNotificationsByTime } from '@utils/functions/defineReminderNotificationsByTime'
+import { filterNotificationsForTime } from '@utils/functions/filterNotificationsForTime'
 import { filterNotificationsForToday } from '@utils/functions/filterNotificationsForToday'
 import getData from '@utils/services/api'
 import graphqlRequest from '@utils/graphql/graphqlRequest'
@@ -88,23 +87,14 @@ export const CalendarPage = (): JSX.Element => {
 
   useEffect(() => {
     if (data) {
-      const remindersForEveryDay = defineReminderNotificationsByTime(data, moment(new Date()))
-      {
-        remindersForEveryDay.reminders.length > 0 &&
-          notification.open({
-            message: <NotificationTitle />,
-            description: Notifications(remindersForEveryDay.reminders),
-            duration: 0,
-          })
+      const notificationsForTime = defineNotificationsByTime(data, moment(new Date()))
+
+      if (notificationsForTime.reminders.length > 0) {
+        filterNotificationsForTime(notificationsForTime.reminders)
       }
 
-      {
-        remindersForEveryDay.notificationsBeforeReminders.length > 0 &&
-          notification.open({
-            message: <NotificationTitle />,
-            description: Notifications(remindersForEveryDay.notificationsBeforeReminders),
-            duration: 0,
-          })
+      if (notificationsForTime.remindersBefore.length > 0) {
+        filterNotificationsForTime(notificationsForTime.remindersBefore)
       }
     }
   }, [data])
@@ -186,50 +176,50 @@ export const CalendarPage = (): JSX.Element => {
       (eventItem: INotification): INotification =>
         eventItem.identifier.id === eventID
           ? {
-            ...eventItem,
-            type: type[0].toUpperCase() + type.slice(1),
-            title: title,
-            date: date,
-          }
+              ...eventItem,
+              type: type[0].toUpperCase() + type.slice(1),
+              title: title,
+              date: date,
+            }
           : eventItem,
     )
     const updatedVacations = data.data.vacationCollection.items.map(
       (eventItem: INotification): INotification =>
         eventItem.identifier.id === eventID
           ? {
-            ...eventItem,
-            type: type[0].toUpperCase() + type.slice(1),
-            title: title,
-            start: start,
-            end: end,
-            description: description,
-          }
+              ...eventItem,
+              type: type[0].toUpperCase() + type.slice(1),
+              title: title,
+              start: start,
+              end: end,
+              description: description,
+            }
           : eventItem,
     )
     const updatedMeetings = data.data.meetingCollection.items.map(
       (eventItem: INotification): INotification =>
         eventItem.identifier.id === eventID
           ? {
-            ...eventItem,
-            type: type[0].toUpperCase() + type.slice(1),
-            title: title,
-            start: start,
-            end: end,
-            description: description,
-          }
+              ...eventItem,
+              type: type[0].toUpperCase() + type.slice(1),
+              title: title,
+              start: start,
+              end: end,
+              description: description,
+            }
           : eventItem,
     )
     const updatedReminders = data.data.reminderCollection.items.map(
       (eventItem: INotification): INotification =>
         eventItem.identifier.id === eventID
           ? {
-            ...eventItem,
-            type: type[0].toUpperCase() + type.slice(1),
-            title: title,
-            description: description,
-            date: date,
-            time: time,
-          }
+              ...eventItem,
+              type: type[0].toUpperCase() + type.slice(1),
+              title: title,
+              description: description,
+              date: date,
+              time: time,
+            }
           : eventItem,
     )
     setData({
@@ -275,14 +265,14 @@ export const CalendarPage = (): JSX.Element => {
     const eventFieldValue: string = e.target.value
 
     switch (eventFieldName) {
-    case 'title':
-      setTitle(eventFieldValue)
-      break
-    case 'description':
-      setDescription(eventFieldValue)
-      break
-    default:
-      console.error('field isnt exist')
+      case 'title':
+        setTitle(eventFieldValue)
+        break
+      case 'description':
+        setDescription(eventFieldValue)
+        break
+      default:
+        console.error('field isnt exist')
     }
   }
 
@@ -312,56 +302,56 @@ export const CalendarPage = (): JSX.Element => {
     const dataWithNewBirthday =
       type === 'birthdays'
         ? [
-          {
-            type: type[0].toUpperCase() + type.slice(1),
-            identifier: { id: ID },
-            title: title,
-            date: date,
-          },
-          ...data.data.birthdaysCollection.items,
-        ]
+            {
+              type: type[0].toUpperCase() + type.slice(1),
+              identifier: { id: ID },
+              title: title,
+              date: date,
+            },
+            ...data.data.birthdaysCollection.items,
+          ]
         : [...data.data.birthdaysCollection.items]
     const dataWithNewMeeting =
       type === 'meeting'
         ? [
-          {
-            type: type[0].toUpperCase() + type.slice(1),
-            identifier: { id: ID },
-            title: title,
-            start: start,
-            end: end,
-            description: description,
-          },
-          ...data.data.meetingCollection.items,
-        ]
+            {
+              type: type[0].toUpperCase() + type.slice(1),
+              identifier: { id: ID },
+              title: title,
+              start: start,
+              end: end,
+              description: description,
+            },
+            ...data.data.meetingCollection.items,
+          ]
         : [...data.data.meetingCollection.items]
     const dataWithNewVacation =
       type === 'vacation'
         ? [
-          {
-            type: type[0].toUpperCase() + type.slice(1),
-            identifier: { id: ID },
-            title: title,
-            start: start,
-            end: end,
-            description: description,
-          },
-          ...data.data.vacationCollection.items,
-        ]
+            {
+              type: type[0].toUpperCase() + type.slice(1),
+              identifier: { id: ID },
+              title: title,
+              start: start,
+              end: end,
+              description: description,
+            },
+            ...data.data.vacationCollection.items,
+          ]
         : [...data.data.vacationCollection.items]
     const dataWithNewReminder =
       type === 'reminder'
         ? [
-          {
-            type: type[0].toUpperCase() + type.slice(1),
-            identifier: { id: ID },
-            title: title,
-            description: description,
-            date: date,
-            time: time,
-          },
-          ...data.data.reminderCollection.items,
-        ]
+            {
+              type: type[0].toUpperCase() + type.slice(1),
+              identifier: { id: ID },
+              title: title,
+              description: description,
+              date: date,
+              time: time,
+            },
+            ...data.data.reminderCollection.items,
+          ]
         : [...data.data.reminderCollection.items]
     setData({
       data: {
