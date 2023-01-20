@@ -1,13 +1,10 @@
 import { Moment } from 'moment'
 
-import { IDefineReminderNotifictionsByTime, IEventsCollections, INotification } from '@domain/types'
+import { IDefineNotificationsByTime, IEventsCollections, INotification } from '@domain/types'
 import { EVENTS } from '@constants/eventVariants'
 import { parseCalendarCellData } from '@utils/functions/parseCalendarCellData'
 
-export const defineReminderNotificationsByTime: IDefineReminderNotifictionsByTime = (
-  data,
-  cellDate,
-) => {
+export const defineNotificationsByTime: IDefineNotificationsByTime = (data, cellDate) => {
   const { reminders }: IEventsCollections = parseCalendarCellData(data)
 
   const getParsedDate = (date: Moment | Date) => {
@@ -18,7 +15,7 @@ export const defineReminderNotificationsByTime: IDefineReminderNotifictionsByTim
 
   const eventType = reminders[0].type
 
-  const filterRemindersByDate = (): INotification[] => {
+  const filterEventsByTime = (): Array<INotification> | [] => {
     if (eventType === EVENTS.reminder) {
       return reminders.filter((reminder: INotification): boolean => {
         return (
@@ -28,7 +25,8 @@ export const defineReminderNotificationsByTime: IDefineReminderNotifictionsByTim
       })
     }
   }
-  const filterRemindersByNotifies = (): INotification[] => {
+
+  const filterEventsByTimeBefore = (): Array<INotification> | [] => {
     if (eventType === EVENTS.reminder) {
       return reminders.filter((reminder: INotification): boolean => {
         return (
@@ -42,7 +40,7 @@ export const defineReminderNotificationsByTime: IDefineReminderNotifictionsByTim
   }
 
   return {
-    reminders: filterRemindersByDate(),
-    notificationsBeforeReminders: filterRemindersByNotifies(),
+    reminders: filterEventsByTime(),
+    remindersBefore: filterEventsByTimeBefore(),
   }
 }

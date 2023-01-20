@@ -14,6 +14,7 @@ export const defineNotificationsByTypeByDay: INotificationByTypeByDay = (
   data,
   cellDate,
 ): IEventsCollections => {
+  
   const getTimeInterval = (start: Date, end: Date): boolean => {
     return (
       moment(momentToDayFormat(cellDate)).isSameOrAfter(moment(dateToDayFormat(start))) &&

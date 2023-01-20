@@ -81,10 +81,10 @@ interface INotificationByTypeByDay {
   (data: IDataFromServer, cellDate: Moment): IEventsCollections;
 }
 
-interface IDefineReminderNotifictionsByTime {
+interface IDefineNotificationsByTime {
   (data: IDataFromServer, cellDate: Moment): {
-    reminders: INotification[];
-    notificationsBeforeReminders: INotification[];
+    reminders: INotification[] | [];
+    remindersBefore: INotification[] | [];
   };
 }
 
@@ -109,6 +109,6 @@ export {
   IModalWindow,
   INotificationComponent,
   INotificationByTypeByDay,
-  IDefineReminderNotifictionsByTime,
+  IDefineNotificationsByTime,
   IItemFromContentful,
 }
