@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
 import './index.css'
+import { BrowserRouter } from 'react-router-dom'
 
 declare global {
   interface Window {
@@ -16,7 +17,9 @@ const root = ReactDOM.createRoot(document.getElementById('root'))
 const startApp = () => {
   root.render(
     <React.StrictMode>
-      <App />
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </React.StrictMode>,
   )
 }
