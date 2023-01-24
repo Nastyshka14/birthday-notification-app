@@ -31,9 +31,9 @@ export const CalendarPage = (): JSX.Element => {
   const [title, setTitle] = useState<string>('')
   const [time, setTime] = useState<number>(0)
   const [description, setDescription] = useState<string>('')
-  const [start, setStart] = useState<Date | undefined>(undefined)
-  const [end, setEnd] = useState<Date | undefined>(undefined)
-  const [date, setDate] = useState<Date | undefined>(undefined)
+  const [start, setStart] = useState<Date>(new Date())
+  const [end, setEnd] = useState<Date>(new Date())
+  const [date, setDate] = useState<Date>(new Date())
   const [eventID, setEventID] = useState<string>(null)
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   const operation = eventID ? EVENTS_OPERATIONS.update : EVENTS_OPERATIONS.create

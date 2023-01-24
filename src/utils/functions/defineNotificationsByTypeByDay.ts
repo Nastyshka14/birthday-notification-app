@@ -32,7 +32,7 @@ export const defineNotificationsByTypeByDay: INotificationByTypeByDay = (
 
     if (eventType === EVENTS.birthday) {
       return eventsList.filter((birthday: INotification): boolean => {
-        return dateToDayFormat(birthday.date) === momentToDayFormat(cellDate)
+        return (new Date(birthday.date).getDate().toString() === cellDate.format('D') && (new Date(birthday.date).getMonth() + 1).toString() === cellDate.format('M'))
       })
     }
 
