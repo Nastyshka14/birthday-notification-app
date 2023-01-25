@@ -1,6 +1,7 @@
 import { Moment } from 'moment'
 
-import type { DatePickerProps } from 'antd/es/date-picker'
+import type { DatePickerProps, RangePickerProps } from 'antd/es/date-picker'
+
 
 interface INotification {
   type: string;
@@ -8,7 +9,6 @@ interface INotification {
   identifier: { id: string };
   description?: string;
   date?: Date;
-  start?: Date;
   end?: Date;
   time?: number;
 }
@@ -59,7 +59,7 @@ interface IModalWindow {
   handleMarkdownInput: (value: string) => void;
   handleTypeInput: (value: string) => void;
   handleDateInput: (value: DatePickerProps['value']) => void;
-  handleStartInput: (value: DatePickerProps['value']) => void;
+  handleTimePickerInput: (value: Moment | null) => void;
   handleEndInput: (value: DatePickerProps['value']) => void;
   handleChange: (value: DatePickerProps['value']) => void;
   handleTextInput: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -68,9 +68,13 @@ interface IModalWindow {
   type: string;
   description: string;
   date: Date;
-  start: Date;
+  timePicker: Moment | null;
   end: Date;
   time: number;
+}
+
+interface ISection {
+  (date: JSX.Element, duration: JSX.Element, end: JSX.Element): JSX.Element;
 }
 
 interface INotificationComponent {
@@ -89,11 +93,9 @@ interface IDefineNotificationsByTime {
 }
 
 interface IItemFromContentful {
-  name?: { 'en-US': string };
   date?: { 'en-US': Date };
   title?: { 'en-US': string };
   description?: { 'en-US': string };
-  start?: { 'en-US': Date };
   end?: { 'en-US': Date };
   time?: { 'en-US': number };
 }
@@ -111,4 +113,5 @@ export {
   INotificationByTypeByDay,
   IDefineNotificationsByTime,
   IItemFromContentful,
+  ISection
 }

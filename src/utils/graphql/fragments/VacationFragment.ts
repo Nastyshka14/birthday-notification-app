@@ -8,7 +8,7 @@ const VacationFragment = gql`
     }
     title
     description
-    start
+    date
     end
   }
 `
