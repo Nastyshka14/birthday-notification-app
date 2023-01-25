@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import moment from 'moment'
 
-import { EVENTS } from '@constants/eventVariants'
 import { INotification } from '@domain/types'
 import './EventRecord.scss'
 
@@ -11,13 +10,13 @@ export const EventRecord = ({ eventRecord }: { eventRecord: INotification }): JS
   const [reminder, setReminder] = useState<INotification>(null)
 
   useEffect(() => {
-    if (eventRecord.type === EVENTS.meeting) {
+    if (eventRecord.type === 'Meeting') {
       setMeeting(eventRecord)
     }
-    if (eventRecord.type === EVENTS.vacation) {
+    if (eventRecord.type === 'Vacation') {
       setVacation(eventRecord)
     }
-    if (eventRecord.type === EVENTS.reminder) {
+    if (eventRecord.type === 'Reminder') {
       setReminder(eventRecord)
     }
   }, [eventRecord])

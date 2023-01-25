@@ -7,7 +7,6 @@ import {
   INotificationByTypeByDay,
 } from '@domain/types'
 import { dateToDayFormat, momentToDayFormat } from '@utils/functions/momentToISOString'
-import { EVENTS } from '@constants/eventVariants'
 import { parseCalendarCellData } from '@utils/functions/parseCalendarCellData'
 
 export const defineNotificationsByTypeByDay: INotificationByTypeByDay = (
@@ -30,24 +29,24 @@ export const defineNotificationsByTypeByDay: INotificationByTypeByDay = (
 
     const eventType = eventsList[0].type
 
-    if (eventType === EVENTS.birthday) {
+    if (eventType === 'Birthdays') {
       return eventsList.filter((birthday: INotification): boolean => {
         return (new Date(birthday.date).getDate().toString() === cellDate.format('D') && (new Date(birthday.date).getMonth() + 1).toString() === cellDate.format('M'))
       })
     }
 
-    if (eventType === EVENTS.vacation) {
+    if (eventType === 'Vacation') {
       return eventsList.filter((vacation: INotification): boolean => {
         return getTimeInterval(vacation.start, vacation.end)
       })
     }
 
-    if (eventType === EVENTS.meeting) {
+    if (eventType === 'Meeting') {
       return eventsList.filter((meeting: INotification): boolean => {
         return getTimeInterval(meeting.start, meeting.end)
       })
     }
-    if (eventType === EVENTS.reminder) {
+    if (eventType === 'Reminder') {
       return eventsList.filter((reminder: INotification): boolean => {
         return dateToDayFormat(reminder.date) === momentToDayFormat(cellDate)
       })

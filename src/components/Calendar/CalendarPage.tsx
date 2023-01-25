@@ -34,8 +34,10 @@ export const CalendarPage = (): JSX.Element => {
   const [start, setStart] = useState<Date>(new Date())
   const [end, setEnd] = useState<Date>(new Date())
   const [date, setDate] = useState<Date>(new Date())
+  const [timePicker, setTimePicker] = useState<Moment | null>(null);
   const [eventID, setEventID] = useState<string>(null)
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
+  const [clock, setClock] = useState(moment(new Date()).format('MMM D YYYY, HH:mm'))
   const operation = eventID ? EVENTS_OPERATIONS.update : EVENTS_OPERATIONS.create
 
   const generateID = (): string => {
@@ -83,7 +85,7 @@ export const CalendarPage = (): JSX.Element => {
         filterNotificationsForToday(notificationsForToday)
       }
     }
-  }, [data])
+  }, [data, clock])
 
   useEffect(() => {
     if (data) {
@@ -97,7 +99,11 @@ export const CalendarPage = (): JSX.Element => {
         filterNotificationsForTime(notificationsForTime.remindersBefore)
       }
     }
-  }, [data])
+  }, [data, clock])
+
+  useEffect(() => {
+    setInterval(() => {setClock(moment(new Date()).format('MMM D YYYY, HH:mm'))}, 20000)
+  })
 
   const handleRemoveEvent = async (id: string): Promise<void> => {
     const isEvent = await isEventWithIDExist(id)
@@ -152,18 +158,18 @@ export const CalendarPage = (): JSX.Element => {
   const handleUpdateSubmit = async (): Promise<void> => {
     const isEvent = await isEventWithIDExist(eventID)
     const event =
-      (type.toLocaleLowerCase() === EVENTS.birthday.toLowerCase() && {
+      (type === EVENTS.birthday && {
         name: { 'en-US': title },
         date: { 'en-US': date },
       }) ||
-      (type.toLocaleLowerCase() === EVENTS.reminder.toLowerCase() && {
+      (type === EVENTS.reminder && {
         time: { 'en-US': time },
         title: { 'en-US': title },
         date: { 'en-US': date },
         description: { 'en-US': description },
       }) ||
-      ((type.toLocaleLowerCase() === EVENTS.meeting.toLowerCase() ||
-        type.toLocaleLowerCase() === EVENTS.vacation.toLowerCase()) && {
+      ((type === EVENTS.meeting ||
+        type === EVENTS.vacation) && {
         title: { 'en-US': title },
         description: { 'en-US': description },
         start: { 'en-US': start },
@@ -241,11 +247,16 @@ export const CalendarPage = (): JSX.Element => {
   }
 
   const handleDateWithTimeInput = (value: DatePickerProps['value']) => {
+    console.log(value)
     setDate(new Date(value.toDate()))
   }
 
   const handleTimeInput = (value: string) => {
     setTime(+value)
+  }
+  const handleTimePickerInput = (value) => {
+    console.log(new Date(value.toDate()).getHours(), new Date(value.toDate()).getMinutes())
+    setTimePicker(value)
   }
 
   const handleDateInput = (value: DatePickerProps['value']) => {
@@ -253,11 +264,16 @@ export const CalendarPage = (): JSX.Element => {
   }
 
   const handleStartInput = (value: DatePickerProps['value']) => {
-    setStart(new Date(value.format('YYYY-MM-DD')))
+    console.log(value)
+    // setStart(new Date(value.format('YYYY-MM-DD')))
+    setStart(new Date(value.toDate()))
   }
 
   const handleEndInput = (value: DatePickerProps['value']) => {
-    setEnd(new Date(value.format('YYYY-MM-DD')))
+// start.setMinutes(start.getMinutes() + new Date(timePicker.toDate()).getMinutes())
+//     start.setHours(start.getHours() + new Date(timePicker.toDate()).getHours())
+//     console.log(start)
+    // setEnd(new Date(value.format('YYYY-MM-DD')))
   }
 
   const handleTextInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -277,20 +293,30 @@ export const CalendarPage = (): JSX.Element => {
   }
 
   const handleCreateEvent = async (): Promise<void> => {
+    const getEndDate = () => {
+      let endDate: Date
+      start.setMinutes(start.getMinutes() + new Date(timePicker.toDate()).getMinutes())
+    start.setHours(start.getHours() + new Date(timePicker.toDate()).getHours())
+  return endDate = start}
     const ID = generateID() + '84okokoko374' + generateID()
     const event =
-      (type.toLocaleLowerCase() === EVENTS.birthday.toLowerCase() && {
+      (type === EVENTS.birthday && {
         name: { 'en-US': title },
         date: { 'en-US': date },
       }) ||
-      (type.toLocaleLowerCase() === EVENTS.reminder.toLowerCase() && {
+      (type === EVENTS.reminder && {
         title: { 'en-US': title },
         date: { 'en-US': date },
         time: { 'en-US': time },
         description: { 'en-US': description },
       }) ||
-      ((type.toLocaleLowerCase() === EVENTS.meeting.toLowerCase() ||
-        type.toLocaleLowerCase() === EVENTS.vacation.toLowerCase()) && {
+      (type === EVENTS.meeting  && {
+        title: { 'en-US': title },
+        description: { 'en-US': description },
+        start: { 'en-US': start },
+        end: { 'en-US': getEndDate() },
+      }) ||
+        (type === EVENTS.vacation && {
         title: { 'en-US': title },
         description: { 'en-US': description },
         start: { 'en-US': start },
@@ -319,7 +345,7 @@ export const CalendarPage = (): JSX.Element => {
               identifier: { id: ID },
               title: title,
               start: start,
-              end: end,
+              end: getEndDate(),
               description: description,
             },
             ...data.data.meetingCollection.items,
@@ -426,10 +452,14 @@ export const CalendarPage = (): JSX.Element => {
             )
           }
           return (
+            <div className='lol'>
+              <div className='calendar__clock'>{clock}</div>
             <div className='calendar__buttons'>
               <Row gutter={8}>
-                <Col />
-                <Button onClick={showModal}>Create</Button>
+                <Col>
+                
+                <Button onClick={showModal}>Create new</Button>
+                </Col>
                 <Col>
                   <Select
                     size='middle'
@@ -459,6 +489,7 @@ export const CalendarPage = (): JSX.Element => {
                 </Col>
               </Row>
             </div>
+            </div>
           )
         }}
         dateCellRender={dateCellRender}
@@ -467,6 +498,7 @@ export const CalendarPage = (): JSX.Element => {
         openMod={isModalOpen}
         handleCancel={handleCancel}
         time={time}
+        timePicker={timePicker}
         operation={operation}
         type={type}
         handleTypeInput={handleTypeInput}
@@ -477,6 +509,7 @@ export const CalendarPage = (): JSX.Element => {
         end={end}
         handleChange={handleDateWithTimeInput}
         handleOk={handleOk}
+        handleTimePickerInput={handleTimePickerInput}
         handleDateInput={handleDateInput}
         handleTextInput={handleTextInput}
         handleStartInput={handleStartInput}

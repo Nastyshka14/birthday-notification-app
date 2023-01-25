@@ -1,8 +1,8 @@
 enum EVENTS {
-  birthday = 'Birthdays',
-  vacation = 'Vacation',
-  meeting = 'Meeting',
-  reminder = 'Reminder',
+  birthday = 'birthdays',
+  vacation = 'vacation',
+  meeting = 'meeting',
+  reminder = 'reminder',
 }
 
 enum EVENTS_OPERATIONS {
