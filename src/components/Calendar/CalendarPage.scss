@@ -8,3 +8,17 @@
   padding: 8;
   @include flex-end;
 }
+
+.lol {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+}
+
+.calendar__clock {
+  color: #40a9ff;
+  padding: 4.3px 10px;
+  border-radius: 2px;
+  border: 1px solid #40a9ff;
+}
