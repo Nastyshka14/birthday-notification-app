@@ -37,13 +37,13 @@ export const defineNotificationsByTypeByDay: INotificationByTypeByDay = (
 
     if (eventType === 'Vacation') {
       return eventsList.filter((vacation: INotification): boolean => {
-        return getTimeInterval(vacation.start, vacation.end)
+        return getTimeInterval(vacation.date, vacation.end)
       })
     }
 
     if (eventType === 'Meeting') {
       return eventsList.filter((meeting: INotification): boolean => {
-        return getTimeInterval(meeting.start, meeting.end)
+        return getTimeInterval(meeting.date, meeting.end)
       })
     }
     if (eventType === 'Reminder') {

@@ -8,6 +8,7 @@ export const EventRecord = ({ eventRecord }: { eventRecord: INotification }): JS
   const [meeting, setMeeting] = useState<INotification>(null)
   const [vacation, setVacation] = useState<INotification>(null)
   const [reminder, setReminder] = useState<INotification>(null)
+  const [birthdays, setBirthdays] = useState<INotification>(null)
 
   useEffect(() => {
     if (eventRecord.type === 'Meeting') {
@@ -19,18 +20,26 @@ export const EventRecord = ({ eventRecord }: { eventRecord: INotification }): JS
     if (eventRecord.type === 'Reminder') {
       setReminder(eventRecord)
     }
+    if (eventRecord.type === 'Birthdays') {
+      setBirthdays(eventRecord)
+    }
   }, [eventRecord])
 
-  const eventDateIntervalLayout = (eventItem: INotification): JSX.Element => (
+  const eventVacationDateLayout = (eventItem: INotification): JSX.Element => (
     <div className='event-record__date'>
-      {moment(eventItem.start).format('MMM Do YYYY')} -
-      {moment(eventItem.end).format('MMM Do YYYY')}
+      {moment(eventItem.date).format('MMM Do YYYY')} - {moment(eventItem.end).format('MMM Do YYYY')}
     </div>
   )
-  const eventDateLayout = (eventItem: INotification): JSX.Element => (
+  const eventMeetingDateLayout = (eventItem: INotification): JSX.Element => (
     <div className='event-record__date'>
-      {moment(eventItem.date).format('MMM D YYYY HH:mm')}
+      {moment(eventItem.date).format('MMM D YYYY HH:mm')} - {moment(eventItem.end).format('MMM D YYYY HH:mm')}
     </div>
+  )
+  const eventReminderDateLayout = (eventItem: INotification): JSX.Element => (
+    <div className='event-record__date'>{moment(eventItem.date).format('MMM D YYYY HH:mm')}</div>
+  )
+  const eventBirthdayDateLayout = (eventItem: INotification): JSX.Element => (
+    <div className='event-record__date'>{moment(eventItem.date).format('MMM D YYYY')}</div>
   )
   const getImage = (type: string): string => {
     return `event-record__image event-record__image--${type.toLowerCase()}`
@@ -44,9 +53,10 @@ export const EventRecord = ({ eventRecord }: { eventRecord: INotification }): JS
         {eventRecord?.description && (
           <p className='event-record__description'>{eventRecord.description}</p>
         )}
-        {meeting && eventDateIntervalLayout(meeting)}
-        {vacation && eventDateIntervalLayout(vacation)}
-        {reminder && eventDateLayout(reminder)}
+        {meeting && eventMeetingDateLayout(meeting)}
+        {vacation && eventVacationDateLayout(vacation)}
+        {reminder && eventReminderDateLayout(reminder)}
+        {birthdays && eventBirthdayDateLayout(birthdays)}
       </div>
     </div>
   )

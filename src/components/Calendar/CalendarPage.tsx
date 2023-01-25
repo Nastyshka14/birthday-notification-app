@@ -31,10 +31,9 @@ export const CalendarPage = (): JSX.Element => {
   const [title, setTitle] = useState<string>('')
   const [time, setTime] = useState<number>(0)
   const [description, setDescription] = useState<string>('')
-  const [start, setStart] = useState<Date>(new Date())
   const [end, setEnd] = useState<Date>(new Date())
   const [date, setDate] = useState<Date>(new Date())
-  const [timePicker, setTimePicker] = useState<Moment | null>(null);
+  const [timePicker, setTimePicker] = useState<Moment | null>(null)
   const [eventID, setEventID] = useState<string>(null)
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   const [clock, setClock] = useState(moment(new Date()).format('MMM D YYYY, HH:mm'))
@@ -102,7 +101,9 @@ export const CalendarPage = (): JSX.Element => {
   }, [data, clock])
 
   useEffect(() => {
-    setInterval(() => {setClock(moment(new Date()).format('MMM D YYYY, HH:mm'))}, 20000)
+    setInterval(() => {
+      setClock(moment(new Date()).format('MMM D YYYY, HH:mm'))
+    }, 20000)
   })
 
   const handleRemoveEvent = async (id: string): Promise<void> => {
@@ -137,18 +138,13 @@ export const CalendarPage = (): JSX.Element => {
       if (eventWithID) {
         const type = eventWithID.sys.contentType.sys.id
         setType(type)
-        if (type === 'birthdays') {
-          setTitle(eventWithID.fields.name['en-US'])
-          setDate(eventWithID.fields.date['en-US'])
-        } else if (type === 'reminder') {
-          setTitle(eventWithID.fields.title['en-US'])
+        setTitle(eventWithID.fields.title['en-US'])
+        setDate(eventWithID.fields.date['en-US'])
+        if (type === EVENTS.reminder) {
           setTime(eventWithID.fields.time['en-US'])
-          setDate(eventWithID.fields.date['en-US'])
           setDescription(eventWithID.fields.description['en-US'])
-        } else {
-          setTitle(eventWithID.fields.title['en-US'])
+        } else if (type === EVENTS.meeting || type === EVENTS.vacation) {
           setDescription(eventWithID.fields.description['en-US'])
-          setStart(eventWithID.fields.start['en-US'])
           setEnd(eventWithID.fields.end['en-US'])
         }
       }
@@ -159,7 +155,7 @@ export const CalendarPage = (): JSX.Element => {
     const isEvent = await isEventWithIDExist(eventID)
     const event =
       (type === EVENTS.birthday && {
-        name: { 'en-US': title },
+        title: { 'en-US': title },
         date: { 'en-US': date },
       }) ||
       (type === EVENTS.reminder && {
@@ -168,11 +164,10 @@ export const CalendarPage = (): JSX.Element => {
         date: { 'en-US': date },
         description: { 'en-US': description },
       }) ||
-      ((type === EVENTS.meeting ||
-        type === EVENTS.vacation) && {
+      ((type === EVENTS.meeting || type === EVENTS.vacation) && {
         title: { 'en-US': title },
         description: { 'en-US': description },
-        start: { 'en-US': start },
+        date: { 'en-US': date },
         end: { 'en-US': end },
       })
 
@@ -196,7 +191,7 @@ export const CalendarPage = (): JSX.Element => {
               ...eventItem,
               type: type[0].toUpperCase() + type.slice(1),
               title: title,
-              start: start,
+              date: date,
               end: end,
               description: description,
             }
@@ -209,7 +204,7 @@ export const CalendarPage = (): JSX.Element => {
               ...eventItem,
               type: type[0].toUpperCase() + type.slice(1),
               title: title,
-              start: start,
+              date: date,
               end: end,
               description: description,
             }
@@ -247,33 +242,25 @@ export const CalendarPage = (): JSX.Element => {
   }
 
   const handleDateWithTimeInput = (value: DatePickerProps['value']) => {
-    console.log(value)
     setDate(new Date(value.toDate()))
   }
 
   const handleTimeInput = (value: string) => {
     setTime(+value)
   }
-  const handleTimePickerInput = (value) => {
-    console.log(new Date(value.toDate()).getHours(), new Date(value.toDate()).getMinutes())
+
+  const handleTimePickerInput = (value: Moment) => {
     setTimePicker(value)
+    const newEnd = moment(date).add(value.hours(), 'hours').add(value.minutes(), 'minutes')
+    setEnd(new Date(newEnd.toDate()))
   }
 
   const handleDateInput = (value: DatePickerProps['value']) => {
     setDate(new Date(value.toDate()))
   }
 
-  const handleStartInput = (value: DatePickerProps['value']) => {
-    console.log(value)
-    // setStart(new Date(value.format('YYYY-MM-DD')))
-    setStart(new Date(value.toDate()))
-  }
-
   const handleEndInput = (value: DatePickerProps['value']) => {
-// start.setMinutes(start.getMinutes() + new Date(timePicker.toDate()).getMinutes())
-//     start.setHours(start.getHours() + new Date(timePicker.toDate()).getHours())
-//     console.log(start)
-    // setEnd(new Date(value.format('YYYY-MM-DD')))
+    setEnd(new Date(value.toDate()))
   }
 
   const handleTextInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -293,44 +280,47 @@ export const CalendarPage = (): JSX.Element => {
   }
 
   const handleCreateEvent = async (): Promise<void> => {
-    const getEndDate = () => {
-      let endDate: Date
-      start.setMinutes(start.getMinutes() + new Date(timePicker.toDate()).getMinutes())
-    start.setHours(start.getHours() + new Date(timePicker.toDate()).getHours())
-  return endDate = start}
     const ID = generateID() + '84okokoko374' + generateID()
+    const titleField = { title: { 'en-US': title } }
+    const dateField = { date: { 'en-US': date } }
+    const descriptionField = { description: { 'en-US': description } }
+    const timeField = { time: { 'en-US': time } }
+    const endField = { end: { 'en-US': end } }
     const event =
       (type === EVENTS.birthday && {
-        name: { 'en-US': title },
-        date: { 'en-US': date },
+        ...titleField,
+        ...dateField,
       }) ||
       (type === EVENTS.reminder && {
-        title: { 'en-US': title },
-        date: { 'en-US': date },
-        time: { 'en-US': time },
-        description: { 'en-US': description },
+        ...titleField,
+        ...dateField,
+        ...descriptionField,
+        ...timeField,
       }) ||
-      (type === EVENTS.meeting  && {
-        title: { 'en-US': title },
-        description: { 'en-US': description },
-        start: { 'en-US': start },
-        end: { 'en-US': getEndDate() },
+      (type === EVENTS.meeting && {
+        ...titleField,
+        ...dateField,
+        ...descriptionField,
+        ...endField,
       }) ||
-        (type === EVENTS.vacation && {
-        title: { 'en-US': title },
-        description: { 'en-US': description },
-        start: { 'en-US': start },
-        end: { 'en-US': end },
+      (type === EVENTS.vacation && {
+        ...titleField,
+        ...dateField,
+        ...descriptionField,
+        ...endField,
       })
 
     createEvent(type, ID, event)
+
+    const typeField = { type: type[0].toUpperCase() + type.slice(1) }
+    const idField = { identifier: { id: ID } }
 
     const dataWithNewBirthday =
       type === 'birthdays'
         ? [
             {
-              type: type[0].toUpperCase() + type.slice(1),
-              identifier: { id: ID },
+              ...typeField,
+              ...idField,
               title: title,
               date: date,
             },
@@ -341,11 +331,11 @@ export const CalendarPage = (): JSX.Element => {
       type === 'meeting'
         ? [
             {
-              type: type[0].toUpperCase() + type.slice(1),
-              identifier: { id: ID },
+              ...typeField,
+              ...idField,
               title: title,
-              start: start,
-              end: getEndDate(),
+              date: date,
+              end: end,
               description: description,
             },
             ...data.data.meetingCollection.items,
@@ -355,10 +345,10 @@ export const CalendarPage = (): JSX.Element => {
       type === 'vacation'
         ? [
             {
-              type: type[0].toUpperCase() + type.slice(1),
-              identifier: { id: ID },
+              ...typeField,
+              ...idField,
               title: title,
-              start: start,
+              date: date,
               end: end,
               description: description,
             },
@@ -369,8 +359,8 @@ export const CalendarPage = (): JSX.Element => {
       type === 'reminder'
         ? [
             {
-              type: type[0].toUpperCase() + type.slice(1),
-              identifier: { id: ID },
+              ...typeField,
+              ...idField,
               title: title,
               description: description,
               date: date,
@@ -454,41 +444,40 @@ export const CalendarPage = (): JSX.Element => {
           return (
             <div className='lol'>
               <div className='calendar__clock'>{clock}</div>
-            <div className='calendar__buttons'>
-              <Row gutter={8}>
-                <Col>
-                
-                <Button onClick={showModal}>Create new</Button>
-                </Col>
-                <Col>
-                  <Select
-                    size='middle'
-                    dropdownMatchSelectWidth={false}
-                    className='my-year-select'
-                    value={year}
-                    onChange={(newYear) => {
-                      const now = value.clone().year(newYear)
-                      onChange(now)
-                    }}
-                  >
-                    {options}
-                  </Select>
-                </Col>
-                <Col>
-                  <Select
-                    size='middle'
-                    dropdownMatchSelectWidth={false}
-                    value={month}
-                    onChange={(newMonth) => {
-                      const now = value.clone().month(newMonth)
-                      onChange(now)
-                    }}
-                  >
-                    {monthOptions}
-                  </Select>
-                </Col>
-              </Row>
-            </div>
+              <div className='calendar__buttons'>
+                <Row gutter={8}>
+                  <Col>
+                    <Button onClick={showModal}>Create new</Button>
+                  </Col>
+                  <Col>
+                    <Select
+                      size='middle'
+                      dropdownMatchSelectWidth={false}
+                      className='my-year-select'
+                      value={year}
+                      onChange={(newYear) => {
+                        const now = value.clone().year(newYear)
+                        onChange(now)
+                      }}
+                    >
+                      {options}
+                    </Select>
+                  </Col>
+                  <Col>
+                    <Select
+                      size='middle'
+                      dropdownMatchSelectWidth={false}
+                      value={month}
+                      onChange={(newMonth) => {
+                        const now = value.clone().month(newMonth)
+                        onChange(now)
+                      }}
+                    >
+                      {monthOptions}
+                    </Select>
+                  </Col>
+                </Row>
+              </div>
             </div>
           )
         }}
@@ -505,14 +494,12 @@ export const CalendarPage = (): JSX.Element => {
         title={title}
         description={description}
         date={date}
-        start={start}
         end={end}
         handleChange={handleDateWithTimeInput}
         handleOk={handleOk}
         handleTimePickerInput={handleTimePickerInput}
         handleDateInput={handleDateInput}
         handleTextInput={handleTextInput}
-        handleStartInput={handleStartInput}
         handleEndInput={handleEndInput}
         handleMarkdownInput={handleMarkdownInput}
         handleTimeInput={handleTimeInput}
