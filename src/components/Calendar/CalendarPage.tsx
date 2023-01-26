@@ -93,7 +93,9 @@ export const CalendarPage = (): JSX.Element => {
       if (notificationsForTime.reminders.length > 0) {
         filterNotificationsForTime(notificationsForTime.reminders)
       }
-
+      if (notificationsForTime.meetings.length > 0) {
+        filterNotificationsForTime(notificationsForTime.meetings)
+      }
       if (notificationsForTime.remindersBefore.length > 0) {
         filterNotificationsForTime(notificationsForTime.remindersBefore)
       }

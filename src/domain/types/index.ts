@@ -88,6 +88,7 @@ interface INotificationByTypeByDay {
 interface IDefineNotificationsByTime {
   (data: IDataFromServer, cellDate: Moment): {
     reminders: INotification[] | [];
+    meetings: INotification[] | [];
     remindersBefore: INotification[] | [];
   };
 }

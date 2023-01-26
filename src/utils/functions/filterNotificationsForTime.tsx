@@ -29,11 +29,16 @@ export const filterNotificationsForTime = (notificationsForToday: INotification[
         notificationsForTodayFromStorage,
       )
 
-      newEventsForToday.filter((item: INotification): boolean => item.type === 'Reminder').length >
-        0 &&
+      newEventsForToday.filter((item: INotification): boolean => item.type === 'Reminder').length > 0 &&
         notification.open({
           message: <NotificationTitle />,
           description: Notifications(newEventsForToday.filter((item) => item.type === 'Reminder')),
+          duration: 0,
+        })
+        newEventsForToday.filter((item: INotification): boolean => item.type === 'Meeting').length > 0 &&
+        notification.open({
+          message: <NotificationTitle />,
+          description: Notifications(newEventsForToday.filter((item) => item.type === 'Meeting')),
           duration: 0,
         })
 
@@ -45,6 +50,12 @@ export const filterNotificationsForTime = (notificationsForToday: INotification[
       notification.open({
         message: <NotificationTitle />,
         description: Notifications(notificationsList.filter((item) => item.type === 'Reminder')),
+        duration: 0,
+      })
+      notificationsList.filter((item) => item.type === 'Meeting').length > 0 &&
+      notification.open({
+        message: <NotificationTitle />,
+        description: Notifications(notificationsList.filter((item) => item.type === 'Meeting')),
         duration: 0,
       })
     saveDataToStorage('reminders', JSON.stringify(notificationsList))

@@ -104,7 +104,7 @@ export const ModalWindow = ({
     <div className='modal__section--markdown'>
       <div className='modal__section-img modal__section--description-img' />
       <div>
-        <MarkdownEditor value={description} onChange={handleMarkdownInput} />
+        <MarkdownEditor value={description} onChange={handleMarkdownInput} style={{ width: '450px' }} />
       </div>
     </div>
   )
