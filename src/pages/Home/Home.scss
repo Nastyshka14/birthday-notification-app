@@ -1,7 +1,7 @@
 .home {
   overflow-y: hidden;
 
-  &__navbar {
+  .navbar {
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -10,7 +10,7 @@
     height: 70px;
     background-color: #e6f7ff;
 
-    .auth--text {
+    &__auth-text {
       font-weight: 500;
       font-size: 15px;
       color: black;
@@ -20,7 +20,7 @@
 
       &:after {
         display: block;
-        content: "";
+        content: '';
         height: 3px;
         width: 0;
         background-color: black;
@@ -36,18 +36,18 @@
         width: 100%;
       }
     }
-
-    &.logout {
-      justify-content: flex-start;
-      padding-left: 50px;
-    }
   }
 
-  &__container {
+  .navbar_logout {
+    justify-content: flex-start;
+    padding-left: 50px;
+  }
+
+  .container {
     padding-top: 10px;
     filter: blur(4px);
 
-    .overlay {
+    &__overlay {
       width: 100%;
       height: 100vh;
       position: absolute;
@@ -55,14 +55,16 @@
       z-index: 10;
     }
   }
+}
 
-  @media screen and (max-width: 768px) {
-    &__navbar {
+@media screen and (max-width: 768px) {
+  .home {
+    .navbar {
       padding-right: 10px;
-      .logout {
-        padding-left: 10px;
-      }
+    }
+
+    .navbar_logout {
+      padding-left: 10px;
     }
   }
-
 }
