@@ -444,7 +444,7 @@ export const CalendarPage = (): JSX.Element => {
             )
           }
           return (
-            <div className='lol'>
+            <div className='calendar'>
               <div className='calendar__clock'>{clock}</div>
               <div className='calendar__buttons'>
                 <Row gutter={8}>
