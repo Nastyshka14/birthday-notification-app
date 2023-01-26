@@ -4,7 +4,7 @@ import { IDefineNotificationsByTime, IEventsCollections, INotification } from '@
 import { parseCalendarCellData } from '@utils/functions/parseCalendarCellData'
 
 export const defineNotificationsByTime: IDefineNotificationsByTime = (data, cellDate) => {
-  const { reminders }: IEventsCollections = parseCalendarCellData(data)
+  const { reminders, meetings }: IEventsCollections = parseCalendarCellData(data)
 
   const getParsedDate = (date: Moment | Date) => {
     return Date.parse(date.toLocaleString())
@@ -12,10 +12,20 @@ export const defineNotificationsByTime: IDefineNotificationsByTime = (data, cell
 
   reminders.length === 0 && []
 
-  const filterEventsByTime = (): Array<INotification> | [] => {
+  const filterRemindersByTime = (): Array<INotification> | [] => {
       return reminders.filter((reminder: INotification): boolean => {
         return (
           getParsedDate(reminder.date) - (getParsedDate(reminder.date) % 60000) ===
+          getParsedDate(cellDate) - (getParsedDate(cellDate) % 60000)
+        )
+      })
+  }
+  meetings.length === 0 && []
+
+  const filterMeetingsByTime = (): Array<INotification> | [] => {
+      return meetings.filter((meeting: INotification): boolean => {
+        return (
+          getParsedDate(meeting.date) - (getParsedDate(meeting.date) % 60000) ===
           getParsedDate(cellDate) - (getParsedDate(cellDate) % 60000)
         )
       })
@@ -33,7 +43,8 @@ export const defineNotificationsByTime: IDefineNotificationsByTime = (data, cell
   }
 
   return {
-    reminders: filterEventsByTime(),
+    reminders: filterRemindersByTime(),
+    meetings: filterMeetingsByTime(),
     remindersBefore: filterEventsByTimeBefore(),
   }
 }

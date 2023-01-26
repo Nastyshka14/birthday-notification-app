@@ -36,12 +36,6 @@ export const filterNotificationsForToday = (notificationsForToday: IEventsCollec
           description: Notifications(newEventsForToday.filter((item) => item.type === 'Birthdays')),
           duration: 0,
         })
-      newEventsForToday.filter((item: INotification): boolean => item.type === 'Meeting').length > 0 &&
-        notification.open({
-          message: <NotificationTitle />,
-          description: Notifications(newEventsForToday.filter((item) => item.type === 'Meeting')),
-          duration: 0,
-        })
       newEventsForToday.filter((item: INotification): boolean => item.type === 'Vacation').length > 0 &&
         notification.open({
           message: <NotificationTitle />,
@@ -63,12 +57,6 @@ export const filterNotificationsForToday = (notificationsForToday: IEventsCollec
       notification.open({
         message: <NotificationTitle />,
         description: Notifications(notificationsList.filter((item) => item.type === 'Birthdays')),
-        duration: 0,
-      })
-    notificationsList.filter((item) => item.type === 'Meeting').length > 0 &&
-      notification.open({
-        message: <NotificationTitle />,
-        description: Notifications(notificationsList.filter((item) => item.type === 'Meeting')),
         duration: 0,
       })
     saveDataToStorage('notifications', JSON.stringify(notificationsList))
