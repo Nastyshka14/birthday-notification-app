@@ -101,6 +101,17 @@ interface ItemFromContentful {
   time?: { 'en-US': number };
 }
 
+interface LoginProps {
+  email: string;
+  name: string;
+  picture: string;
+}
+
+type LoginState = {
+  login?: LoginProps;
+  setLogin: (value: LoginProps) => void;
+}
+
 export {
   Notification,
   EventsCollections,
@@ -114,5 +125,7 @@ export {
   NotificationByTypeByDay,
   DefineNotificationsByTime,
   ItemFromContentful,
-  Section
+  Section,
+  LoginProps,
+  LoginState,
 }

@@ -67,6 +67,8 @@ export const CalendarPage = (): JSX.Element => {
         setData(data)
       })
     }
+
+
     runsCounterRef.current++
     return () => setData(null)
   }, [])
