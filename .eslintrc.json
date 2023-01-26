@@ -1,18 +1,37 @@
 {
   "env": {
     "browser": true,
+    "node": true,
     "es2021": true,
-    "jest": true,
-    "node": true
+    "jest": true
   },
-  "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended", "prettier"],
+  "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended", "prettier", "plugin:react-hooks/recommended"],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
-  "plugins": ["react", "react-hooks", "prettier", "@typescript-eslint"],
+  "plugins": ["react", "react-hooks", "prettier", "@typescript-eslint", "import",
+  "simple-import-sort"],
   "rules": {
+    "comma-dangle": 0,
+    "import/imports-first": 0,
+    "import/no-unresolved": 0,
+    "global-require": 0,
+    "class-methods-use-this": 0,
+    "implicit-arrow-linebreak": 0,
+    "import/prefer-default-export": 0,
+    "import/extensions": 0,
+    "operator-linebreak": [
+      "error",
+      "after",
+      {
+        "overrides": {
+          "?": "ignore",
+          ":": "ignore"
+        }
+      }
+    ],
     "react/react-in-jsx-scope": "off",
     "camelcase": "error",
     "sort-imports": [
@@ -25,18 +44,71 @@
         "allowSeparatedGroups": true
       }
     ],
-    "object-curly-spacing": ["error", "always"],
+    "arrow-body-style": [2, "as-needed"],
+    "arrow-parens": ["error", "always"],
+    "no-debugger": 0,
+    "no-restricted-globals": ["error", "event", "fdescribe"],
+    "no-unused-expressions": [
+      "error",
+      {
+        "allowShortCircuit": true
+      }
+    ],
+    "dot-notation": 0,
+    "no-console": 1,
+    "new-cap": 0,
+    "simple-import-sort/imports": [
+      "error",
+      {
+        "groups": [
+          ["^\\u0000"],
+          ["^@?\\w"],
+          ["^[^. ]"],
+          [
+            "^(@providers|@types|@components|@containers|@constants|@pages|@utils|@hooks|@images|@scss)(/.*|$)"
+          ],
+          ["^\\."],
+          ["^(images|!!raw-loader)"],
+          ["w*(w*.*css)"]
+        ]
+      }
+    ],
+    "strict": 0,
+    "no-param-reassign": [
+      "error",
+      {
+        "props": false
+      }
+    ],
+    "jsx-quotes": [0, "prefer-single"],
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
     "spaced-comment": "error",
+    "quotes": [
+      "error",
+      "single",
+      {
+        "allowTemplateLiterals": true
+      }
+    ],
+    "no-duplicate-imports": [
+      "error",
+      {
+        "includeExports": true
+      }
+    ],
+    "no-underscore-dangle": 0,
+    "no-use-before-define": 0,
+    "eol-last": 0,
+    "no-shadow": 0,
+    "object-curly-spacing": ["error", "always"],
     "react/self-closing-comp": ["error", {
       "component": true,
       "html": true
     }],
-    "quotes": ["error", "single", { "allowTemplateLiterals": true }],
-    "no-duplicate-imports": ["error", { "includeExports": true }]
-  },
   "settings": {
     "import/resolver": {
       "typescript": {}
     }
   }
-}
+}}
