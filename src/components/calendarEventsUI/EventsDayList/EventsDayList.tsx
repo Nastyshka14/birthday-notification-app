@@ -2,7 +2,7 @@ import React from 'react'
 import moment from 'moment'
 
 import { Badge, Popover, Typography } from 'antd'
-import { IEventsDayList, INotification } from '@domain/types'
+import { EventsDayListProps, Notification } from '@domain/types'
 import MarkdownEditor from '@uiw/react-markdown-editor'
 import './EventsDayList.scss'
 
@@ -12,7 +12,7 @@ export const EventsDayList = ({
   collection,
   handleRemoveEvent,
   handleUpdateEvent,
-}: IEventsDayList): JSX.Element => {
+}: EventsDayListProps): JSX.Element => {
   const color = (value: string): string => {
     if (value === 'Birthdays') {
       return '#91caff'
@@ -43,7 +43,7 @@ export const EventsDayList = ({
     <div>
       <ul className='events'>
         {collection.map(
-          <T extends INotification>(eventItem: T): JSX.Element => (
+          <T extends Notification>(eventItem: T): JSX.Element => (
             <Popover
               placement='right'
               title={
