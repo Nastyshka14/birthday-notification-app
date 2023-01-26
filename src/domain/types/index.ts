@@ -1,9 +1,9 @@
 import { Moment } from 'moment'
 
-import type { DatePickerProps, RangePickerProps } from 'antd/es/date-picker'
+import type { DatePickerProps } from 'antd/es/date-picker'
 
 
-interface INotification {
+interface Notification {
   type: string;
   title: string;
   identifier: { id: string };
@@ -13,45 +13,45 @@ interface INotification {
   time?: number;
 }
 
-interface IEventsCollections {
-  birthdays: Array<INotification>;
-  meetings: Array<INotification>;
-  vacations: Array<INotification>;
-  reminders: Array<INotification>;
+interface EventsCollections {
+  birthdays: Array<Notification>;
+  meetings: Array<Notification>;
+  vacations: Array<Notification>;
+  reminders: Array<Notification>;
 }
 
-interface IDataFromServer {
+interface DataFromServer {
   data: {
-    birthdaysCollection: { items: Array<INotification> };
-    meetingCollection: { items: Array<INotification> };
-    vacationCollection: { items: Array<INotification> };
-    reminderCollection: { items: Array<INotification> };
+    birthdaysCollection: { items: Array<Notification> };
+    meetingCollection: { items: Array<Notification> };
+    vacationCollection: { items: Array<Notification> };
+    reminderCollection: { items: Array<Notification> };
   };
 }
 
-interface IFilterEvents {
-  (eventsList: Array<INotification>, cellDate: Moment): Array<INotification> | [];
+interface FilterEvents {
+  (eventsList: Array<Notification>, cellDate: Moment): Array<Notification> | [];
 }
 
-interface ICalendarCell {
-  data: IDataFromServer;
+interface CalendarCell {
+  data: DataFromServer;
   cellDate: Moment;
   removeEvent: (id: string) => Promise<void>;
   clickUpdate: (id: string) => void;
   showModal: () => void;
 }
 
-interface IEventsDayList {
-  collection: Array<INotification>;
+interface EventsDayListProps {
+  collection: Array<Notification>;
   handleRemoveEvent: (id: string) => Promise<void>;
   handleUpdateEvent: (id: string) => void;
 }
 
-interface IEventsList {
-  collection: Array<INotification>;
+interface EventsListProps {
+  collection: Array<Notification>;
 }
 
-interface IModalWindow {
+interface ModalWindowProps {
   handleOk: () => void;
   openMod: boolean;
   handleCancel: () => void;
@@ -73,27 +73,27 @@ interface IModalWindow {
   time: number;
 }
 
-interface ISection {
+interface Section {
   (date: JSX.Element, duration: JSX.Element, end: JSX.Element): JSX.Element;
 }
 
-interface INotificationComponent {
-  (notifications: Array<INotification>): JSX.Element;
+interface NotificationComponent {
+  (notifications: Array<Notification>): JSX.Element;
 }
 
-interface INotificationByTypeByDay {
-  (data: IDataFromServer, cellDate: Moment): IEventsCollections;
+interface NotificationByTypeByDay {
+  (data: DataFromServer, cellDate: Moment): EventsCollections;
 }
 
-interface IDefineNotificationsByTime {
-  (data: IDataFromServer, cellDate: Moment): {
-    reminders: INotification[] | [];
-    meetings: INotification[] | [];
-    remindersBefore: INotification[] | [];
+interface DefineNotificationsByTime {
+  (data: DataFromServer, cellDate: Moment): {
+    reminders: Notification[] | [];
+    meetings: Notification[] | [];
+    remindersBefore: Notification[] | [];
   };
 }
 
-interface IItemFromContentful {
+interface ItemFromContentful {
   date?: { 'en-US': Date };
   title?: { 'en-US': string };
   description?: { 'en-US': string };
@@ -102,17 +102,17 @@ interface IItemFromContentful {
 }
 
 export {
-  INotification,
-  IEventsCollections,
-  IDataFromServer,
-  IFilterEvents,
-  ICalendarCell,
-  IEventsDayList,
-  IEventsList,
-  IModalWindow,
-  INotificationComponent,
-  INotificationByTypeByDay,
-  IDefineNotificationsByTime,
-  IItemFromContentful,
-  ISection
+  Notification,
+  EventsCollections,
+  DataFromServer,
+  FilterEvents,
+  CalendarCell,
+  EventsDayListProps,
+  EventsListProps,
+  ModalWindowProps,
+  NotificationComponent,
+  NotificationByTypeByDay,
+  DefineNotificationsByTime,
+  ItemFromContentful,
+  Section
 }

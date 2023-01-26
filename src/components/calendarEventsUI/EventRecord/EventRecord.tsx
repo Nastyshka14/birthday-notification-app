@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react'
 import moment from 'moment'
 
-import { INotification } from '@domain/types'
+import { Notification } from '@domain/types'
 import './EventRecord.scss'
 
-export const EventRecord = ({ eventRecord }: { eventRecord: INotification }): JSX.Element => {
-  const [meeting, setMeeting] = useState<INotification>(null)
-  const [vacation, setVacation] = useState<INotification>(null)
-  const [reminder, setReminder] = useState<INotification>(null)
-  const [birthdays, setBirthdays] = useState<INotification>(null)
+export const EventRecord = ({ eventRecord }: { eventRecord: Notification }): JSX.Element => {
+  const [meeting, setMeeting] = useState<Notification>(null)
+  const [vacation, setVacation] = useState<Notification>(null)
+  const [reminder, setReminder] = useState<Notification>(null)
+  const [birthdays, setBirthdays] = useState<Notification>(null)
 
   useEffect(() => {
     if (eventRecord.type === 'Meeting') {
@@ -25,20 +25,20 @@ export const EventRecord = ({ eventRecord }: { eventRecord: INotification }): JS
     }
   }, [eventRecord])
 
-  const eventVacationDateLayout = (eventItem: INotification): JSX.Element => (
+  const eventVacationDateLayout = (eventItem: Notification): JSX.Element => (
     <div className='event-record__date'>
       {moment(eventItem.date).format('MMM Do YYYY')} - {moment(eventItem.end).format('MMM Do YYYY')}
     </div>
   )
-  const eventMeetingDateLayout = (eventItem: INotification): JSX.Element => (
+  const eventMeetingDateLayout = (eventItem: Notification): JSX.Element => (
     <div className='event-record__date'>
       {moment(eventItem.date).format('MMM D YYYY HH:mm')} - {moment(eventItem.end).format('MMM D YYYY HH:mm')}
     </div>
   )
-  const eventReminderDateLayout = (eventItem: INotification): JSX.Element => (
+  const eventReminderDateLayout = (eventItem: Notification): JSX.Element => (
     <div className='event-record__date'>{moment(eventItem.date).format('MMM D YYYY HH:mm')}</div>
   )
-  const eventBirthdayDateLayout = (eventItem: INotification): JSX.Element => (
+  const eventBirthdayDateLayout = (eventItem: Notification): JSX.Element => (
     <div className='event-record__date'>{moment(eventItem.date).format('MMM D YYYY')}</div>
   )
   const getImage = (type: string): string => {

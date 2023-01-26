@@ -2,8 +2,8 @@ import React, { useEffect, useRef, useState } from 'react'
 import moment, { Moment } from 'moment'
 
 import { Button, Calendar, Col, Row, Select } from 'antd'
+import { DataFromServer, Notification } from '@domain/types'
 import { EVENTS, EVENTS_OPERATIONS } from '@constants/eventVariants'
-import { IDataFromServer, INotification } from '@domain/types'
 import {
   createEvent,
   deleteEventByID,
@@ -26,7 +26,7 @@ import './CalendarPage.scss'
 moment.updateLocale('en', { week: { dow: 1 } })
 
 export const CalendarPage = (): JSX.Element => {
-  const [data, setData] = useState<IDataFromServer | null>(null)
+  const [data, setData] = useState<DataFromServer | null>(null)
   const [type, setType] = useState<string>('')
   const [title, setTitle] = useState<string>('')
   const [time, setTime] = useState<number>(0)
@@ -63,7 +63,7 @@ export const CalendarPage = (): JSX.Element => {
   const runsCounterRef = useRef(0)
   useEffect(() => {
     if (runsCounterRef.current === 0) {
-      getData(graphqlRequest).then((data: IDataFromServer): void => {
+      getData(graphqlRequest).then((data: DataFromServer): void => {
         setData(data)
       })
     }
@@ -176,7 +176,7 @@ export const CalendarPage = (): JSX.Element => {
     isEvent && updateEvent(eventID, event)
 
     const updatedBirthdays = data.data.birthdaysCollection.items.map(
-      (eventItem: INotification): INotification =>
+      (eventItem: Notification): Notification =>
         eventItem.identifier.id === eventID
           ? {
               ...eventItem,
@@ -187,7 +187,7 @@ export const CalendarPage = (): JSX.Element => {
           : eventItem,
     )
     const updatedVacations = data.data.vacationCollection.items.map(
-      (eventItem: INotification): INotification =>
+      (eventItem: Notification): Notification =>
         eventItem.identifier.id === eventID
           ? {
               ...eventItem,
@@ -200,7 +200,7 @@ export const CalendarPage = (): JSX.Element => {
           : eventItem,
     )
     const updatedMeetings = data.data.meetingCollection.items.map(
-      (eventItem: INotification): INotification =>
+      (eventItem: Notification): Notification =>
         eventItem.identifier.id === eventID
           ? {
               ...eventItem,
@@ -213,7 +213,7 @@ export const CalendarPage = (): JSX.Element => {
           : eventItem,
     )
     const updatedReminders = data.data.reminderCollection.items.map(
-      (eventItem: INotification): INotification =>
+      (eventItem: Notification): Notification =>
         eventItem.identifier.id === eventID
           ? {
               ...eventItem,

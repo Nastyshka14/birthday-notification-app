@@ -1,10 +1,10 @@
-import { INotification } from '@domain/types'
+import { Notification } from '@domain/types'
 import { Typography } from 'antd'
 import './EventsItem.scss'
 
 const { Text } = Typography
 
-export const EventsItem = <T extends INotification>({
+export const EventsItem = <T extends Notification>({
   eventItem,
 }: {
   eventItem: T

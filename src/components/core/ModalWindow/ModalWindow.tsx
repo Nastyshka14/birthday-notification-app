@@ -2,7 +2,7 @@ import moment from 'moment'
 
 import { DatePicker, DatePickerProps, Input, Modal, Select, TimePicker } from 'antd'
 import { EVENTS, EVENTS_OPERATIONS } from '@constants/eventVariants'
-import { IModalWindow, ISection } from '@domain/types'
+import { ModalWindowProps, Section } from '@domain/types'
 import MarkdownEditor from '@uiw/react-markdown-editor'
 import './ModalWindow.scss'
 
@@ -34,7 +34,7 @@ export const ModalWindow = ({
   end,
   time,
   timePicker,
-}: IModalWindow): JSX.Element => {
+}: ModalWindowProps): JSX.Element => {
   const getTypeLayout = (option: boolean): JSX.Element => {
     return (
       <Select
@@ -137,7 +137,7 @@ export const ModalWindow = ({
     )
   }
 
-  const getSectionLayout: ISection = (date, duration, end) => {
+  const getSectionLayout: Section = (date, duration, end) => {
     return (
       <div className='modal__section'>
         <div className='modal__section-img modal__section--date-img' />

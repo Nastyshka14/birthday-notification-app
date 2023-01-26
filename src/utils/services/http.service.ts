@@ -1,5 +1,5 @@
 import { Entry, createClient } from 'contentful-management'
-import { IItemFromContentful } from '@domain/types'
+import { ItemFromContentful } from '@domain/types'
 
 const client = createClient({
   accessToken: process.env.REACT_APP_ACCESS_TOKEN,
@@ -15,7 +15,7 @@ export const getItemById = async (id: string): Promise<void | Entry> => {
   }
 }
 
-export const createEvent = async (type: string, id: string, event: IItemFromContentful): Promise<void | Entry> => {
+export const createEvent = async (type: string, id: string, event: ItemFromContentful): Promise<void | Entry> => {
   try {
     const space = await client.getSpace(process.env.REACT_APP_SPACE_ID)
     const environment = await space.getEnvironment(process.env.REACT_APP_ENVIRONMENT)
@@ -30,7 +30,7 @@ export const createEvent = async (type: string, id: string, event: IItemFromCont
   }
 }
 
-export const updateEvent = async (id: string, event: IItemFromContentful): Promise<void> => {
+export const updateEvent = async (id: string, event: ItemFromContentful): Promise<void> => {
   try {
     const space = await client.getSpace(process.env.REACT_APP_SPACE_ID)
     const environment = await space.getEnvironment(process.env.REACT_APP_ENVIRONMENT)

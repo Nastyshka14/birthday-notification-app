@@ -1,14 +1,14 @@
 import React from 'react'
 
-import { IEventsList, INotification } from '@domain/types'
+import { EventsListProps, Notification } from '@domain/types'
 import { EventsItem } from '@components/calendarEventsUI/EventItem'
 import './EventsList.scss'
 
-export const EventsList = ({ collection }: IEventsList): JSX.Element => {
+export const EventsList = ({ collection }: EventsListProps): JSX.Element => {
   return (
     <>
       <ul className='events'>
-        {collection.map((eventItem: INotification) => (
+        {collection.map((eventItem: Notification) => (
           <React.Fragment key={eventItem.identifier.id}>
             <EventsItem eventItem={eventItem} />
           </React.Fragment>
