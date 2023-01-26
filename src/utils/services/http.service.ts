@@ -1,84 +1,66 @@
-import { createClient } from 'contentful-management'
-import { IItemFromContentful } from 'src/domain/types'
+import { Entry, createClient } from 'contentful-management'
+import { ItemFromContentful } from '@domain/types'
 
 const client = createClient({
-  accessToken: 'CFPAT-70dkQZ7ta2SQCUWWgoamQkkiezW-zUpLcNZX-ptfzPI',
+  accessToken: process.env.REACT_APP_ACCESS_TOKEN,
 })
 
-export const getItemById = (id: string): Promise<IItemFromContentful> => {
-  return client
-    .getSpace('g5vcvjt0rgq7')
-    .then((space) => space.getEnvironment('master'))
-    .then((environment) => environment.getEntry(id))
-    .then(
-      (entry) => entry,
-      (reason) => null,
-    )
-    .catch(console.error)
+export const getItemById = async (id: string): Promise<void | Entry> => {
+  try {
+    const space = await client.getSpace(process.env.REACT_APP_SPACE_ID)
+    const environment = await space.getEnvironment(process.env.REACT_APP_ENVIRONMENT)
+    return await environment.getEntry(id)
+  } catch (message) {
+    throw new Error(message)
+  }
 }
 
-export const createEvent = (type: string, id: string, event: object) => {
-  client
-    .getSpace('g5vcvjt0rgq7')
-    .then((space) => space.getEnvironment('master'))
-    .then((environment) =>
-      environment.createEntryWithId(type.toLocaleLowerCase(), id, {
+export const createEvent = async (type: string, id: string, event: ItemFromContentful): Promise<void | Entry> => {
+  try {
+    const space = await client.getSpace(process.env.REACT_APP_SPACE_ID)
+    const environment = await space.getEnvironment(process.env.REACT_APP_ENVIRONMENT)
+    const entry = environment.createEntryWithId(type.toLocaleLowerCase(), id, {
         fields: {
           ...event,
         },
-      }),
-    )
-    .then((entry) => {
-      return entry.publish()
-    })
-    .catch(console.error)
+      })
+    return (await entry).publish()
+  } catch (message) {
+    throw new Error(message)
+  }
 }
 
-export const updateEvent = (id: string, event: object) => {
-  return client
-    .getSpace('g5vcvjt0rgq7')
-    .then((space) => space.getEnvironment('master'))
-    .then((environment) => environment.getEntry(id))
-    .then((entry) => {
-      entry.fields = { ...event }
-      return entry.update()
-    })
-    .then((entry) => {
-      entry.publish()
-    })
-    .then(
-      (result) => true,
-      (reason) => false,
-    )
-    .catch((error) => console.error(error.message))
+export const updateEvent = async (id: string, event: ItemFromContentful): Promise<void> => {
+  try {
+    const space = await client.getSpace(process.env.REACT_APP_SPACE_ID)
+    const environment = await space.getEnvironment(process.env.REACT_APP_ENVIRONMENT)
+    const entry = await environment.getEntry(id)
+    entry.fields = { ...event }
+    const updatedEntry = await entry.update()
+    updatedEntry.publish()
+  } catch (error) {
+    throw new Error(error.message)
+  }
 }
 
-export const deleteEventByID = (id: string): Promise<boolean | void> => {
-  return client
-    .getSpace('g5vcvjt0rgq7')
-    .then((space) => space.getEnvironment('master'))
-    .then((environment) => environment.getEntry(id))
-    .then((entry) => entry.unpublish())
-    .then((entry) => entry.delete())
-    .then(
-      (result) => true,
-      (reason) => false,
-    )
-    .catch((error) => console.error(error.message))
+export const deleteEventByID = async (id: string): Promise<boolean | void> => {
+  try {
+    const space = await client.getSpace(process.env.REACT_APP_SPACE_ID)
+    const environment = await space.getEnvironment(process.env.REACT_APP_ENVIRONMENT)
+    const entry = await environment.getEntry(id)
+    const unpublishedEntry = await entry.unpublish()
+    return await unpublishedEntry.delete()
+  } catch (error) {
+    throw new Error(error.message)
+  }
 }
 
-export const isEventWithIDExist = (id: string): Promise<boolean | void> => {
-  return client
-    .getSpace('g5vcvjt0rgq7')
-    .then((space) => space.getEnvironment('master'))
-    .then((environment) => environment.getEntry(id, { locale: 'en-US' }))
-    .then(
-      (result) => {
-        return true
-      },
-      (reason) => {
-        return false
-      },
-    )
-    .catch(console.error)
+export const isEventWithIDExist = async (id: string): Promise<Entry | void> => {
+  try {
+    const space = await client.getSpace(process.env.REACT_APP_SPACE_ID)
+    const environment = await space.getEnvironment(process.env.REACT_APP_ENVIRONMENT)
+    return await environment.getEntry(id, { locale: 'en-US' })
+  } catch (message) {
+    throw new Error(message)
+  }
 }

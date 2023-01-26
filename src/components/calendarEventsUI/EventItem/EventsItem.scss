@@ -1,0 +1,30 @@
+.item {
+  position: relative;
+  margin: 10px;
+  white-space: nowrap;
+}
+
+.item::before {
+  position: absolute;
+  margin: 0 0 0 -8px;
+  top: 4px;
+  width: 2px;
+  height: 18px;
+  content: '';
+}
+
+.item__meeting::before {
+  background: #d3adf7;
+}
+
+.item__vacation::before {
+  background: #ffadd2;
+}
+
+.item__reminder::before {
+  background: #b7eb8f;
+}
+
+.item__birthday::before {
+  background: #91caff;
+}

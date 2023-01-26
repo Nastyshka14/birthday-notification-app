@@ -1,20 +1,20 @@
-import { Notifications } from '../../components/Notifications'
-import { NotificationTitle } from 'src/components/core/NotificationTitle.tsx'
-import { saveDataToStorage, getDataFromStorage, removeDataFromStorage } from './sessionStorageData'
-import { IEventsCollections, INotification } from '../../domain/types'
+import { EventsCollections, Notification } from '@domain/types'
+import { getDataFromStorage, removeDataFromStorage, saveDataToStorage } from '@utils/functions/sessionStorageData'
+import { NotificationTitle } from '@components/core/NotificationTitle'
+import { Notifications } from '@components/Notifications'
 import { notification } from 'antd'
 
-export const filterNotificationsForToday = (notificationsForToday: IEventsCollections) => {
-  let notificationsList: Array<INotification> = []
+export const filterNotificationsForToday = (notificationsForToday: EventsCollections) => {
+  let notificationsList: Array<Notification> = []
 
   for (const notificationCollection in notificationsForToday) {
     notificationsList = [
       ...notificationsList,
-      ...(notificationsForToday[notificationCollection] as Array<INotification>),
+      ...(notificationsForToday[notificationCollection] as Array<Notification>),
     ]
   }
 
-  const notificationsForTodayFromStorage: Array<INotification> = JSON.parse(
+  const notificationsForTodayFromStorage: Array<Notification> = JSON.parse(
     getDataFromStorage('notifications'),
   )
 
@@ -30,21 +30,15 @@ export const filterNotificationsForToday = (notificationsForToday: IEventsCollec
         notificationsForTodayFromStorage,
       )
 
-      newEventsForToday.filter((item: INotification): boolean => item.type === 'Birthdays').length > 0 &&
+      newEventsForToday.filter((item: Notification): boolean => item.type === 'Birthdays').length > 0 &&
         notification.open({
-          message: NotificationTitle(),
+          message: <NotificationTitle />,
           description: Notifications(newEventsForToday.filter((item) => item.type === 'Birthdays')),
           duration: 0,
         })
-      newEventsForToday.filter((item: INotification): boolean => item.type === 'Meeting').length > 0 &&
+      newEventsForToday.filter((item: Notification): boolean => item.type === 'Vacation').length > 0 &&
         notification.open({
-          message: NotificationTitle(),
-          description: Notifications(newEventsForToday.filter((item) => item.type === 'Meeting')),
-          duration: 0,
-        })
-      newEventsForToday.filter((item: INotification): boolean => item.type === 'Vacation').length > 0 &&
-        notification.open({
-          message: NotificationTitle(),
+          message: <NotificationTitle />,
           description: Notifications(newEventsForToday.filter((item) => item.type === 'Vacation')),
           duration: 0,
         })
@@ -55,20 +49,14 @@ export const filterNotificationsForToday = (notificationsForToday: IEventsCollec
   } else {
     notificationsList.filter((item) => item.type === 'Vacation').length > 0 &&
       notification.open({
-        message: NotificationTitle(),
+        message: <NotificationTitle />,
         description: Notifications(notificationsList.filter((item) => item.type === 'Vacation')),
         duration: 0,
       })
     notificationsList.filter((item) => item.type === 'Birthdays').length > 0 &&
       notification.open({
-        message: NotificationTitle(),
+        message: <NotificationTitle />,
         description: Notifications(notificationsList.filter((item) => item.type === 'Birthdays')),
-        duration: 0,
-      })
-    notificationsList.filter((item) => item.type === 'Meeting').length > 0 &&
-      notification.open({
-        message: NotificationTitle(),
-        description: Notifications(notificationsList.filter((item) => item.type === 'Meeting')),
         duration: 0,
       })
     saveDataToStorage('notifications', JSON.stringify(notificationsList))
@@ -76,9 +64,9 @@ export const filterNotificationsForToday = (notificationsForToday: IEventsCollec
 }
 
 const filterUpdatedNotifications = (
-  serverNotificationForToday: Array<INotification>,
-  storageNotificationForToday: Array<INotification>,
-): Array<INotification> => {
+  serverNotificationForToday: Array<Notification>,
+  storageNotificationForToday: Array<Notification>,
+): Array<Notification> => {
   const serverNotifications = sortNotifications([...serverNotificationForToday])
   const storageNotifications = sortNotifications([...storageNotificationForToday])
 
@@ -100,9 +88,9 @@ const filterUpdatedNotifications = (
 }
 
 const getUpdatedNotifications = (
-  serverNotifications: Array<INotification>,
-): Array<INotification> => {
-  const notificationsForTodayFromStorage: Array<INotification> = JSON.parse(
+  serverNotifications: Array<Notification>,
+): Array<Notification> => {
+  const notificationsForTodayFromStorage: Array<Notification> = JSON.parse(
     getDataFromStorage('notifications'),
   )
 
@@ -131,8 +119,8 @@ const getUpdatedNotifications = (
 }
 
 const isServerStorageNotificationForTodayTheSame = (
-  serverNotificationForToday: Array<INotification>,
-  storageNotificationForToday: Array<INotification>,
+  serverNotificationForToday: Array<Notification>,
+  storageNotificationForToday: Array<Notification>,
 ): boolean => {
   if (serverNotificationForToday.length !== storageNotificationForToday.length) {
     return false
@@ -160,7 +148,7 @@ const isServerStorageNotificationForTodayTheSame = (
   return true
 }
 
-const sortNotifications = (notifications: Array<INotification>): Array<INotification> => {
+const sortNotifications = (notifications: Array<Notification>): Array<Notification> => {
   return notifications.sort((notificationFirst, notificationSecond) => {
     return notificationFirst.identifier.id.localeCompare(notificationSecond.identifier.id)
   })

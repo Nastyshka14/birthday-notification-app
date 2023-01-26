@@ -1,9 +1,25 @@
-.calendar__wrapper{
-    display: flex;
+@import '@scss/variables/mixins';
+@import '@scss/variables/colors';
+
+.calendar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
 }
 
-.calendar__buttons{
-    padding: 8;
-    display: flex;
-    justify-content: flex-end;
+.calendar__wrapper {
+  display: flex;
+}
+
+.calendar__buttons {
+  padding: 8;
+  @include flex-end;
+}
+
+.calendar__clock {
+  color: $blue-default;
+  padding: 4.3px 10px;
+  border-radius: 2px;
+  border: 1px solid $blue-default;
 }

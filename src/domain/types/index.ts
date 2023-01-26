@@ -1,134 +1,118 @@
 import { Moment } from 'moment'
+
 import type { DatePickerProps } from 'antd/es/date-picker'
 
-interface INotification {
-  type: string
-  title: string
-  identifier: { id: string }
-  description?: string
-  date?: Date
-  start?: Date
-  end?: Date
+
+interface Notification {
+  type: string;
+  title: string;
+  identifier: { id: string };
+  description?: string;
+  date?: Date;
+  end?: Date;
+  time?: number;
 }
 
-type IBirthday = INotification
-
-interface IReminder extends INotification {
-  time?: number
+interface EventsCollections {
+  birthdays: Array<Notification>;
+  meetings: Array<Notification>;
+  vacations: Array<Notification>;
+  reminders: Array<Notification>;
 }
 
-type IVacation = INotification
-
-type IMeeting = INotification
-
-interface IEventsCollections {
-  birthdays: Array<IBirthday>
-  meetings: Array<IMeeting>
-  vacations: Array<IVacation>
-  reminders: Array<IReminder>
-}
-
-interface IDataFromServer {
+interface DataFromServer {
   data: {
-    birthdaysCollection: { items: Array<IBirthday> }
-    meetingCollection: { items: Array<IMeeting> }
-    vacationCollection: { items: Array<IVacation> }
-    reminderCollection: { items: Array<IReminder> }
-  }
+    birthdaysCollection: { items: Array<Notification> };
+    meetingCollection: { items: Array<Notification> };
+    vacationCollection: { items: Array<Notification> };
+    reminderCollection: { items: Array<Notification> };
+  };
 }
 
-type TListEvents = Array<IBirthday> | Array<IMeeting> | Array<IVacation> | Array<IReminder>
-type TEvent = IBirthday | IMeeting | IVacation | IReminder
-
-interface IFilterEvents {
-  (eventsList: TListEvents, cellDate: Moment): Array<INotification> | []
+interface FilterEvents {
+  (eventsList: Array<Notification>, cellDate: Moment): Array<Notification> | [];
 }
 
-interface ICalendarCell {
-  data: IDataFromServer
-  cellDate: Moment
-  removeEvent: (id: string) => Promise<void>
-  clickUpdate: (id: string) => void
-  showModal: () => void
+interface CalendarCell {
+  data: DataFromServer;
+  cellDate: Moment;
+  removeEvent: (id: string) => Promise<void>;
+  clickUpdate: (id: string) => void;
+  showModal: () => void;
 }
 
-interface IEventsDayList {
-  collection: Array<IBirthday> | Array<IMeeting> | Array<IVacation> | Array<IReminder>
-  handleRemoveEvent: (id: string) => Promise<void>
-  handleUpdateEvent: (id: string) => void
+interface EventsDayListProps {
+  collection: Array<Notification>;
+  handleRemoveEvent: (id: string) => Promise<void>;
+  handleUpdateEvent: (id: string) => void;
 }
 
-interface IEventsList {
-  collection: Array<INotification>
+interface EventsListProps {
+  collection: Array<Notification>;
 }
 
-interface IModalWindow {
-  handleOk: () => void
-  openMod: boolean
-  handleCancel: () => void
-  operation: string
-  handleMarkdownInput: (value: string) => void
-  handleTypeInput: (value: string) => void
-  handleDateInput: (value: DatePickerProps['value']) => void
-  handleStartInput: (value: DatePickerProps['value']) => void
-  handleEndInput: (value: DatePickerProps['value']) => void
-  handleChange: (value: DatePickerProps['value']) => void
-  handleTextInput: (e: React.ChangeEvent<HTMLInputElement>) => void
-  handleTimeInput: (value: string) => void
-  title: string
-  type: string
-  description: string
-  date: Date
-  start: Date
-  end: Date
-  time: number
+interface ModalWindowProps {
+  handleOk: () => void;
+  openMod: boolean;
+  handleCancel: () => void;
+  operation: string;
+  handleMarkdownInput: (value: string) => void;
+  handleTypeInput: (value: string) => void;
+  handleDateInput: (value: DatePickerProps['value']) => void;
+  handleTimePickerInput: (value: Moment | null) => void;
+  handleEndInput: (value: DatePickerProps['value']) => void;
+  handleChange: (value: DatePickerProps['value']) => void;
+  handleTextInput: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleTimeInput: (value: string) => void;
+  title: string;
+  type: string;
+  description: string;
+  date: Date;
+  timePicker: Moment | null;
+  end: Date;
+  time: number;
 }
 
-interface INotificationComponent {
-  (notifications: Array<INotification>): JSX.Element
+interface Section {
+  (date: JSX.Element, duration: JSX.Element, end: JSX.Element): JSX.Element;
 }
 
-interface INotificationByTypeByDay {
-  (data: IDataFromServer, cellDate: Moment): IEventsCollections
+interface NotificationComponent {
+  (notifications: Array<Notification>): JSX.Element;
 }
 
-interface IDefineReminderNotifictionsByTime {
-  (data: IDataFromServer, cellDate: Moment): {
-    reminders: IReminder[]
-    notificationsBeforeReminders: IReminder[]
-  }
+interface NotificationByTypeByDay {
+  (data: DataFromServer, cellDate: Moment): EventsCollections;
 }
 
-interface IItemFromContentful {
-  fields: {
-    name?: { 'en-US': string }
-    date?: { 'en-US': Date }
-    title?: { 'en-US': string }
-    description?: { 'en-US': string }
-    start?: { 'en-US': Date }
-    end?: { 'en-US': Date }
-    time?: { 'en-US': number }
-  },
-  sys: { contentType: { sys: { id: string } } }
+interface DefineNotificationsByTime {
+  (data: DataFromServer, cellDate: Moment): {
+    reminders: Notification[] | [];
+    meetings: Notification[] | [];
+    remindersBefore: Notification[] | [];
+  };
+}
+
+interface ItemFromContentful {
+  date?: { 'en-US': Date };
+  title?: { 'en-US': string };
+  description?: { 'en-US': string };
+  end?: { 'en-US': Date };
+  time?: { 'en-US': number };
 }
 
 export {
-  INotification,
-  IBirthday,
-  IMeeting,
-  IVacation,
-  IReminder,
-  IEventsCollections,
-  IDataFromServer,
-  IFilterEvents,
-  ICalendarCell,
-  IEventsDayList,
-  IEventsList,
-  TListEvents,
-  IModalWindow,
-  INotificationComponent,
-  INotificationByTypeByDay,
-  IDefineReminderNotifictionsByTime,
-  IItemFromContentful,
-  TEvent,
+  Notification,
+  EventsCollections,
+  DataFromServer,
+  FilterEvents,
+  CalendarCell,
+  EventsDayListProps,
+  EventsListProps,
+  ModalWindowProps,
+  NotificationComponent,
+  NotificationByTypeByDay,
+  DefineNotificationsByTime,
+  ItemFromContentful,
+  Section
 }

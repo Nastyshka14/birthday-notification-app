@@ -1,42 +1,24 @@
+import { EventRecord } from '@components/calendarEventsUI/EventRecord'
+import { NotificationComponent } from '@domain/types'
 import { Popover } from 'antd'
-import { INotificationComponent } from '../../domain/types'
-import { EventRecord } from '../calendarEventsUI'
-import { SocialNetLinks } from '../SocialNetLinks'
+import { SocialNetLinks } from '@components/SocialNetLinks'
 import './Notifications.scss'
 
-export const Notifications: INotificationComponent = (notifications) => (
+export const Notifications: NotificationComponent = (notifications) => (
   <ul className='notification-list'>
-    {notifications
-      .filter((item) => item.type !== 'Reminder')
-      .map((notification) => {
-        return (
-          <li className='notification-list__item' key={notification.identifier.id}>
-            <EventRecord eventRecord={notification} />
-            <Popover
-              placement='bottomRight'
-              content={<SocialNetLinks message={notification.title} />}
-              trigger='click'
-            >
-              <div className='notification-list_item-share-btn' />
-            </Popover>
-          </li>
-        )
-      })}
-      {notifications
-      .filter((item) => item.type === 'Reminder')
-      .map((notification) => {
-        return (
-          <li className='notification-list__item' key={notification.identifier.id}>
-            <EventRecord eventRecord={notification} />
-            <Popover
-              placement='bottomRight'
-              content={<SocialNetLinks message={notification.title} />}
-              trigger='click'
-            >
-              <div className='notification-list_item-share-btn' />
-            </Popover>
-          </li>
-        )
-      })}
+    {notifications.map((notification) => {
+      return (
+        <li className='notification-list__item' key={notification.identifier.id}>
+          <EventRecord eventRecord={notification} />
+          <Popover
+            placement='bottomRight'
+            content={<SocialNetLinks message={notification.title} />}
+            trigger='click'
+          >
+            <div className='notification-list_item-share-btn' />
+          </Popover>
+        </li>
+      )
+    })}
   </ul>
 )

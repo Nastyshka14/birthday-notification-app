@@ -1,24 +1,24 @@
 import React from 'react'
-import { defineNotificationsByTypeByDay } from '../../utils/functions/defineNotificationsByTypeByDay'
-import { EventsList } from '../calendarEventsUI'
-import { EventsDayList } from '../calendarEventsUI/EventsDayList'
-import { Popover, Button } from 'antd'
-import { PlusOutlined } from '@ant-design/icons'
-import './CalendarCellWithEvents.scss'
-import { ICalendarCell } from 'src/domain/types'
 
-export const CalendarCellWithEvents = ({ data, cellDate, removeEvent, clickUpdate, showModal }: ICalendarCell): JSX.Element => {
+import { Button, Popover } from 'antd'
+import { CalendarCell } from '@domain/types'
+import { EventsDayList } from '@components/calendarEventsUI/EventsDayList'
+import { EventsList } from '@components/calendarEventsUI/EventsList'
+import { PlusOutlined } from '@ant-design/icons'
+import { defineNotificationsByTypeByDay } from '@utils/functions/defineNotificationsByTypeByDay'
+import './CalendarCellWithEvents.scss'
+
+export const CalendarCellWithEvents = ({ data, cellDate, removeEvent, clickUpdate, showModal }: CalendarCell): JSX.Element => {
   const collections = defineNotificationsByTypeByDay(data, cellDate)
   const content = Object.keys(collections).map((eventsCollection: string): JSX.Element => (
-    <div>
-      {collections[eventsCollection].length !== 0 && (
+      collections[eventsCollection].length !== 0 && (
         <EventsDayList
           collection={collections[eventsCollection]}
           handleRemoveEvent={removeEvent}
           handleUpdateEvent={clickUpdate}
         />
-      )}
-    </div>
+      )
+
   ))
 
   const title = (): JSX.Element => {
@@ -35,11 +35,9 @@ export const CalendarCellWithEvents = ({ data, cellDate, removeEvent, clickUpdat
 
   return (
     <Popover placement='right' title={title()} content={content}>
-      <div>
         {Object.keys(collections).map((eventsCollection: string, index: number): JSX.Element => (
-          <EventsList collection={collections[eventsCollection]} key={index} />
+          <EventsList collection={collections[eventsCollection]} key={index + 111} />
         ))}
-      </div>
     </Popover>
   )
 }

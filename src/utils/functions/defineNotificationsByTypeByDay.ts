@@ -1,68 +1,62 @@
-import { parseCalendarCellData } from './parseCalendarCellData'
-import { EVENTS } from '../../constants'
-import { dateToDayFormat, momentToDayFormat } from './momentToISOString'
-import { Moment } from 'moment'
-import {
-  IBirthday,
-  IMeeting,
-  IVacation,
-  IEventsCollections,
-  IFilterEvents,
-  IReminder,
-  INotificationByTypeByDay,
-} from '../../domain/types'
+import moment from 'moment'
 
-export const defineNotificationsByTypeByDay: INotificationByTypeByDay = (data, cellDate) => {
-  const { birthdays, meetings, vacations, reminders }: IEventsCollections =
+import {
+  EventsCollections,
+  FilterEvents,
+  Notification,
+  NotificationByTypeByDay,
+} from '@domain/types'
+import { dateToDayFormat, momentToDayFormat } from '@utils/functions/momentToISOString'
+import { parseCalendarCellData } from '@utils/functions/parseCalendarCellData'
+
+export const defineNotificationsByTypeByDay: NotificationByTypeByDay = (
+  data,
+  cellDate,
+): EventsCollections => {
+  
+  const getTimeInterval = (start: Date, end: Date): boolean => {
+    return (
+      moment(momentToDayFormat(cellDate)).isSameOrAfter(moment(dateToDayFormat(start))) &&
+      moment(momentToDayFormat(cellDate)).isSameOrBefore(moment(dateToDayFormat(end)))
+    )
+  }
+
+  const { birthdays, meetings, vacations, reminders }: EventsCollections =
     parseCalendarCellData(data)
 
-  const filterEventsByDay: IFilterEvents = (eventsList, cellDate) => {
-    if (eventsList.length === 0) return []
+  const filterEventsByDay: FilterEvents = (eventsList, cellDate) => {
+    eventsList.length === 0 && []
 
     const eventType = eventsList[0].type
 
-    if (eventType === EVENTS.birthday) {
-      return (eventsList as Array<IBirthday>).filter((birthday: IBirthday): boolean => {
-        return dateToDayFormat(birthday.date) === momentToDayFormat(cellDate)
+    if (eventType === 'Birthdays') {
+      return eventsList.filter((birthday: Notification): boolean => {
+        return (new Date(birthday.date).getDate().toString() === cellDate.format('D') && (new Date(birthday.date).getMonth() + 1).toString() === cellDate.format('M'))
       })
     }
 
-    if (eventType === EVENTS.vacation) {
-      return (eventsList as Array<IVacation>).filter((vacation: IVacation): boolean => {
-        return (
-          (momentToDayFormat(cellDate, true) as Moment).isSameOrAfter(
-            dateToDayFormat(vacation.start, true) as Moment,
-          ) &&
-          (momentToDayFormat(cellDate, true) as Moment).isSameOrBefore(
-            dateToDayFormat(vacation.end, true) as Moment,
-          )
-        )
+    if (eventType === 'Vacation') {
+      return eventsList.filter((vacation: Notification): boolean => {
+        return getTimeInterval(vacation.date, vacation.end)
       })
     }
 
-    if (eventType === EVENTS.meeting) {
-      return (eventsList as Array<IMeeting>).filter((meeting: IMeeting): boolean => {
-        return (
-          (momentToDayFormat(cellDate, true) as Moment).isSameOrAfter(
-            dateToDayFormat(meeting.start, true) as Moment,
-          ) &&
-          (momentToDayFormat(cellDate, true) as Moment).isSameOrBefore(
-            dateToDayFormat(meeting.end, true) as Moment,
-          )
-        )
+    if (eventType === 'Meeting') {
+      return eventsList.filter((meeting: Notification): boolean => {
+        return getTimeInterval(meeting.date, meeting.end)
       })
     }
-    if (eventType === EVENTS.reminder) {
-      return (eventsList as Array<IReminder>).filter((reminder: IReminder): boolean => {
+    if (eventType === 'Reminder') {
+      return eventsList.filter((reminder: Notification): boolean => {
         return dateToDayFormat(reminder.date) === momentToDayFormat(cellDate)
       })
     }
   }
 
   return {
-    birthdays: filterEventsByDay(birthdays, cellDate) as Array<IBirthday>,
-    meetings: filterEventsByDay(meetings, cellDate) as Array<IMeeting>,
-    vacations: filterEventsByDay(vacations, cellDate) as Array<IVacation>,
-    reminders: filterEventsByDay(reminders, cellDate) as Array<IReminder>,
+    birthdays: filterEventsByDay(birthdays, cellDate),
+    meetings: filterEventsByDay(meetings, cellDate),
+    vacations: filterEventsByDay(vacations, cellDate),
+    reminders: filterEventsByDay(reminders, cellDate),
   }
 }

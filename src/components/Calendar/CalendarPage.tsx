@@ -1,42 +1,42 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import moment, { Moment } from 'moment'
-import { IBirthday, IDataFromServer, IMeeting, IReminder, IVacation } from '../../domain/types'
-import { EVENTS_OPERATIONS, EVENTS } from '../../constants'
-import { defineNotificationsByTypeByDay } from '../../utils/functions/defineNotificationsByTypeByDay'
-import { filterNotificationsForToday } from 'src/utils/functions/filterNotificationsForToday'
-import { CalendarCellWithEvents } from '../CalendarCellWithEvents'
-import { ModalWindow } from '../core/ModalWindow'
-import { NotificationTitle } from '../core/NotificationTitle.tsx'
-import { Notifications } from '../Notifications'
+
+import { Button, Calendar, Col, Row, Select } from 'antd'
+import { DataFromServer, Notification } from '@domain/types'
+import { EVENTS, EVENTS_OPERATIONS } from '@constants/eventVariants'
 import {
   createEvent,
+  deleteEventByID,
+  getItemById,
   isEventWithIDExist,
   updateEvent,
-  getItemById,
-  deleteEventByID,
-} from '../../utils/services/http.service'
-import graphqlRequest from '../../utils/graphql/graphqlRequest'
-import getData from '../../utils/services/api'
-import { defineReminderNotificationsByTime } from 'src/utils/functions/defineReminderNotificationsByTime'
-import { Calendar, Col, Row, Select, Button, notification } from 'antd'
-import type { DatePickerProps } from 'antd/es/date-picker';
+} from '@utils/services/http.service'
+import { CalendarCellWithEvents } from '@components/CalendarCellWithEvents'
+import type { DatePickerProps } from 'antd/es/date-picker'
+import { ModalWindow } from '@components/core/ModalWindow'
+import { defineNotificationsByTime } from '@utils/functions/defineNotificationsByTime'
+import { defineNotificationsByTypeByDay } from '@utils/functions/defineNotificationsByTypeByDay'
+import { filterNotificationsForTime } from '@utils/functions/filterNotificationsForTime'
+import { filterNotificationsForToday } from '@utils/functions/filterNotificationsForToday'
+import getData from '@utils/services/api'
+import graphqlRequest from '@utils/graphql/graphqlRequest'
 import 'antd/dist/antd.css'
 import './CalendarPage.scss'
-
 
 moment.updateLocale('en', { week: { dow: 1 } })
 
 export const CalendarPage = (): JSX.Element => {
-  const [data, setData] = useState<IDataFromServer | null>(null)
+  const [data, setData] = useState<DataFromServer | null>(null)
   const [type, setType] = useState<string>('')
   const [title, setTitle] = useState<string>('')
   const [time, setTime] = useState<number>(0)
   const [description, setDescription] = useState<string>('')
-  const [start, setStart] = useState<Date | undefined>(undefined)
-  const [end, setEnd] = useState<Date | undefined>(undefined)
-  const [date, setDate] = useState<Date | undefined>(undefined)
+  const [end, setEnd] = useState<Date>(new Date())
+  const [date, setDate] = useState<Date>(new Date())
+  const [timePicker, setTimePicker] = useState<Moment | null>(null)
   const [eventID, setEventID] = useState<string>(null)
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
+  const [clock, setClock] = useState(moment(new Date()).format('MMM D YYYY, HH:mm'))
   const operation = eventID ? EVENTS_OPERATIONS.update : EVENTS_OPERATIONS.create
 
   const generateID = (): string => {
@@ -63,7 +63,7 @@ export const CalendarPage = (): JSX.Element => {
   const runsCounterRef = useRef(0)
   useEffect(() => {
     if (runsCounterRef.current === 0) {
-      getData(graphqlRequest).then((data: IDataFromServer): void => {
+      getData(graphqlRequest).then((data: DataFromServer): void => {
         setData(data)
       })
     }
@@ -86,26 +86,29 @@ export const CalendarPage = (): JSX.Element => {
         filterNotificationsForToday(notificationsForToday)
       }
     }
-  }, [data])
+  }, [data, clock])
 
   useEffect(() => {
     if (data) {
-      const remindersForEveryDay = defineReminderNotificationsByTime(data, moment(new Date()))
-      {remindersForEveryDay.reminders.length > 0 && 
-      (notification.open({
-          message: NotificationTitle(),
-          description: Notifications(remindersForEveryDay.reminders),
-          duration: 0,
-        }) )}
-  
-       {remindersForEveryDay.notificationsBeforeReminders.length > 0 && 
-      (notification.open({
-        message: NotificationTitle(),
-        description: Notifications(remindersForEveryDay.notificationsBeforeReminders),
-        duration: 0,
-      }) 
-      )}}
-  }, [data])
+      const notificationsForTime = defineNotificationsByTime(data, moment(new Date()))
+
+      if (notificationsForTime.reminders.length > 0) {
+        filterNotificationsForTime(notificationsForTime.reminders)
+      }
+      if (notificationsForTime.meetings.length > 0) {
+        filterNotificationsForTime(notificationsForTime.meetings)
+      }
+      if (notificationsForTime.remindersBefore.length > 0) {
+        filterNotificationsForTime(notificationsForTime.remindersBefore)
+      }
+    }
+  }, [data, clock])
+
+  useEffect(() => {
+    setInterval(() => {
+      setClock(moment(new Date()).format('MMM D YYYY, HH:mm'))
+    }, 20000)
+  })
 
   const handleRemoveEvent = async (id: string): Promise<void> => {
     const isEvent = await isEventWithIDExist(id)
@@ -139,18 +142,13 @@ export const CalendarPage = (): JSX.Element => {
       if (eventWithID) {
         const type = eventWithID.sys.contentType.sys.id
         setType(type)
-        if (type === 'birthdays') {
-          setTitle(eventWithID.fields.name['en-US'])
-          setDate(eventWithID.fields.date['en-US'])
-        } else if (type === 'reminder') {
-          setTitle(eventWithID.fields.title['en-US'])
+        setTitle(eventWithID.fields.title['en-US'])
+        setDate(eventWithID.fields.date['en-US'])
+        if (type === EVENTS.reminder) {
           setTime(eventWithID.fields.time['en-US'])
-          setDate(eventWithID.fields.date['en-US'])
           setDescription(eventWithID.fields.description['en-US'])
-        } else {
-          setTitle(eventWithID.fields.title['en-US'])
+        } else if (type === EVENTS.meeting || type === EVENTS.vacation) {
           setDescription(eventWithID.fields.description['en-US'])
-          setStart(eventWithID.fields.start['en-US'])
           setEnd(eventWithID.fields.end['en-US'])
         }
       }
@@ -160,76 +158,74 @@ export const CalendarPage = (): JSX.Element => {
   const handleUpdateSubmit = async (): Promise<void> => {
     const isEvent = await isEventWithIDExist(eventID)
     const event =
-      (type.toLocaleLowerCase() === EVENTS.birthday.toLowerCase() && {
-        name: { 'en-US': title },
+      (type === EVENTS.birthday && {
+        title: { 'en-US': title },
         date: { 'en-US': date },
       }) ||
-      (type.toLocaleLowerCase() === EVENTS.reminder.toLowerCase() && {
+      (type === EVENTS.reminder && {
         time: { 'en-US': time },
         title: { 'en-US': title },
         date: { 'en-US': date },
         description: { 'en-US': description },
       }) ||
-      (type.toLocaleLowerCase() === EVENTS.meeting.toLowerCase() && {
+      ((type === EVENTS.meeting || type === EVENTS.vacation) && {
         title: { 'en-US': title },
         description: { 'en-US': description },
-        start: { 'en-US': start },
-        end: { 'en-US': end },
-      }) ||
-      (type.toLocaleLowerCase() === EVENTS.vacation.toLowerCase() && {
-        title: { 'en-US': title },
-        description: { 'en-US': description },
-        start: { 'en-US': start },
+        date: { 'en-US': date },
         end: { 'en-US': end },
       })
 
     isEvent && updateEvent(eventID, event)
 
-    const updatedBirthdays = data.data.birthdaysCollection.items.map((eventItem: IBirthday): IBirthday =>
-      eventItem.identifier.id === eventID
-        ? {
-            ...eventItem,
-            type: type[0].toUpperCase() + type.slice(1),
-            title: title,
-            date: date,
-          }
-        : eventItem,
+    const updatedBirthdays = data.data.birthdaysCollection.items.map(
+      (eventItem: Notification): Notification =>
+        eventItem.identifier.id === eventID
+          ? {
+              ...eventItem,
+              type: type[0].toUpperCase() + type.slice(1),
+              title: title,
+              date: date,
+            }
+          : eventItem,
     )
-    const updatedVacations = data.data.vacationCollection.items.map((eventItem: IVacation): IVacation =>
-      eventItem.identifier.id === eventID
-        ? {
-            ...eventItem,
-            type: type[0].toUpperCase() + type.slice(1),
-            title: title,
-            start: start,
-            end: end,
-            description: description,
-          }
-        : eventItem,
+    const updatedVacations = data.data.vacationCollection.items.map(
+      (eventItem: Notification): Notification =>
+        eventItem.identifier.id === eventID
+          ? {
+              ...eventItem,
+              type: type[0].toUpperCase() + type.slice(1),
+              title: title,
+              date: date,
+              end: end,
+              description: description,
+            }
+          : eventItem,
     )
-    const updatedMeetings = data.data.meetingCollection.items.map((eventItem: IMeeting): IMeeting =>
-      eventItem.identifier.id === eventID
-        ? {
-            ...eventItem,
-            type: type[0].toUpperCase() + type.slice(1),
-            title: title,
-            start: start,
-            end: end,
-            description: description,
-          }
-        : eventItem,
+    const updatedMeetings = data.data.meetingCollection.items.map(
+      (eventItem: Notification): Notification =>
+        eventItem.identifier.id === eventID
+          ? {
+              ...eventItem,
+              type: type[0].toUpperCase() + type.slice(1),
+              title: title,
+              date: date,
+              end: end,
+              description: description,
+            }
+          : eventItem,
     )
-    const updatedReminders = data.data.reminderCollection.items.map((eventItem: IReminder): IReminder =>
-      eventItem.identifier.id === eventID
-        ? {
-            ...eventItem,
-            type: type[0].toUpperCase() + type.slice(1),
-            title: title,
-            description: description,
-            date: date,
-            time: time,
-          }
-        : eventItem,
+    const updatedReminders = data.data.reminderCollection.items.map(
+      (eventItem: Notification): Notification =>
+        eventItem.identifier.id === eventID
+          ? {
+              ...eventItem,
+              type: type[0].toUpperCase() + type.slice(1),
+              title: title,
+              description: description,
+              date: date,
+              time: time,
+            }
+          : eventItem,
     )
     setData({
       data: {
@@ -249,7 +245,7 @@ export const CalendarPage = (): JSX.Element => {
     setDescription(value)
   }
 
-  const handleDateWithTimeInput = (value: DatePickerProps['value'])=> {
+  const handleDateWithTimeInput = (value: DatePickerProps['value']) => {
     setDate(new Date(value.toDate()))
   }
 
@@ -257,16 +253,18 @@ export const CalendarPage = (): JSX.Element => {
     setTime(+value)
   }
 
+  const handleTimePickerInput = (value: Moment) => {
+    setTimePicker(value)
+    const newEnd = moment(date).add(value.hours(), 'hours').add(value.minutes(), 'minutes')
+    setEnd(new Date(newEnd.toDate()))
+  }
+
   const handleDateInput = (value: DatePickerProps['value']) => {
     setDate(new Date(value.toDate()))
   }
 
-  const handleStartInput = (value: DatePickerProps['value']) => {
-    setStart(new Date(value.format('YYYY-MM-DD')))
-  }
-
   const handleEndInput = (value: DatePickerProps['value']) => {
-    setEnd(new Date(value.format('YYYY-MM-DD')))
+    setEnd(new Date(value.toDate()))
   }
 
   const handleTextInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -287,38 +285,46 @@ export const CalendarPage = (): JSX.Element => {
 
   const handleCreateEvent = async (): Promise<void> => {
     const ID = generateID() + '84okokoko374' + generateID()
+    const titleField = { title: { 'en-US': title } }
+    const dateField = { date: { 'en-US': date } }
+    const descriptionField = { description: { 'en-US': description } }
+    const timeField = { time: { 'en-US': time } }
+    const endField = { end: { 'en-US': end } }
     const event =
-      (type.toLocaleLowerCase() === EVENTS.birthday.toLowerCase() && {
-        name: { 'en-US': title },
-        date: { 'en-US': date },
+      (type === EVENTS.birthday && {
+        ...titleField,
+        ...dateField,
       }) ||
-      (type.toLocaleLowerCase() === EVENTS.reminder.toLowerCase() && {
-        title: { 'en-US': title },
-        date: { 'en-US': date },
-        time: { 'en-US': time },
-        description: { 'en-US': description },
+      (type === EVENTS.reminder && {
+        ...titleField,
+        ...dateField,
+        ...descriptionField,
+        ...timeField,
       }) ||
-      (type.toLocaleLowerCase() === EVENTS.meeting.toLowerCase() && {
-        title: { 'en-US': title },
-        description: { 'en-US': description },
-        start: { 'en-US': start },
-        end: { 'en-US': end },
+      (type === EVENTS.meeting && {
+        ...titleField,
+        ...dateField,
+        ...descriptionField,
+        ...endField,
       }) ||
-      (type.toLocaleLowerCase() === EVENTS.vacation.toLowerCase() && {
-        title: { 'en-US': title },
-        description: { 'en-US': description },
-        start: { 'en-US': start },
-        end: { 'en-US': end },
+      (type === EVENTS.vacation && {
+        ...titleField,
+        ...dateField,
+        ...descriptionField,
+        ...endField,
       })
 
     createEvent(type, ID, event)
+
+    const typeField = { type: type[0].toUpperCase() + type.slice(1) }
+    const idField = { identifier: { id: ID } }
 
     const dataWithNewBirthday =
       type === 'birthdays'
         ? [
             {
-              type: type[0].toUpperCase() + type.slice(1),
-              identifier: { id: ID },
+              ...typeField,
+              ...idField,
               title: title,
               date: date,
             },
@@ -329,10 +335,10 @@ export const CalendarPage = (): JSX.Element => {
       type === 'meeting'
         ? [
             {
-              type: type[0].toUpperCase() + type.slice(1),
-              identifier: { id: ID },
+              ...typeField,
+              ...idField,
               title: title,
-              start: start,
+              date: date,
               end: end,
               description: description,
             },
@@ -343,10 +349,10 @@ export const CalendarPage = (): JSX.Element => {
       type === 'vacation'
         ? [
             {
-              type: type[0].toUpperCase() + type.slice(1),
-              identifier: { id: ID },
+              ...typeField,
+              ...idField,
               title: title,
-              start: start,
+              date: date,
               end: end,
               description: description,
             },
@@ -357,8 +363,8 @@ export const CalendarPage = (): JSX.Element => {
       type === 'reminder'
         ? [
             {
-              type: type[0].toUpperCase() + type.slice(1),
-              identifier: { id: ID },
+              ...typeField,
+              ...idField,
               title: title,
               description: description,
               date: date,
@@ -440,38 +446,42 @@ export const CalendarPage = (): JSX.Element => {
             )
           }
           return (
-            <div className='calendar__buttons'>
-              <Row gutter={8}>
-                <Col></Col>
-                <Button onClick={showModal}>Create</Button>
-                <Col>
-                  <Select
-                    size='middle'
-                    dropdownMatchSelectWidth={false}
-                    className='my-year-select'
-                    value={year}
-                    onChange={(newYear) => {
-                      const now = value.clone().year(newYear)
-                      onChange(now)
-                    }}
-                  >
-                    {options}
-                  </Select>
-                </Col>
-                <Col>
-                  <Select
-                    size='middle'
-                    dropdownMatchSelectWidth={false}
-                    value={month}
-                    onChange={(newMonth) => {
-                      const now = value.clone().month(newMonth)
-                      onChange(now)
-                    }}
-                  >
-                    {monthOptions}
-                  </Select>
-                </Col>
-              </Row>
+            <div className='calendar'>
+              <div className='calendar__clock'>{clock}</div>
+              <div className='calendar__buttons'>
+                <Row gutter={8}>
+                  <Col>
+                    <Button onClick={showModal}>Create new</Button>
+                  </Col>
+                  <Col>
+                    <Select
+                      size='middle'
+                      dropdownMatchSelectWidth={false}
+                      className='my-year-select'
+                      value={year}
+                      onChange={(newYear) => {
+                        const now = value.clone().year(newYear)
+                        onChange(now)
+                      }}
+                    >
+                      {options}
+                    </Select>
+                  </Col>
+                  <Col>
+                    <Select
+                      size='middle'
+                      dropdownMatchSelectWidth={false}
+                      value={month}
+                      onChange={(newMonth) => {
+                        const now = value.clone().month(newMonth)
+                        onChange(now)
+                      }}
+                    >
+                      {monthOptions}
+                    </Select>
+                  </Col>
+                </Row>
+              </div>
             </div>
           )
         }}
@@ -481,19 +491,19 @@ export const CalendarPage = (): JSX.Element => {
         openMod={isModalOpen}
         handleCancel={handleCancel}
         time={time}
+        timePicker={timePicker}
         operation={operation}
         type={type}
         handleTypeInput={handleTypeInput}
         title={title}
         description={description}
         date={date}
-        start={start}
         end={end}
         handleChange={handleDateWithTimeInput}
         handleOk={handleOk}
+        handleTimePickerInput={handleTimePickerInput}
         handleDateInput={handleDateInput}
         handleTextInput={handleTextInput}
-        handleStartInput={handleStartInput}
         handleEndInput={handleEndInput}
         handleMarkdownInput={handleMarkdownInput}
         handleTimeInput={handleTimeInput}

@@ -1,3 +1,6 @@
+@import '@scss/variables/colors';
+@import '@scss/variables/mixins';
+
 .events {
   margin: 0;
   padding: 0;
@@ -26,35 +29,69 @@
 }
 
 .content__item--buttons {
-  display: flex;
+  @include flex-center;
   justify-content: space-between;
-  align-items: center;
 }
 
 .content__item--delete-btn {
-  width: 29px;
-  height: 29px;
-  border: none;
-  background: url(../../../assets/icons/delete.svg);
+  @include large-button;
+  background-color: #595959;
+  background: url(../../../assets/icons/delete.svg) no-repeat center center;
+}
+
+.content__item--delete-btn:hover,
+.content__item--edit-btn:hover {
+  transition: 0.3s;
+  transform: scale(1.1);
+  cursor: pointer;
 }
 
 .content__item--edit-btn {
-  width: 24px;
-  height: 24px;
-  border: none;
-  background: url(../../../assets/icons/edit.svg);
+  @include small-button;
+  background: url(../../../assets/icons/edit.svg) no-repeat center center;
 }
 
 .list__item--date {
   margin: 0 15px 10px;
-  color: rgb(200, 200, 200);
+  color: $gray-middle;
 }
 
 .list__item--description {
   margin: 0 15px;
-  color: rgb(200, 200, 200);
+  color: $gray-middle;
 }
 
 .list__item:active {
-  background: radial-gradient(at top, rgb(234, 234, 234), #feffff);
+  background: radial-gradient(at top, $gray-white, $white);
+}
+
+.list__item--title {
+  position: relative;
+  margin: 15px;
+  white-space: nowrap;
+}
+
+.list__item--title::before {
+  position: absolute;
+  margin: 0 0 0 -8px;
+  top: 4px;
+  width: 2px;
+  height: 36px;
+  content: '';
+}
+
+.list__item--meeting::before {
+  background: #d3adf7;
+}
+
+.list__item--vacation::before {
+  background: #ffadd2;
+}
+
+.list__item--reminder::before {
+  background: #b7eb8f;
+}
+
+.list__item--birthday::before {
+  background: #91caff;
 }

@@ -1,6 +1,15 @@
 {
-    "compilerOptions": {
+  "compilerOptions": {
     "module": "commonjs",
+    "baseUrl": "./",
+    "paths": {
+      "@components/*": ["src/components/*"],
+      "@domain/*": ["src/domain/*"],
+      "@constants/*": ["src/constants/*"],
+      "@assets/*": ["src/assets/*"],
+      "@scss/*": ["src/scss/*"],
+      "@utils/*": ["src/utils/*"]
+    },
     "declaration": true,
     "removeComments": true,
     "emitDecoratorMetadata": true,
@@ -9,10 +18,8 @@
     "target": "es6",
     "sourceMap": true,
     "outDir": "./dist",
-    "baseUrl": "./",
     "incremental": true,
     "jsx": "preserve",
-    "allowJs": false 
-  },
-  "include": ["./"] 
+    "allowJs": false
+  }
 }

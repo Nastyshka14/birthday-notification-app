@@ -1,6 +1,6 @@
-import { IDataFromServer } from '../../../domain/types'
+import { DataFromServer } from '@domain/types'
 
-const getData = async (query: string): Promise<IDataFromServer> | null => {
+const getData = async (query: string): Promise<DataFromServer> | null => {
   const endpoint = `https://graphql.contentful.com/content/v1/spaces/${process.env.REACT_APP_SPACE_ID}/`
   const headers = {
     'Content-Type': 'application/json',
@@ -10,7 +10,7 @@ const getData = async (query: string): Promise<IDataFromServer> | null => {
   try {
     const response = await fetch(endpoint, { method: 'POST', body: JSON.stringify({ query }), headers })
     const responseText = await response.text()
-    const responseAsJSON: IDataFromServer = JSON.parse(responseText)
+    const responseAsJSON: DataFromServer = JSON.parse(responseText)
     const responseStatus = response.status
 
     if (responseStatus !== 200) {

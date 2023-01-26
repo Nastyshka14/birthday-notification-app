@@ -6,9 +6,9 @@ const BirthdayFragment = gql`
     identifier: sys {
       id
     }
-    title: name
+    title: title
     date
   }
-`;
+`
 
 export default BirthdayFragment
