@@ -9,27 +9,18 @@ export const defineNotificationsByTime: DefineNotificationsByTime = (data, cellD
   const getParsedDate = (date: Moment | Date) => {
     return Date.parse(date.toLocaleString())
   }
-
+  
   reminders.length === 0 && []
-
-  const filterRemindersByTime = (): Array<Notification> | [] => {
-      return reminders.filter((reminder: Notification): boolean => {
-        return (
-          getParsedDate(reminder.date) - (getParsedDate(reminder.date) % 60000) ===
-          getParsedDate(cellDate) - (getParsedDate(cellDate) % 60000)
-        )
-      })
-  }
   meetings.length === 0 && []
 
-  const filterMeetingsByTime = (): Array<Notification> | [] => {
-      return meetings.filter((meeting: Notification): boolean => {
-        return (
-          getParsedDate(meeting.date) - (getParsedDate(meeting.date) % 60000) ===
-          getParsedDate(cellDate) - (getParsedDate(cellDate) % 60000)
-        )
-      })
-  }
+  const filterEventsByTime = (collection): Array<Notification> | [] => {
+    return collection.filter((item: Notification): boolean => {
+      return (
+        getParsedDate(item.date) - (getParsedDate(item.date) % 60000) ===
+        getParsedDate(cellDate) - (getParsedDate(cellDate) % 60000)
+      )
+    })
+}
 
   const filterEventsByTimeBefore = (): Array<Notification> | [] => {
       return reminders.filter((reminder: Notification): boolean => {
@@ -43,8 +34,8 @@ export const defineNotificationsByTime: DefineNotificationsByTime = (data, cellD
   }
 
   return {
-    reminders: filterRemindersByTime(),
-    meetings: filterMeetingsByTime(),
+    reminders: filterEventsByTime(reminders),
+    meetings: filterEventsByTime(meetings),
     remindersBefore: filterEventsByTimeBefore(),
   }
 }
