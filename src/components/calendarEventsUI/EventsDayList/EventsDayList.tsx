@@ -45,6 +45,7 @@ export const EventsDayList = ({
         {collection.map(
           <T extends Notification>(eventItem: T): JSX.Element => (
             <Popover
+              key={eventItem.identifier + '9893'}
               placement='right'
               title={
                 <>
@@ -57,7 +58,10 @@ export const EventsDayList = ({
               content={
                 <div className='content__item'>
                   {eventItem.type === 'Reminder' && (
-                    <MarkdownEditor.Markdown source={eventItem.description} style={{ maxWidth: '180px',  maxHeight: '150px', overflowY: 'scroll' }}/>
+                    <MarkdownEditor.Markdown
+                      source={eventItem.description}
+                      style={{ maxWidth: '180px', maxHeight: '150px', overflowY: 'scroll' }}
+                    />
                   )}
                   {(eventItem.type === 'Meeting' || eventItem.type === 'Vacation') && (
                     <p className='content__item--description'>{eventItem.description}</p>
