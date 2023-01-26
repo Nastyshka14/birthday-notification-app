@@ -11,15 +11,14 @@ import './CalendarCellWithEvents.scss'
 export const CalendarCellWithEvents = ({ data, cellDate, removeEvent, clickUpdate, showModal }: CalendarCell): JSX.Element => {
   const collections = defineNotificationsByTypeByDay(data, cellDate)
   const content = Object.keys(collections).map((eventsCollection: string): JSX.Element => (
-    <div>
-      {collections[eventsCollection].length !== 0 && (
+      collections[eventsCollection].length !== 0 && (
         <EventsDayList
           collection={collections[eventsCollection]}
           handleRemoveEvent={removeEvent}
           handleUpdateEvent={clickUpdate}
         />
-      )}
-    </div>
+      )
+
   ))
 
   const title = (): JSX.Element => {
@@ -36,11 +35,9 @@ export const CalendarCellWithEvents = ({ data, cellDate, removeEvent, clickUpdat
 
   return (
     <Popover placement='right' title={title()} content={content}>
-      <div>
         {Object.keys(collections).map((eventsCollection: string, index: number): JSX.Element => (
-          <EventsList collection={collections[eventsCollection]} key={index} />
+          <EventsList collection={collections[eventsCollection]} key={index + 111} />
         ))}
-      </div>
     </Popover>
   )
 }
