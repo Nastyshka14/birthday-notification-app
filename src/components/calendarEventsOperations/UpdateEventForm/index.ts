@@ -1,1 +1,0 @@
-export { UpdateEventForm } from './UpdateEventForm'

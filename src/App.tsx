@@ -3,7 +3,7 @@ import { CalendarPage } from './components/Calendar/CalendarPage'
 
 function App() {
   return (
-    <div id='app-root'>
+    <div>
       <CalendarPage />
     </div>
   )

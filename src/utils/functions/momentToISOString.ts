@@ -1,4 +1,3 @@
-
 import moment, { Moment } from 'moment'
 
 export const momentToISOString = (item: Moment): string => {
@@ -14,9 +13,9 @@ export const momentToDayFormat = (date: Moment, isLikeMoment = false): Moment | 
 }
 
 export const dateToDayFormat = (date: Date, isLikeMoment = false): Moment | string => {
-  return isLikeMoment ?
-    moment(moment(date.toLocaleString()).format('YYYY-MM-DD')) :
-    moment(date.toLocaleString()).format('YYYY-MM-DD')
+  return isLikeMoment
+    ? moment(moment(date.toLocaleString()).format('YYYY-MM-DD'))
+    : moment(date.toLocaleString()).format('YYYY-MM-DD')
 }
 
 export const formatDateToFullView = (date: Date): string => {

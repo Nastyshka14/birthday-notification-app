@@ -1,4 +1,9 @@
-.calendar__wrapper > * {
-  position: relative;
-  top: 200px;
+.calendar__wrapper{
+    display: flex;
+}
+
+.calendar__buttons{
+    padding: 8;
+    display: flex;
+    justify-content: flex-end;
 }

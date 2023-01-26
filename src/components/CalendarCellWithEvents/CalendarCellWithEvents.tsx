@@ -1,31 +1,45 @@
-import { useState } from 'react'
+import React from 'react'
 import { defineNotificationsByTypeByDay } from '../../utils/functions/defineNotificationsByTypeByDay'
-import { IEventsCollections, ICalendarCell } from '../../domain/types'
-import { EVENTS_OPERATIONS } from '../../constants'
 import { EventsList } from '../calendarEventsUI'
-import { CreateEventForm } from '../calendarEventsOperations/CreateEventForm'
-import { Button } from '../core/Button'
-import { ModalWindow } from '../core/ModalWindow'
+import { EventsDayList } from '../calendarEventsUI/EventsDayList'
+import { Popover, Button } from 'antd'
+import { PlusOutlined } from '@ant-design/icons'
+import './CalendarCellWithEvents.scss'
+import { ICalendarCell } from 'src/domain/types'
 
-export const CalendarCellWithEvents = ({ data, cellDate }: ICalendarCell) => {
-  const [isAddEvent, setAddEvent] = useState<boolean>(false)
-  const eventsCollections: IEventsCollections = defineNotificationsByTypeByDay(data, cellDate)
+export const CalendarCellWithEvents = ({ data, cellDate, removeEvent, clickUpdate, showModal }: ICalendarCell): JSX.Element => {
+  const collections = defineNotificationsByTypeByDay(data, cellDate)
+  const content = Object.keys(collections).map((eventsCollection: string): JSX.Element => (
+    <div>
+      {collections[eventsCollection].length !== 0 && (
+        <EventsDayList
+          collection={collections[eventsCollection]}
+          handleRemoveEvent={removeEvent}
+          handleUpdateEvent={clickUpdate}
+        />
+      )}
+    </div>
+  ))
 
-  const handleOnClick = () => {
-    setAddEvent(true)
+  const title = (): JSX.Element => {
+    return (
+      <div className='title'>
+        <div className='title__date'>
+          <p className='title__day'>{cellDate.format('D MMM')}</p>
+          <p className='title__week'>{cellDate.format('dddd')}</p>
+        </div>
+        <Button className='title__btn' icon={<PlusOutlined />} onClick={showModal} type='primary' ghost />
+      </div>
+    )
   }
 
   return (
-    <div className='events'>
-      {Object.keys(eventsCollections).map((eventsCollection, index) => (
-        <EventsList collection={eventsCollections[eventsCollection]} key={index} />
-      ))}
-      <Button type={EVENTS_OPERATIONS.create} onClick={handleOnClick}></Button>
-      {isAddEvent && (
-        <ModalWindow>
-          <CreateEventForm />
-        </ModalWindow>
-      )}
-    </div>
+    <Popover placement='right' title={title()} content={content}>
+      <div>
+        {Object.keys(collections).map((eventsCollection: string, index: number): JSX.Element => (
+          <EventsList collection={collections[eventsCollection]} key={index} />
+        ))}
+      </div>
+    </Popover>
   )
 }

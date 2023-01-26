@@ -1,6 +1,6 @@
 import './SocialNetLinks.scss'
 
-export const SocialNetLinks = ({ message }) => {
+export const SocialNetLinks = ({ message }: { message: string }): JSX.Element => {
   const socialNetLinks = {
     vk: `http://vk.com/share.php?url=${window.location.href}&title=Today is `,
     telegram: `https://t.me/share/url?url=${window.location.href}&text=Today is `,
