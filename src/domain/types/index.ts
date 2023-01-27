@@ -1,5 +1,6 @@
 import { Moment } from 'moment'
 
+
 interface INotification {
   type: string
   title: string
@@ -54,7 +55,7 @@ interface LoginProps {
 
 type LoginState = {
   login?: LoginProps
-  setLogin: (value: LoginProps) => void
+  setLogin: (value) => void
 }
 
 export {
