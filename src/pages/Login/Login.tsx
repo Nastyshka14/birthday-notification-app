@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
-import { GoogleLogin } from 'react-google-login'
+
 import { Link, useNavigate } from 'react-router-dom'
-
 import { LoginProps, LoginState } from '../../domain/types'
-
+import { GoogleLogin } from 'react-google-login'
 import './Login.scss'
+
 
 export const Login = ({ setLogin }: LoginState) => {
   const [failed, setFailed] = useState<boolean>(false)

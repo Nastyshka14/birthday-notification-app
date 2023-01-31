@@ -1,12 +1,19 @@
-import dotenv from 'dotenv'
-import express from 'express'
-import { OAuth2Client } from 'google-auth-library'
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const { OAuth2Client } = require('google-auth-library')
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const dotenv = require('dotenv')
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const express = require('express')
 
-import { LoginProps } from './src/domain/types'
+// interface LoginProps {
+//   email: string;
+//   name: string;
+//   picture: string;
+// }
 
 const client = new OAuth2Client(process.env.REACT_APP_GOOGLE_AUTH_CLIENT_ID)
 const app = express()
-const users: LoginProps[] = []
+const users = []
 
 function upsert(array, item) {
   const i = array.findIndex((_item) => _item.email === item.email)
@@ -33,8 +40,10 @@ app.post('/api/google-login', async (req, res) => {
   })
   const { name, email, picture } = ticket.getPayload()
   upsert(users, { name, email, picture })
+  console.log('kokok', users)
   res.status(201)
   res.json({ name, email, picture })
+
 })
 
 app.listen(process.env.PORT || 5000, () => {
