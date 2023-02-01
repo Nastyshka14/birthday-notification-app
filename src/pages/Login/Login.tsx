@@ -58,7 +58,7 @@ export const Login = ({ setLogin }: LoginState) => {
           <div className='login__social'>
             <div className='login__google'>
               <GoogleLogin
-                clientId={`${process.env.REACT_APP_GOOGLE_AUTH_CLIENT_ID}`}
+                clientId={'831800577601-q6vcr59hkau3n90rvfpp9oktlsjh4l9c.apps.googleusercontent.com'}
                 onSuccess={onSuccess}
                 onFailure={onFailure}
                 cookiePolicy={'single_host_origin'}
