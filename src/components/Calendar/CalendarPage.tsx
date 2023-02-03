@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import moment, { Moment } from 'moment'
 
 import { Button, Calendar, Col, Row, Select } from 'antd'
-import { DataFromServer, Notification } from '@domain/types'
+import { DataFromServer, LoginState, Notification } from '@domain/types'
 import { EVENTS, EVENTS_OPERATIONS } from '@constants/eventVariants'
 import {
   createEvent,
@@ -13,6 +13,7 @@ import {
 } from '@utils/services/http.service'
 import { CalendarCellWithEvents } from '@components/CalendarCellWithEvents'
 import type { DatePickerProps } from 'antd/es/date-picker'
+import { GoogleOut } from '@components/GoogleLogout'
 import { ModalWindow } from '@components/core/ModalWindow'
 import { defineNotificationsByTime } from '@utils/functions/defineNotificationsByTime'
 import { defineNotificationsByTypeByDay } from '@utils/functions/defineNotificationsByTypeByDay'
@@ -25,10 +26,11 @@ import './CalendarPage.scss'
 
 moment.updateLocale('en', { week: { dow: 1 } })
 
-export const CalendarPage = (): JSX.Element => {
+export const CalendarPage = ({ setLogin }: LoginState): JSX.Element => {
   const [data, setData] = useState<DataFromServer | null>(null)
   const [type, setType] = useState<string>('')
   const [title, setTitle] = useState<string>('')
+  const [email, setEmail] = useState<string>('')
   const [time, setTime] = useState<number>(0)
   const [description, setDescription] = useState<string>('')
   const [end, setEnd] = useState<Date>(new Date())
@@ -67,7 +69,6 @@ export const CalendarPage = (): JSX.Element => {
         setData(data)
       })
     }
-
 
     runsCounterRef.current++
     return () => setData(null)
@@ -147,6 +148,7 @@ export const CalendarPage = (): JSX.Element => {
         if (type === EVENTS.reminder) {
           setTime(eventWithID.fields.time['en-US'])
           setDescription(eventWithID.fields.description['en-US'])
+          setEmail(eventWithID.fields.email['en-US'])
         } else if (type === EVENTS.meeting || type === EVENTS.vacation) {
           setDescription(eventWithID.fields.description['en-US'])
           setEnd(eventWithID.fields.end['en-US'])
@@ -164,6 +166,7 @@ export const CalendarPage = (): JSX.Element => {
       }) ||
       (type === EVENTS.reminder && {
         time: { 'en-US': time },
+        email: { 'en-US': email },
         title: { 'en-US': title },
         date: { 'en-US': date },
         description: { 'en-US': description },
@@ -224,6 +227,7 @@ export const CalendarPage = (): JSX.Element => {
               description: description,
               date: date,
               time: time,
+              email: email,
             }
           : eventItem,
     )
@@ -278,6 +282,9 @@ export const CalendarPage = (): JSX.Element => {
       case 'description':
         setDescription(eventFieldValue)
         break
+      case 'email':
+        setEmail(eventFieldValue)
+        break
       default:
         console.error('field isnt exist')
     }
@@ -290,6 +297,7 @@ export const CalendarPage = (): JSX.Element => {
     const descriptionField = { description: { 'en-US': description } }
     const timeField = { time: { 'en-US': time } }
     const endField = { end: { 'en-US': end } }
+    const emailField = { email: { 'en-US': email } }
     const event =
       (type === EVENTS.birthday && {
         ...titleField,
@@ -300,6 +308,7 @@ export const CalendarPage = (): JSX.Element => {
         ...dateField,
         ...descriptionField,
         ...timeField,
+        ...emailField,
       }) ||
       (type === EVENTS.meeting && {
         ...titleField,
@@ -369,6 +378,7 @@ export const CalendarPage = (): JSX.Element => {
               description: description,
               date: date,
               time: time,
+              email: email,
             },
             ...data.data.reminderCollection.items,
           ]
@@ -409,6 +419,16 @@ export const CalendarPage = (): JSX.Element => {
   const handleCancel = () => {
     setIsModalOpen(false)
     setType('')
+  }
+
+  const onSuccess = () => {
+    localStorage.removeItem('login')
+    setLogin(null)
+  }
+
+  const getLogin = () => {
+    const login = localStorage.getItem('login')
+    return JSON.parse(login)
   }
 
   return (
@@ -480,6 +500,12 @@ export const CalendarPage = (): JSX.Element => {
                       {monthOptions}
                     </Select>
                   </Col>
+                  <Col>
+                    <GoogleOut onSuccess={onSuccess} />
+                  </Col>
+                  <Col>
+                    <img className='googleout__img' src={getLogin().picture} alt='Avatar' />
+                  </Col>
                 </Row>
               </div>
             </div>
@@ -506,6 +532,7 @@ export const CalendarPage = (): JSX.Element => {
         handleTextInput={handleTextInput}
         handleEndInput={handleEndInput}
         handleMarkdownInput={handleMarkdownInput}
+        email={email}
         handleTimeInput={handleTimeInput}
       />
     </div>

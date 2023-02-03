@@ -15,8 +15,6 @@
   "simple-import-sort"],
   "rules": {
     "comma-dangle": 0,
-    "import/imports-first": 0,
-    "import/no-unresolved": 0,
     "global-require": 0,
     "class-methods-use-this": 0,
     "implicit-arrow-linebreak": 0,
@@ -44,35 +42,12 @@
         "allowSeparatedGroups": true
       }
     ],
-    "arrow-body-style": [2, "as-needed"],
     "arrow-parens": ["error", "always"],
     "no-debugger": 0,
     "no-restricted-globals": ["error", "event", "fdescribe"],
-    "no-unused-expressions": [
-      "error",
-      {
-        "allowShortCircuit": true
-      }
-    ],
     "dot-notation": 0,
     "no-console": 1,
     "new-cap": 0,
-    "simple-import-sort/imports": [
-      "error",
-      {
-        "groups": [
-          ["^\\u0000"],
-          ["^@?\\w"],
-          ["^[^. ]"],
-          [
-            "^(@providers|@types|@components|@containers|@constants|@pages|@utils|@hooks|@images|@scss)(/.*|$)"
-          ],
-          ["^\\."],
-          ["^(images|!!raw-loader)"],
-          ["w*(w*.*css)"]
-        ]
-      }
-    ],
     "strict": 0,
     "no-param-reassign": [
       "error",
@@ -105,10 +80,11 @@
     "react/self-closing-comp": ["error", {
       "component": true,
       "html": true
-    }],
+    }]
+  },
   "settings": {
     "import/resolver": {
       "typescript": {}
     }
   }
-}}
+}

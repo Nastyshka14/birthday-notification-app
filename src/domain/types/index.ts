@@ -11,6 +11,7 @@ interface Notification {
   date?: Date;
   end?: Date;
   time?: number;
+  email?: string;
 }
 
 interface EventsCollections {
@@ -70,6 +71,7 @@ interface ModalWindowProps {
   date: Date;
   timePicker: Moment | null;
   end: Date;
+  email: string;
   time: number;
 }
 
@@ -109,7 +111,11 @@ interface LoginProps {
 
 type LoginState = {
   login?: LoginProps;
-  setLogin: (value: LoginProps) => void;
+  setLogin?: (value: LoginProps) => void;
+}
+
+interface OnSuccess {
+  onSuccess  : () => void;
 }
 
 export {
@@ -128,4 +134,5 @@ export {
   Section,
   LoginProps,
   LoginState,
+  OnSuccess
 }

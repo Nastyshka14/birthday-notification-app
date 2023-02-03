@@ -13,7 +13,7 @@ export const defineNotificationsByTime: DefineNotificationsByTime = (data, cellD
   reminders.length === 0 && []
   meetings.length === 0 && []
 
-  const filterEventsByTime = (collection): Array<Notification> | [] => {
+  const filterEventsByTime = (collection: Notification[]): Array<Notification> | [] => {
     return collection.filter((item: Notification): boolean => {
       return (
         getParsedDate(item.date) - (getParsedDate(item.date) % 60000) ===

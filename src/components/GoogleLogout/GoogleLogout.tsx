@@ -1,17 +1,10 @@
 import React from 'react'
+
 import { GoogleLogout } from 'react-google-login'
-
-import { LoginState } from '../../domain/types'
-
+import { OnSuccess } from '../../domain/types'
 import './GoogleLogout.scss'
 
-export const GoogleOut = ({ setLogin }: LoginState) => {
-
-  const onSuccess = () => {
-    localStorage.removeItem('login')
-    setLogin(null)
-  }
-
+export const GoogleOut = ({ onSuccess }: OnSuccess) => {
   return (
     <GoogleLogout
       className='google-logout'

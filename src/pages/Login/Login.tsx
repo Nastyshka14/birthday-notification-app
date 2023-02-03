@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
-import { GoogleLogin } from 'react-google-login'
+
 import { Link, useNavigate } from 'react-router-dom'
-
 import { LoginProps, LoginState } from '../../domain/types'
-
+import { GoogleLogin } from 'react-google-login'
 import './Login.scss'
+
 
 export const Login = ({ setLogin }: LoginState) => {
   const [failed, setFailed] = useState<boolean>(false)
@@ -58,7 +58,7 @@ export const Login = ({ setLogin }: LoginState) => {
           <div className='login__social'>
             <div className='login__google'>
               <GoogleLogin
-                clientId={`${process.env.REACT_APP_GOOGLE_AUTH_CLIENT_ID}`}
+                clientId={'831800577601-q6vcr59hkau3n90rvfpp9oktlsjh4l9c.apps.googleusercontent.com'}
                 onSuccess={onSuccess}
                 onFailure={onFailure}
                 cookiePolicy={'single_host_origin'}

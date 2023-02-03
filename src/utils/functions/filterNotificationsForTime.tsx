@@ -17,6 +17,16 @@ export const filterNotificationsForTime = (notificationsForToday: Notification[]
     getDataFromStorage('reminders'),
   )
 
+  const sendEmail = async (email, subject, message) => {
+    await fetch('http://localhost:5000/api/sendemail', {
+      method: 'POST',
+      body: JSON.stringify({ email, subject, message }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+  }
+
   if (notificationsForTodayFromStorage) {
     if (
       !isServerStorageNotificationForTodayTheSame(
@@ -28,14 +38,25 @@ export const filterNotificationsForTime = (notificationsForToday: Notification[]
         notificationsList,
         notificationsForTodayFromStorage,
       )
-
-      newEventsForToday.filter((item: Notification): boolean => item.type === 'Reminder').length > 0 &&
+      if (
+        newEventsForToday.filter((item: Notification): boolean => item.type === 'Reminder').length >
+        0
+      ) {
         notification.open({
           message: <NotificationTitle />,
           description: Notifications(newEventsForToday.filter((item) => item.type === 'Reminder')),
           duration: 0,
         })
-        newEventsForToday.filter((item: Notification): boolean => item.type === 'Meeting').length > 0 &&
+        newEventsForToday.forEach(
+          (item) =>
+            item.type === 'Reminder' &&
+            item.email.length > 0 &&
+            sendEmail(item.email, item.title, item.title),
+        )
+      }
+
+      newEventsForToday.filter((item: Notification): boolean => item.type === 'Meeting').length >
+        0 &&
         notification.open({
           message: <NotificationTitle />,
           description: Notifications(newEventsForToday.filter((item) => item.type === 'Meeting')),
@@ -46,13 +67,21 @@ export const filterNotificationsForTime = (notificationsForToday: Notification[]
       saveDataToStorage('reminders', JSON.stringify(notificationsList))
     }
   } else {
-    notificationsList.filter((item) => item.type === 'Reminder').length > 0 &&
+    if (notificationsList.filter((item) => item.type === 'Reminder').length > 0) {
       notification.open({
         message: <NotificationTitle />,
         description: Notifications(notificationsList.filter((item) => item.type === 'Reminder')),
         duration: 0,
       })
-      notificationsList.filter((item) => item.type === 'Meeting').length > 0 &&
+      notificationsList.forEach(
+        (item) =>
+          item.type === 'Reminder' &&
+          item.email.length > 0 &&
+          sendEmail(item.email, item.title, item.title),
+      )
+    }
+
+    notificationsList.filter((item) => item.type === 'Meeting').length > 0 &&
       notification.open({
         message: <NotificationTitle />,
         description: Notifications(notificationsList.filter((item) => item.type === 'Meeting')),
@@ -86,9 +115,7 @@ const filterUpdatedNotifications = (
   return [...newNotifications, ...updatedNotifications]
 }
 
-const getUpdatedNotifications = (
-  serverNotifications: Array<Notification>,
-): Array<Notification> => {
+const getUpdatedNotifications = (serverNotifications: Array<Notification>): Array<Notification> => {
   const notificationsForTodayFromStorage: Array<Notification> = JSON.parse(
     getDataFromStorage('reminders'),
   )
