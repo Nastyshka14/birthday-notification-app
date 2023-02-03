@@ -1,24 +1,14 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const { OAuth2Client } = require('google-auth-library')
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const nodemailer = require('nodemailer')
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const dotenv = require('dotenv')
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const express = require('express')
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const cors = require('cors');
-
-// interface LoginProps {
-//   email: string;
-//   name: string;
-//   picture: string;
-// }
+import express, { json } from 'express'
+import { LoginProps } from '@domain/types'
+import { OAuth2Client } from 'google-auth-library'
+import { config } from 'dotenv'
+import cors from 'cors'
+import { createTransport } from 'nodemailer'
 
 const client = new OAuth2Client(process.env.REACT_APP_GOOGLE_AUTH_CLIENT_ID)
 const app = express()
 
-const users = []
+const users: LoginProps[] = []
 
 function upsert(array, item) {
   const i = array.findIndex((_item) => _item.email === item.email)
@@ -29,22 +19,21 @@ function upsert(array, item) {
   }
 }
 
-dotenv.config()
+config()
 
-app.use(express.json())
-app.use(cors());
+app.use(json())
+app.use(cors())
 
 const sendEmail = async (sendTo, subject, message) => {
-  const transporter = nodemailer.createTransport({
+  const transporter = createTransport({
     host: process.env.EMAIL_HOST,
     port: '587',
     auth: {
       user: process.env.USER_EMAIL,
       pass: process.env.USER_PASSWORD,
     },
-    tls: {
-      rejectUnauthorized: false,
-    },
+   
+    
   })
 
   const options = {
