@@ -33,6 +33,7 @@ export const ModalWindow = ({
   date,
   end,
   time,
+  email,
   timePicker,
 }: ModalWindowProps): JSX.Element => {
   const getTypeLayout = (option: boolean): JSX.Element => {
@@ -137,6 +138,21 @@ export const ModalWindow = ({
     )
   }
 
+  const emailLayout = (
+    <div className='modal__section'>
+      <div className='modal__section-img modal__section--email-img' />
+      <div className='modal__section--input'>
+        <Input
+          bordered={false}
+          value={email}
+          name='email'
+          onChange={handleTextInput}
+          placeholder='Add email'
+        />
+      </div>
+    </div>
+  )
+
   const getSectionLayout: Section = (date, duration, end) => {
     return (
       <div className='modal__section'>
@@ -210,6 +226,7 @@ export const ModalWindow = ({
             )}
             {markdownLayout}
             {timeNotificationLayout}
+            {emailLayout}
           </div>
         ))}
     </Modal>
