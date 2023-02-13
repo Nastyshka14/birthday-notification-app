@@ -126,7 +126,7 @@ export const Login = ({ setLogin }: LoginState) => {
                 placeholder='name@example.com'
                 onBlur={(e) => blurHandler(e)}
                 name='email'
-                className={classNames('login__input',{ error: emailInside && emailError })}
+                className={classNames('login__input', { error: emailInside && emailError })}
                 value={email}
                 onChange={(e) => emailHandler(e)}
               />
@@ -138,7 +138,7 @@ export const Login = ({ setLogin }: LoginState) => {
                 onBlur={(e) => blurHandler(e)}
                 name='password'
                 placeholder='Password'
-                className={classNames('login__input', {error: emailInside && emailError })}
+                className={classNames('login__input', { error: emailInside && emailError })}
                 value={password}
                 onChange={(e) => passwordHandler(e)}
               />
