@@ -1,35 +1,22 @@
-.google-logout {
-  &__btn {
-    border: none;
-    background-color: unset;
-    box-shadow: none;
-    padding: 0;
-    font-weight: 500;
-    font-size: 15px;
-    color: black;
-    text-decoration: none;
-    line-height: 1;
-    text-transform: uppercase;
-    cursor: pointer;
+@import '@scss/variables/mixins';
+@import '@scss/variables/colors';
 
-    &:after {
-      margin-top: 1px;
-      display: block;
-      content: '';
-      height: 3px;
-      width: 0;
-      background-color: black;
-      transition: width 0.4s ease-in-out;
-    }
+.google-logout__btn {
+  background-color: $white;
+  padding: 4.3px 10px;
+  border-radius: 2px;
+  border: 1px solid $blue-default;
+}
 
-    &:hover,
-    &:focus {
-      color: dimgrey;
-    }
+.google-logout__btn:hover {
+  color: $blue-default;
+  padding: 4.3px 10px;
+  border-radius: 2px;
+  border: 1px solid $blue-default;
+  cursor: pointer;
+}
 
-    &:hover:after,
-    &:focus:after {
-      width: 100%;
-    }
-  }
+.google-logout__btn:active {
+  transition: 0.3s;
+  transform: scale(1.1);
 }

@@ -1,10 +1,10 @@
-import { gapi } from 'gapi-script'
 import React, { useState } from 'react'
 import { Route, Routes } from 'react-router-dom'
-
-import { LoginProps } from './domain/types'
 import { Home } from './pages/Home/Home'
 import { Login } from './pages/Login/Login'
+import { LoginProps } from './domain/types'
+import { gapi } from 'gapi-script'
+
 
 function App() {
   const loginItem: string = localStorage.getItem('login')
@@ -21,7 +21,7 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path='/' element={<Home login={login} setLogin={setLogin} />} />
+        <Route path='/' element={<Home login={login} setLogin={setLogin}/>} />
         <Route path='/login' element={<Login setLogin={setLogin} />} />
       </Routes>
     </>

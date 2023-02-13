@@ -1,13 +1,41 @@
+@import '@scss/variables/colors';
+@import '@scss/variables/mixins';
+
+.event-record {
+  display: flex;
+}
+
 .event-record__title {
   padding-top: 8px;
-  color: chocolate;
 }
 
 .event-record__date {
   font-size: 11px;
-  color: cadetblue;
+  color: $gray-light;
 }
 
 .event-record__description {
-  color: burlywood;
+  max-width: 260px;
+  color: $gray-dark;
+}
+
+.event-record__image {
+  @include extra-large-image;
+  margin: 10px;
+}
+
+.event-record__image--birthdays {
+  background: url(../../../assets/icons/cake.svg) no-repeat center center;
+}
+
+.event-record__image--vacation {
+  background: url(../../../assets/icons/coconut.svg) no-repeat center center;
+}
+
+.event-record__image--meeting {
+  background: url(../../../assets/icons/meeting.svg) no-repeat center center;
+}
+
+.event-record__image--reminder {
+  background: url(../../../assets/icons/alert.svg) no-repeat center center;
 }

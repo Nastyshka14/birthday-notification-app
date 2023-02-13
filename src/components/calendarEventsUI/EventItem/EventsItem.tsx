@@ -1,37 +1,28 @@
-import { Popover } from 'antd'
-import { INotification } from '../../../domain/types'
-import { EVENTS } from '../../../constants'
-import { EventRecord } from '../EventRecord'
+import { Notification } from '@domain/types'
+import { Typography } from 'antd'
 import './EventsItem.scss'
 
-export const EventsItem = <T extends INotification>({
+const { Text } = Typography
+
+export const EventsItem = <T extends Notification>({
   eventItem,
 }: {
   eventItem: T
 }): JSX.Element => {
-  const eventStyles: Array<string> = []
-
-  if (eventItem.type === EVENTS.birthday) {
-    eventStyles.push('item--birthday')
+  const type = () => {
+    if (eventItem.type === 'Meeting') {
+      return 'meeting'
+    } else if (eventItem.type === 'Vacation') {
+      return 'vacation'
+    } else if (eventItem.type === 'Reminder') {
+      return 'reminder'
+    } else if (eventItem.type === 'Birthdays') {
+      return 'birthday'
+    }
   }
-
-  if (eventItem.type === EVENTS.meeting) {
-    eventStyles.push('item--meeting')
-  }
-
-  if (eventItem.type === EVENTS.vacation) {
-    eventStyles.push('item--vacation')
-  }
-
   return (
-    <Popover
-      placement='right'
-      title={eventItem.type}
-      content={<EventRecord eventRecord={eventItem} />}
-    >
-      <li className={`item ${eventStyles.join(' ')}`}>
-        <h3 className='item__title'>{eventItem.title}</h3>
-      </li>
-    </Popover>
+    <li>
+      <Text className={`item item__${type()}`}>{eventItem.title}</Text>
+    </li>
   )
 }

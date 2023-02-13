@@ -11,18 +11,10 @@
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
-  "plugins": [
-    "react",
-    "import",
-    "simple-import-sort",
-    "react-hooks",
-    "prettier",
-    "@typescript-eslint"
-  ],
+  "plugins": ["react", "react-hooks", "prettier", "@typescript-eslint", "import",
+  "simple-import-sort"],
   "rules": {
     "comma-dangle": 0,
-    "import/imports-first": 0,
-    "import/no-unresolved": 0,
     "global-require": 0,
     "class-methods-use-this": 0,
     "implicit-arrow-linebreak": 0,
@@ -38,35 +30,24 @@
         }
       }
     ],
-    "arrow-body-style": [2, "as-needed"],
+    "react/react-in-jsx-scope": "off",
+    "camelcase": "error",
+    "sort-imports": [
+      "error",
+      {
+        "ignoreCase": false,
+        "ignoreDeclarationSort": false,
+        "ignoreMemberSort": false,
+        "memberSyntaxSortOrder": ["multiple", "all", "single", "none"],
+        "allowSeparatedGroups": true
+      }
+    ],
     "arrow-parens": ["error", "always"],
     "no-debugger": 0,
     "no-restricted-globals": ["error", "event", "fdescribe"],
-    "no-unused-expressions": [
-      "error",
-      {
-        "allowShortCircuit": true
-      }
-    ],
     "dot-notation": 0,
     "no-console": 1,
     "new-cap": 0,
-    "simple-import-sort/imports": [
-      "error",
-      {
-        "groups": [
-          ["^\\u0000"],
-          ["^@?\\w"],
-          ["^[^. ]"],
-          [
-            "^(@providers|@types|@components|@containers|@constants|@pages|@utils|@hooks|@images|@scss)(/.*|$)"
-          ],
-          ["^\\."],
-          ["^(images|!!raw-loader)"],
-          ["w*(w*.*css)"]
-        ]
-      }
-    ],
     "strict": 0,
     "no-param-reassign": [
       "error",
@@ -74,15 +55,9 @@
         "props": false
       }
     ],
-    "no-underscore-dangle": 0,
-    "no-use-before-define": 0,
-    "eol-last": 0,
-    "no-shadow": 0,
     "jsx-quotes": [0, "prefer-single"],
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
-    "react/react-in-jsx-scope": "off",
-    "camelcase": "error",
     "spaced-comment": "error",
     "quotes": [
       "error",
@@ -96,7 +71,16 @@
       {
         "includeExports": true
       }
-    ]
+    ],
+    "no-underscore-dangle": 0,
+    "no-use-before-define": 0,
+    "eol-last": 0,
+    "no-shadow": 0,
+    "object-curly-spacing": ["error", "always"],
+    "react/self-closing-comp": ["error", {
+      "component": true,
+      "html": true
+    }]
   },
   "settings": {
     "import/resolver": {

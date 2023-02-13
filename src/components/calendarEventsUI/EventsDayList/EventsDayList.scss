@@ -1,0 +1,97 @@
+@import '@scss/variables/colors';
+@import '@scss/variables/mixins';
+
+.events {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.events .ant-badge-status {
+  width: 100%;
+  overflow: hidden;
+  font-size: 12px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.notes-month {
+  font-size: 28px;
+  text-align: center;
+}
+
+.notes-month section {
+  font-size: 28px;
+}
+
+.popover__badge {
+  height: 25px;
+}
+
+.content__item--buttons {
+  @include flex-center;
+  justify-content: space-between;
+}
+
+.content__item--delete-btn {
+  @include large-button;
+  background-color: #595959;
+  background: url(../../../assets/icons/delete.svg) no-repeat center center;
+}
+
+.content__item--delete-btn:hover,
+.content__item--edit-btn:hover {
+  transition: 0.3s;
+  transform: scale(1.1);
+  cursor: pointer;
+}
+
+.content__item--edit-btn {
+  @include small-button;
+  background: url(../../../assets/icons/edit.svg) no-repeat center center;
+}
+
+.list__item--date {
+  margin: 0 15px 10px;
+  color: $gray-middle;
+}
+
+.list__item--description {
+  margin: 0 15px;
+  color: $gray-middle;
+}
+
+.list__item:active {
+  background: radial-gradient(at top, $gray-white, $white);
+}
+
+.list__item--title {
+  position: relative;
+  margin: 15px;
+  white-space: nowrap;
+}
+
+.list__item--title::before {
+  position: absolute;
+  margin: 0 0 0 -8px;
+  top: 4px;
+  width: 2px;
+  height: 36px;
+  content: '';
+}
+
+.list__item--meeting::before {
+  background: #d3adf7;
+}
+
+.list__item--vacation::before {
+  background: #ffadd2;
+}
+
+.list__item--reminder::before {
+  background: #b7eb8f;
+}
+
+.list__item--birthday::before {
+  background: #91caff;
+}

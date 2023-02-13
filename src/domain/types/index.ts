@@ -1,74 +1,138 @@
 import { Moment } from 'moment'
 
+import type { DatePickerProps } from 'antd/es/date-picker'
 
-interface INotification {
-  type: string
-  title: string
-  identifier: { id: string }
-  description?: string
-  date?: Date
+
+interface Notification {
+  type: string;
+  title: string;
+  identifier: { id: string };
+  description?: string;
+  date?: Date;
+  end?: Date;
+  time?: number;
+  email?: string;
 }
 
-type IBirthday = INotification
-
-interface IVacation extends INotification {
-  start: Date
-  end: Date
+interface EventsCollections {
+  birthdays: Array<Notification>;
+  meetings: Array<Notification>;
+  vacations: Array<Notification>;
+  reminders: Array<Notification>;
 }
 
-interface IMeeting extends INotification {
-  start: Date
-  end: Date
-}
-
-interface IEventsCollections {
-  birthdays: Array<IBirthday>
-  meetings: Array<IMeeting>
-  vacations: Array<IVacation>
-}
-
-interface IDataFromServer {
+interface DataFromServer {
   data: {
-    birthdaysCollection: { items: Array<IBirthday> }
-    meetingCollection: { items: Array<IMeeting> }
-    vacationCollection: { items: Array<IVacation> }
-  }
+    birthdaysCollection: { items: Array<Notification> };
+    meetingCollection: { items: Array<Notification> };
+    vacationCollection: { items: Array<Notification> };
+    reminderCollection: { items: Array<Notification> };
+  };
 }
 
-type TListEvents = Array<IBirthday> | Array<IMeeting> | Array<IVacation>
-type TEvent = IBirthday | IMeeting | IVacation
-
-interface IFilterEvents {
-  (eventsList: TListEvents, cellDate: Moment): Array<INotification> | []
+interface FilterEvents {
+  (eventsList: Array<Notification>, cellDate: Moment): Array<Notification> | [];
 }
 
-interface ICalendarCell {
-  data: IDataFromServer
-  cellDate: Moment
+interface CalendarCell {
+  data: DataFromServer;
+  cellDate: Moment;
+  removeEvent: (id: string) => Promise<void>;
+  clickUpdate: (id: string) => void;
+  showModal: () => void;
+}
+
+interface EventsDayListProps {
+  collection: Array<Notification>;
+  handleRemoveEvent: (id: string) => Promise<void>;
+  handleUpdateEvent: (id: string) => void;
+}
+
+interface EventsListProps {
+  collection: Array<Notification>;
+}
+
+interface ModalWindowProps {
+  handleOk: () => void;
+  openMod: boolean;
+  handleCancel: () => void;
+  operation: string;
+  handleMarkdownInput: (value: string) => void;
+  handleTypeInput: (value: string) => void;
+  handleDateInput: (value: DatePickerProps['value']) => void;
+  handleTimePickerInput: (value: Moment | null) => void;
+  handleEndInput: (value: DatePickerProps['value']) => void;
+  handleChange: (value: DatePickerProps['value']) => void;
+  handleTextInput: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleTimeInput: (value: string) => void;
+  title: string;
+  type: string;
+  description: string;
+  date: Date;
+  timePicker: Moment | null;
+  end: Date;
+  email: string;
+  time: number;
+}
+
+interface Section {
+  (date: JSX.Element, duration: JSX.Element, end: JSX.Element): JSX.Element;
+}
+
+interface NotificationComponent {
+  (notifications: Array<Notification>): JSX.Element;
+}
+
+interface NotificationByTypeByDay {
+  (data: DataFromServer, cellDate: Moment): EventsCollections;
+}
+
+interface DefineNotificationsByTime {
+  (data: DataFromServer, cellDate: Moment): {
+    reminders: Notification[] | [];
+    meetings: Notification[] | [];
+    remindersBefore: Notification[] | [];
+  };
+}
+
+interface ItemFromContentful {
+  date?: { 'en-US': Date };
+  title?: { 'en-US': string };
+  description?: { 'en-US': string };
+  end?: { 'en-US': Date };
+  time?: { 'en-US': number };
 }
 
 interface LoginProps {
-  email: string
-  name: string
-  picture: string
+  email: string;
+  name: string;
+  picture: string;
 }
 
 type LoginState = {
-  login?: LoginProps
-  setLogin: (value) => void
+  login?: LoginProps;
+  setLogin?: (value: LoginProps) => void;
+}
+
+interface OnSuccess {
+  onSuccess  : () => void;
 }
 
 export {
-  INotification,
-  IBirthday,
-  IMeeting,
-  IVacation,
-  IEventsCollections,
-  IDataFromServer,
-  IFilterEvents,
-  ICalendarCell,
-  TListEvents,
-  TEvent,
+  Notification,
+  EventsCollections,
+  DataFromServer,
+  FilterEvents,
+  CalendarCell,
+  EventsDayListProps,
+  EventsListProps,
+  ModalWindowProps,
+  NotificationComponent,
+  NotificationByTypeByDay,
+  DefineNotificationsByTime,
+  ItemFromContentful,
+  Section,
   LoginProps,
   LoginState,
+  OnSuccess
 }

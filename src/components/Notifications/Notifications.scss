@@ -1,3 +1,6 @@
+@import '@scss/variables/colors';
+@import '@scss/variables/borders';
+
 .notification-list {
   padding: 0;
   list-style: none;
@@ -6,7 +9,7 @@
 .notification-list__item {
   width: 100%;
   padding-bottom: 10px;
-  border-bottom: 1px solid lightgray;
+  border-bottom: $border-bottom-gray-white;
 }
 
 .notification-list__item:last-of-type {

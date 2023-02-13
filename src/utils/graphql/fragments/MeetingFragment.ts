@@ -8,7 +8,7 @@ const MeetingFragment = gql`
     }
     title
     description
-    start
+    date
     end
 }`
 

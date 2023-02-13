@@ -1,4 +1,82 @@
-.modal-window {
-  position: absolute;
-  top: 0;
+@import '@scss/variables/colors';
+@import '@scss/variables/borders';
+@import '@scss/variables/mixins';
+
+.modal__main {
+  @include flex-column;
+}
+
+.modal__section {
+  @include flex-center;
+  margin: 5px 0;
+}
+
+.modal__section-select {
+  width: 120px;
+}
+
+.modal__section-img {
+  @include small-image;
+  margin-right: 10px;
+}
+
+.modal__section--type-img {
+  background: url(../../../assets/icons/type.svg) no-repeat center center;
+}
+
+.modal__section--title-img {
+  background: url(../../../assets/icons/edi.svg) no-repeat center center;
+}
+
+.modal__section--description-img {
+  background: url(../../../assets/icons/job-description.svg) no-repeat center center;
+}
+
+.modal__section--date-img {
+  background: url(../../../assets/icons/date.svg) no-repeat center center;
+}
+
+.modal__section--time-img {
+  @include large-image;
+  margin-right: 10px;
+  background: url(../../../assets/icons/time.svg) no-repeat center center;
+}
+
+.modal__section--arrow-img {
+  @include small-image;
+  margin: 0 10px;
+  background: url(../../../assets/icons/arrow.svg) no-repeat center center;
+}
+
+.modal__section--input {
+  width: 90%;
+  @include flex-center;
+  border-bottom: $border-bottom-gray-thin;
+}
+
+.modal__section--markdown {
+  @include flex-start;
+  margin: 5px 0;
+}
+
+.modal__section--type-input,
+.modal__section--time-input {
+  @include flex-center;
+  border-bottom: $border-bottom-gray-thin;
+}
+
+.modal__section--date-input {
+  width: 100%;
+  @include flex-center;
+  border-bottom: $border-bottom-gray-thin;
+}
+
+.modal__section--date-group {
+  width: 90%;
+  @include flex-center;
+}
+
+.modal__section--start-input,
+.modal__section--end-input {
+  border-bottom: $border-bottom-gray-thin;
 }
