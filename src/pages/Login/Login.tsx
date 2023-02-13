@@ -31,19 +31,21 @@ export const Login = ({ setLogin }: LoginState) => {
   }, [emailError, passwordError])
 
   const emailHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value)
+    const email = e.target.value
+    setEmail(email)
     const validation = re
-    if (!validation.test(String(e.target.value).toLowerCase())) {
+    if (!validation.test(String(email).toLowerCase())) {
       setEmailError('The email is incorrect.')
     } else {
       setEmailError('')
     }
   }
   const passwordHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value)
-    if (e.target.value.length <= 8) {
+    const password = e.target.value
+    setPassword(password)
+    if (password.length <= 8) {
       setPasswordError('Password must be at least 8 characters long')
-      if (!e.target.value) {
+      if (!password) {
         setPasswordError('Password cannot be empty.')
       }
     } else {
