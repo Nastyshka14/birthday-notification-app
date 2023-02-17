@@ -29,3 +29,23 @@
   height: 32px;
   border-radius: 100px;
 }
+
+.google-logout__btn {
+  background-color: $white;
+  padding: 4.3px 10px;
+  border-radius: 2px;
+  border: 1px solid $blue-default;
+}
+
+.google-logout__btn:hover {
+  color: $blue-default;
+  padding: 4.3px 10px;
+  border-radius: 2px;
+  border: 1px solid $blue-default;
+  cursor: pointer;
+}
+
+.google-logout__btn:active {
+  transition: 0.3s;
+  transform: scale(1.1);
+}

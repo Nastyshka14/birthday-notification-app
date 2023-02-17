@@ -8,12 +8,12 @@ import './Home.scss'
 export const Home = ({ login, setLogin }: LoginState) => {
   const authentication = !login ? (
     <div className='navbar'>
-      <Link to='/login' className='navbar__auth-text'>
-        LOG IN
+      <Link to='/signup' className='navbar__auth-text'>
+        Signup
       </Link>
     </div>
   ) : (
-    <CalendarPage setLogin={setLogin} />
+    <CalendarPage />
   )
 
   return (

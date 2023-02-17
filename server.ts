@@ -32,8 +32,6 @@ const sendEmail = async (sendTo, subject, message) => {
       user: process.env.USER_EMAIL,
       pass: process.env.USER_PASSWORD,
     },
-   
-    
   })
 
   const options = {

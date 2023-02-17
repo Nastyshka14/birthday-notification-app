@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import moment, { Moment } from 'moment'
+import { useNavigate } from 'react-router-dom'
 
 import { Button, Calendar, Col, Row, Select } from 'antd'
 import { DataFromServer, LoginState, Notification } from '@domain/types'
@@ -11,6 +12,7 @@ import {
   isEventWithIDExist,
   updateEvent,
 } from '@utils/services/http.service'
+import { Auth } from 'aws-amplify'
 import { CalendarCellWithEvents } from '@components/CalendarCellWithEvents'
 import type { DatePickerProps } from 'antd/es/date-picker'
 import { GoogleOut } from '@components/GoogleLogout'
@@ -26,7 +28,7 @@ import './CalendarPage.scss'
 
 moment.updateLocale('en', { week: { dow: 1 } })
 
-export const CalendarPage = ({ setLogin }: LoginState): JSX.Element => {
+export const CalendarPage = (): JSX.Element => {
   const [data, setData] = useState<DataFromServer | null>(null)
   const [type, setType] = useState<string>('')
   const [title, setTitle] = useState<string>('')
@@ -39,6 +41,7 @@ export const CalendarPage = ({ setLogin }: LoginState): JSX.Element => {
   const [eventID, setEventID] = useState<string>(null)
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   const [clock, setClock] = useState(moment(new Date()).format('MMM D YYYY, HH:mm'))
+  const navigate = useNavigate()
   const operation = eventID ? EVENTS_OPERATIONS.update : EVENTS_OPERATIONS.create
 
   const generateID = (): string => {
@@ -423,7 +426,6 @@ export const CalendarPage = ({ setLogin }: LoginState): JSX.Element => {
 
   const onSuccess = () => {
     localStorage.removeItem('login')
-    setLogin(null)
   }
 
   const getLogin = () => {
@@ -431,6 +433,15 @@ export const CalendarPage = ({ setLogin }: LoginState): JSX.Element => {
     return JSON.parse(login)
   }
 
+  const signOut = async () => {
+    try {
+      await Auth.signOut({ global: true })
+      onSuccess()
+      navigate('/')
+    } catch (e) {
+      alert(e.message)
+    }
+  }
   return (
     <div className='calendar__wrapper'>
       <Calendar
@@ -501,7 +512,10 @@ export const CalendarPage = ({ setLogin }: LoginState): JSX.Element => {
                     </Select>
                   </Col>
                   <Col>
-                    <GoogleOut onSuccess={onSuccess} />
+            
+                    {getLogin().picture ? <GoogleOut onSuccess={onSuccess} /> : <button className='google-logout__btn' onClick={signOut}>
+          Log out
+        </button>}
                   </Col>
                   <Col>
                     <img className='googleout__img' src={getLogin().picture} alt='Avatar' />

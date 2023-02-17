@@ -3,9 +3,16 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 
 import App from './App'
-import reportWebVitals from './reportWebVitals'
+import reportWebVitals from './reportWebVitals.js'
 import './index.css'
 
+import { Amplify } from 'aws-amplify'
+import config from './aws-exports.js'
+import '@aws-amplify/ui-react/styles.css'
+
+import { AmplifyProvider } from '@aws-amplify/ui-react'
+
+Amplify.configure(config)
 
 declare global {
   interface Window {
