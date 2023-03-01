@@ -168,30 +168,30 @@
       max-width: 325px;
     }
 
-    &__google-btn {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      width: 100%;
-      height: auto;
-      padding: 0 70px 0 10px;
-      letter-spacing: 0;
-      text-align: center;
-      border: 1px solid black;
-      cursor: pointer;
-      min-height: 44px;
-      opacity: 1;
-      transition: all ease 0.15s;
-      font-size: 14px;
-      font-weight: 700;
-      line-height: 22px;
-      color: rgb(0, 0, 0);
+    // &__google-btn {
+    //   display: flex;
+    //   align-items: center;
+    //   justify-content: space-between;
+    //   width: 100%;
+    //   height: auto;
+    //   padding: 0 70px 0 10px;
+    //   letter-spacing: 0;
+    //   text-align: center;
+    //   border: 1px solid black;
+    //   cursor: pointer;
+    //   min-height: 44px;
+    //   opacity: 1;
+    //   transition: all ease 0.15s;
+    //   font-size: 14px;
+    //   font-weight: 700;
+    //   line-height: 22px;
+    //   color: rgb(0, 0, 0);
 
-      &:hover,
-      &:focus {
-        background-color: rgb(180, 180, 180);
-      }
-    }
+    //   &:hover,
+    //   &:focus {
+    //     background-color: rgb(180, 180, 180);
+    //   }
+    // }
 
     &__google-icon {
       width: 32px;

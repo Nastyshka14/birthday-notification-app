@@ -46,6 +46,7 @@
     "mini-css-extract-plugin": "^2.4.5",
     "moment": "^2.29.4",
     "nodemailer": "^6.9.1",
+    "password-validator": "^5.3.0",
     "path": "^0.12.7",
     "postcss": "^8.4.4",
     "postcss-flexbugs-fixes": "^5.0.2",
@@ -78,7 +79,7 @@
   },
   "scripts": {
     "start": "node scripts/start.js",
-    "server": "node server.ts",
+    "server": "node server.js",
     "build": "node scripts/build.js && cp -r build/* ./cordovaApp/www",
     "test": "node scripts/test.js && jest",
     "lint": "eslint src/**/*.{js,jsx,ts,tsx,json}",
