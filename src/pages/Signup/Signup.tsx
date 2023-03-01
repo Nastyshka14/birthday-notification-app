@@ -7,7 +7,6 @@ import { LoginProps, LoginState } from '../../domain/types'
 import { Auth } from 'aws-amplify'
 import { ConfirmEmailContainer } from '../ConfirmEmailContainer/ConfirmEmailContainer'
 import GoogleLogin from 'react-google-login'
-// import { PasswordValidator } from 'password-validator'
 import './Signup.scss'
 
 export const Signup = ({ setLogin }: LoginState) => {
@@ -48,20 +47,6 @@ export const Signup = ({ setLogin }: LoginState) => {
     }
     setLoading(false)
   }
-
-  const title = 'Password Policy'
-  const passwordPolicyContent = (
-    <React.Fragment>
-      <h4>Your password should contain: </h4>
-      <ul>
-        <li>Minimum length of 8 characters</li>
-        <li>Numerical characters (0-9)</li>
-        <li>Special characters</li>
-        <li>Uppercase letter</li>
-        <li>Lowercase letter</li>
-      </ul>
-    </React.Fragment>
-  )
 
   const onChangeInput = (e: { target: { name: string; value: string } }) => {
     const eventFieldName: string = e.target.name
@@ -127,9 +112,9 @@ export const Signup = ({ setLogin }: LoginState) => {
           BACK
         </Link>
       </div>
-      <div className='login'>
-        <h1 className='login__info'>Create an account</h1>
-        <div className='login__area'>
+      <div className='signup'>
+        <h1 className='signup__info'>Create an account</h1>
+        <div className='signup__area'>
           {user === null ? (
             <div className='signup__container'>
               <Form onFinish={onSubmit} validateMessages={validateMessages}>
@@ -255,10 +240,10 @@ export const Signup = ({ setLogin }: LoginState) => {
                   </Row>
                 </Form.Item>
               </Form>
-              <div className='login__divider'>
-                <div className='login__line' />
-                <span className='login__divider-text'>OR</span>
-                <div className='login__line' />
+              <div className='signup__divider'>
+                <div className='signup__line' />
+                <span className='signup__divider-text'>OR</span>
+                <div className='signup__line' />
               </div>
               <div className='signup__login-container'>
                 <Link to='/login' className='signup__login-link'>
