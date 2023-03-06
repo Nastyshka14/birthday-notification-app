@@ -69,9 +69,10 @@ export const Login = ({ setLogin }: LoginState) => {
         </Link>
       </div>
       <div className='login'>
-        <h1 className='login__info'>Log into Calendar</h1>
+        <div className='login__info'>Log into Calendar or <Link to='/signup' className='login__signup-link'>Sign up</Link></div>
         {failed && <p className='login__failed'>Login failed</p>}
         <div className='login__area'>
+        <div className='login__container'>
           <Form onFinish={onSubmit}>
             <Form.Item>
               <Input
@@ -108,9 +109,6 @@ export const Login = ({ setLogin }: LoginState) => {
                     )}
                   </Button>
                 </Col>
-                <Col lg={24}>
-                  Or <Link to='/signup'>Sign up</Link>
-                </Col>
               </Row>
             </Form.Item>
           </Form>
@@ -136,6 +134,7 @@ export const Login = ({ setLogin }: LoginState) => {
                   </button>
                 )}
               />
+              </div>
             </div>
           </div>
         </div>
