@@ -27,31 +27,34 @@ export const ConfirmEmailContainer = ({ email, password, toLogIn, user }) => {
   }
 
   return (
-    <Form onFinish={handleSubmitConfirm}>
-      <Col md={24} lg={18}>
-        <div className='full-width'>
-          <h2>Check your email</h2>
-          <p>We've sent a six­ digit confirmation code</p>
-        </div>
-        <Form.Item label='Confirmation Code'>
-          <Input
-            size='large'
-            type='number'
-            placeholder='Enter confirmation code'
-            onChange={handleChange}
-            value={confirmationCode}
-          />
-        </Form.Item>
-      </Col>
-      <Col md={24} lg={12}>
-        <Button type='primary' disabled={loading} htmlType='submit' size='large'>
-          {loading ? (
-            <Spin indicator={<Icon type='loading' style={{ fontSize: 24 }} />} />
-          ) : (
-            'Confirm Email'
-          )}
-        </Button>
-      </Col>
-    </Form>
+    <div className='confirm__container'>
+      <Form onFinish={handleSubmitConfirm} className='confirm__form' >
+        <Col md={24} lg={18}>
+          <div className='confirm__info'>
+            <h2 className='confirm__info--title'>Check your email</h2>
+            <p className='confirm__info--description'>We've sent a six­ digit confirmation code</p>
+          </div>
+          <Form.Item className='confirm__input'>
+            <div className='confirm__input--title'>Check your email</div>
+            <Input
+              size='middle'
+              placeholder='Enter confirmation code'
+              onChange={handleChange}
+              value={confirmationCode}
+              className='confirm__input'
+            />
+          </Form.Item>
+        </Col>
+        <Col md={24} lg={12}>
+          <Button type='primary' disabled={loading} htmlType='submit' size='large'>
+            {loading ? (
+              <Spin indicator={<Icon type='loading' style={{ fontSize: 24 }} />} />
+            ) : (
+              'Confirm Email'
+            )}
+          </Button>
+        </Col>
+      </Form>
+    </div>
   )
 }

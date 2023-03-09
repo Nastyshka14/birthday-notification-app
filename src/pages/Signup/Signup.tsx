@@ -112,10 +112,11 @@ export const Signup = ({ setLogin }: LoginState) => {
           BACK
         </Link>
       </div>
-      <div className='signup'>
-        <h1 className='signup__info'>Create an account</h1>
-        <div className='signup__area'>
+      
           {user === null ? (
+            <div className='signup'>
+            <h1 className='signup__info'>Create an account</h1>
+            <div className='signup__area'>
             <div className='signup__container'>
               <Form onFinish={onSubmit} validateMessages={validateMessages}>
                 <Form.Item name={'First name'} rules={[{ required: true }]}>
@@ -268,6 +269,8 @@ export const Signup = ({ setLogin }: LoginState) => {
                 </div>
               </div>
             </div>
+            </div>
+      </div>
           ) : (
             <ConfirmEmailContainer
               email={email}
@@ -276,8 +279,7 @@ export const Signup = ({ setLogin }: LoginState) => {
               user={user}
             />
           )}
-        </div>
-      </div>
+       
     </div>
   )
 }

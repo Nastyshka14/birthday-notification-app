@@ -105,7 +105,7 @@ export const Login = ({ setLogin }: LoginState) => {
                     {loading ? (
                       <Spin indicator={<UserOutlined className='site-form-item-icon' />} />
                     ) : (
-                      'Register'
+                      'Login'
                     )}
                   </Button>
                 </Col>
