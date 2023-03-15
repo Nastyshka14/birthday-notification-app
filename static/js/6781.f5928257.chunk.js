@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkcalendar=self.webpackChunkcalendar||[]).push([[6781],{56781:function(e,r,n){n.r(r),n.d(r,{diff:function(){return a}});var t={"+":"inserted","-":"deleted","@":"meta"},a={name:"diff",token:function(e){var r=e.string.search(/[\t ]+?$/);if(!e.sol()||0===r)return e.skipToEnd(),("error "+(t[e.string.charAt(0)]||"")).replace(/ $/,"");var n=t[e.peek()]||e.skipToEnd();return-1===r?e.skipToEnd():e.pos=r,n}}}}]);
+//# sourceMappingURL=6781.f5928257.chunk.js.map
