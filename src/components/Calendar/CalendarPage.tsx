@@ -3,7 +3,7 @@ import moment, { Moment } from 'moment'
 import { useNavigate } from 'react-router-dom'
 
 import { Button, Calendar, Col, Row, Select } from 'antd'
-import { DataFromServer, LoginState, Notification } from '@domain/types'
+import { DataFromServer, Notification } from '@domain/types'
 import { EVENTS, EVENTS_OPERATIONS } from '@constants/eventVariants'
 import {
   createEvent,
@@ -512,10 +512,13 @@ export const CalendarPage = (): JSX.Element => {
                     </Select>
                   </Col>
                   <Col>
-            
-                    {getLogin().picture ? <GoogleOut onSuccess={onSuccess} /> : <button className='google-logout__btn' onClick={signOut}>
-          Log out
-        </button>}
+                    {getLogin().picture ? (
+                      <GoogleOut onSuccess={onSuccess} />
+                    ) : (
+                      <button className='google-logout__btn' onClick={signOut}>
+                        Log out
+                      </button>
+                    )}
                   </Col>
                   <Col>
                     <img className='googleout__img' src={getLogin().picture} alt='Avatar' />

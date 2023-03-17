@@ -16,30 +16,8 @@
 }
 
 .modal__section-img {
-  @include small-image;
   margin-right: 10px;
-}
-
-.modal__section--type-img {
-  background: url(../../../assets/icons/type.svg) no-repeat center center;
-}
-
-.modal__section--title-img {
-  background: url(../../../assets/icons/edi.svg) no-repeat center center;
-}
-
-.modal__section--description-img {
-  background: url(../../../assets/icons/job-description.svg) no-repeat center center;
-}
-
-.modal__section--date-img {
-  background: url(../../../assets/icons/date.svg) no-repeat center center;
-}
-
-.modal__section--time-img {
-  @include large-image;
-  margin-right: 10px;
-  background: url(../../../assets/icons/time.svg) no-repeat center center;
+  color: #909090;
 }
 
 .modal__section--arrow-img {
@@ -55,7 +33,7 @@
 }
 
 .modal__section--markdown {
-  @include flex-start;
+  @include flex-center;
   margin: 5px 0;
 }
 
@@ -79,4 +57,9 @@
 .modal__section--start-input,
 .modal__section--end-input {
   border-bottom: $border-bottom-gray-thin;
+}
+
+.md-editor {
+  width: 100%;
+  height: 100%;
 }

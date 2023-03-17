@@ -17,14 +17,18 @@ export const filterNotificationsForTime = (notificationsForToday: Notification[]
     getDataFromStorage('reminders'),
   )
 
-  const sendEmail = async (email, subject, message) => {
-    await fetch('http://localhost:5000/api/sendemail', {
-      method: 'POST',
-      body: JSON.stringify({ email, subject, message }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
+  const sendEmail = async (email: string, subject: string, message: string): Promise<void> => {
+    try {
+      await fetch('http://localhost:5000/api/sendemail', {
+        method: 'POST',
+        body: JSON.stringify({ email: email, subject: subject, message: message }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+    } catch (message) {
+      throw new Error(message)
+    }
   }
 
   if (notificationsForTodayFromStorage) {
