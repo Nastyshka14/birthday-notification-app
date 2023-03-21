@@ -3,13 +3,17 @@ import React, { useState } from 'react'
 
 import { Button, Col, Form, Input, Row, Spin } from 'antd'
 import { CalendarOutlined, LockOutlined, UserOutlined } from '@ant-design/icons'
-import { LoginProps, LoginState } from '../../domain/types'
 import { Auth } from 'aws-amplify'
 import { ConfirmEmailContainer } from '../ConfirmEmailContainer/ConfirmEmailContainer'
-import GoogleLogin from 'react-google-login'
+import { GoogleIn } from '@components/GoogleLogin'
+import { LoginProps } from '@domain/types'
 import './Signup.scss'
 
-export const Signup = ({ setLogin }: LoginState) => {
+export const Signup = ({
+  setLogin,
+}: {
+  setLogin: React.Dispatch<React.SetStateAction<LoginProps>>
+}): JSX.Element => {
   const [email, setEmail] = useState('')
   const [user, setUser] = useState(null)
   const [password, setPassword] = useState('')
@@ -21,13 +25,13 @@ export const Signup = ({ setLogin }: LoginState) => {
   const [failed, setFailed] = useState<boolean>(false)
   const navigate = useNavigate()
 
-  const toLogIn = (data) => {
+  const toLogIn = (data: LoginProps): void => {
     setLogin(data)
     localStorage.setItem('login', JSON.stringify(data))
     navigate('/')
   }
 
-  const onSubmit = async () => {
+  const onSubmit = async (): Promise<void> => {
     setLoading(true)
     try {
       const newUser = await Auth.signUp({
@@ -75,21 +79,7 @@ export const Signup = ({ setLogin }: LoginState) => {
         console.error('field isnt exist')
     }
   }
-  const onSuccess = async (res) => {
-    const data = await fetch('/api/google-login', {
-      method: 'POST',
-      body: JSON.stringify({
-        token: res.tokenId,
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-    const loginData: LoginProps = await data.json()
-    setLogin(loginData)
-    localStorage.setItem('login', JSON.stringify(loginData))
-    navigate('/')
-  }
+
   // eslint-disable-next-line no-useless-escape
   const format = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/
   const onFailure = () => setFailed(true)
@@ -107,16 +97,10 @@ export const Signup = ({ setLogin }: LoginState) => {
 
   return (
     <div className='container'>
-      <div className='navbar'>
-        <Link to='/' className='navbar__auth-text'>
-          BACK
-        </Link>
-      </div>
-      
-          {user === null ? (
-            <div className='signup'>
-            <h1 className='signup__info'>Create an account</h1>
-            <div className='signup__area'>
+      {user === null ? (
+        <div className='signup'>
+          <h1 className='signup__info'>Create an account</h1>
+          <div className='signup__area'>
             <div className='signup__container'>
               <Form onFinish={onSubmit} validateMessages={validateMessages}>
                 <Form.Item name={'First name'} rules={[{ required: true }]}>
@@ -251,35 +235,15 @@ export const Signup = ({ setLogin }: LoginState) => {
                   Log in to your account!
                 </Link>
                 <div className='signup__google-container'>
-                  <GoogleLogin
-                    clientId={
-                      '831800577601-q6vcr59hkau3n90rvfpp9oktlsjh4l9c.apps.googleusercontent.com'
-                    }
-                    onSuccess={onSuccess}
-                    onFailure={onFailure}
-                    cookiePolicy={'single_host_origin'}
-                    isSignedIn={true}
-                    render={(renderProps) => (
-                      <button className='signup__google-btn' onClick={renderProps.onClick}>
-                        <div className='signup__google-icon' />
-                        Continue with Google
-                      </button>
-                    )}
-                  />
+                  <GoogleIn setLogin={setLogin} onFailure={onFailure} />
                 </div>
               </div>
             </div>
-            </div>
-      </div>
-          ) : (
-            <ConfirmEmailContainer
-              email={email}
-              password={password}
-              toLogIn={toLogIn}
-              user={user}
-            />
-          )}
-       
+          </div>
+        </div>
+      ) : (
+        <ConfirmEmailContainer email={email} password={password} toLogIn={toLogIn} user={user} />
+      )}
     </div>
   )
 }

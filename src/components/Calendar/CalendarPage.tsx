@@ -3,7 +3,7 @@ import moment, { Moment } from 'moment'
 import { useNavigate } from 'react-router-dom'
 
 import { Button, Calendar, Col, Row, Select } from 'antd'
-import { DataFromServer, Notification } from '@domain/types'
+import { DataFromServer, LoginProps, Notification } from '@domain/types'
 import { EVENTS, EVENTS_OPERATIONS } from '@constants/eventVariants'
 import {
   createEvent,
@@ -28,7 +28,7 @@ import './CalendarPage.scss'
 
 moment.updateLocale('en', { week: { dow: 1 } })
 
-export const CalendarPage = (): JSX.Element => {
+export const CalendarPage = ({ userInitials }: { userInitials: string }): JSX.Element => {
   const [data, setData] = useState<DataFromServer | null>(null)
   const [type, setType] = useState<string>('')
   const [title, setTitle] = useState<string>('')
@@ -394,6 +394,19 @@ export const CalendarPage = (): JSX.Element => {
         reminderCollection: { items: dataWithNewReminder },
       },
     })
+    clearInput()
+  }
+
+  const clearInput = (): void => {
+    setType('')
+    setTitle('')
+    setEmail('')
+    setTime(0)
+    setDescription('')
+    setDate(new Date())
+    setEnd(new Date())
+    setEventID(null)
+    setTimePicker(null)
   }
 
   const dateCellRender = (dateCell: Moment): JSX.Element | null => {
@@ -410,34 +423,34 @@ export const CalendarPage = (): JSX.Element => {
     )
   }
 
-  const showModal = () => {
+  const showModal = (): void => {
     setIsModalOpen(true)
   }
 
-  const handleOk = () => {
+  const handleOk = (): void => {
     operation === 'update' ? handleUpdateSubmit() : handleCreateEvent()
     setIsModalOpen(false)
   }
 
-  const handleCancel = () => {
+  const handleCancel = (): void => {
     setIsModalOpen(false)
-    setType('')
+    clearInput()
   }
 
-  const onSuccess = () => {
+  const onSuccess = (): void => {
     localStorage.removeItem('login')
+    navigate('/login')
   }
 
-  const getLogin = () => {
+  const getLogin = (): LoginProps => {
     const login = localStorage.getItem('login')
     return JSON.parse(login)
   }
 
-  const signOut = async () => {
+  const signOut = async (): Promise<void> => {
     try {
       await Auth.signOut({ global: true })
       onSuccess()
-      navigate('/')
     } catch (e) {
       alert(e.message)
     }
@@ -480,11 +493,11 @@ export const CalendarPage = (): JSX.Element => {
             <div className='calendar'>
               <div className='calendar__clock'>{clock}</div>
               <div className='calendar__buttons'>
-                <Row gutter={8}>
-                  <Col>
+                <Row gutter={8} className='calendar__row'>
+                  <Col className='calendar__col'>
                     <Button onClick={showModal}>Create new</Button>
                   </Col>
-                  <Col>
+                  <Col className='calendar__col'>
                     <Select
                       size='middle'
                       dropdownMatchSelectWidth={false}
@@ -498,7 +511,7 @@ export const CalendarPage = (): JSX.Element => {
                       {options}
                     </Select>
                   </Col>
-                  <Col>
+                  <Col className='calendar__col'>
                     <Select
                       size='middle'
                       dropdownMatchSelectWidth={false}
@@ -511,7 +524,7 @@ export const CalendarPage = (): JSX.Element => {
                       {monthOptions}
                     </Select>
                   </Col>
-                  <Col>
+                  <Col className='calendar__col'>
                     {getLogin().picture ? (
                       <GoogleOut onSuccess={onSuccess} />
                     ) : (
@@ -520,8 +533,12 @@ export const CalendarPage = (): JSX.Element => {
                       </button>
                     )}
                   </Col>
-                  <Col>
-                    <img className='googleout__img' src={getLogin().picture} alt='Avatar' />
+                  <Col className='calendar__col'>
+                    {getLogin().picture ? (
+                      <img className='googleout__img' src={getLogin().picture} alt='Avatar' />
+                    ) : (
+                      <div className='calendar__user--img'>{userInitials}</div>
+                    )}
                   </Col>
                 </Row>
               </div>

@@ -21,11 +21,11 @@ function App() {
   gapi.load('client:auth2', initClient)
 
   return (
-      <Routes>
-        <Route path='/' element={<Home login={login} setLogin={setLogin}/>} />
-        <Route path='/signup' element={<Signup setLogin={setLogin} />} />
-        <Route path='/login' element={<Login setLogin={setLogin} />} />
-      </Routes>
+    <Routes>
+      <Route path='/' element={<Home login={login} setLogin={setLogin} />} />
+      <Route path='/signup' element={<Signup setLogin={setLogin} />} />
+      <Route path='/login' element={<Login setLogin={setLogin} />} />
+    </Routes>
   )
 }
 
