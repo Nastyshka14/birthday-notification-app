@@ -525,7 +525,7 @@ export const CalendarPage = ({ userInitials }: { userInitials: string }): JSX.El
                     </Select>
                   </Col>
                   <Col className='calendar__col'>
-                    {getLogin().picture ? (
+                    {getLogin()?.picture ? (
                       <GoogleOut onSuccess={onSuccess} />
                     ) : (
                       <button className='google-logout__btn' onClick={signOut}>
