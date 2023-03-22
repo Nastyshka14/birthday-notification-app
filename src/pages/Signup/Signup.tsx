@@ -102,7 +102,7 @@ export const Signup = ({
           <h1 className='signup__info'>Create an account</h1>
           <div className='signup__area'>
             <div className='signup__container'>
-              <Form onFinish={onSubmit} validateMessages={validateMessages}>
+              <Form onFinish={onSubmit} validateMessages={validateMessages} className='signup__form'>
                 <Form.Item name={'First name'} rules={[{ required: true }]}>
                   <Input
                     prefix={<UserOutlined className='site-form-item-icon' />}

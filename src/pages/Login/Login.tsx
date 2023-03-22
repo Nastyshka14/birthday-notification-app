@@ -93,11 +93,12 @@ export const Login = ({
               </Form.Item>
               <Form.Item className='text-center'>
                 <Row>
-                  <Col lg={24}>
+                  <Col lg={24} style={{ width: '100%' }}>
                     <Button
                       type='primary'
                       disabled={loading}
                       htmlType='submit'
+                      style={{ width: '100%' }}
                     >
                       {loading ? (
                         <Spin indicator={<UserOutlined className='site-form-item-icon' />} />

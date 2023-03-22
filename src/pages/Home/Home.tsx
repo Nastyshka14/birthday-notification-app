@@ -1,27 +1,34 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import { CalendarPage } from '@components/Calendar'
+import { Login } from '../Login/Login'
 import { LoginState } from '@domain/types'
-import { Signup } from '../Signup/Signup'
 import './Home.scss'
 
-
 export const Home = ({ login, setLogin }: LoginState): JSX.Element => {
-  const userInitials =
-    !login.picture && `${login?.lastName.toUpperCase()[0]}${login?.name.toUpperCase()[0]}`
-  const authentication = !login ? (
-    <div>
-      <Signup setLogin={setLogin} />
-    </div>
-  ) : (
-    <div>
-      <CalendarPage userInitials={userInitials} />
-    </div>
-  )
+  const navigate = useNavigate()
+  const userInitials = !login.picture
+    ? `${login?.lastName.toUpperCase()[0]}${login?.name.toUpperCase()[0]}`
+    : ''
+  const toSignUp = () => {
+    navigate('/login')
+    return (
+      <div>
+        <Login setLogin={setLogin} />
+      </div>
+    )
+  }
 
-  return (
-    <div className='home'>
-      <div>{authentication}</div>
-    </div>
-  )
+  const toLogIn = () => {
+    navigate('/')
+    return (
+      <div>
+        <CalendarPage userInitials={userInitials} />
+      </div>
+    )
+  }
+  const authentication = !login ? toSignUp() : toLogIn()
+
+  return authentication
 }
