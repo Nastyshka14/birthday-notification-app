@@ -2,7 +2,7 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { GoogleLogin, GoogleLoginResponse } from 'react-google-login'
-import { LoginProps } from '../../domain/types'
+import { LoginProps } from '@domain/types'
 import './GoogleLogin.scss'
 
 export const GoogleIn = ({
