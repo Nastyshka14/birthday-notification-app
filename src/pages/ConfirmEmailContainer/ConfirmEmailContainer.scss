@@ -1,0 +1,36 @@
+.confirm__container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60%;
+}
+
+.confirm__form {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid lightgray;
+  padding: 40px 100px;
+}
+
+.confirm__info {
+  padding-bottom: 15px;
+
+  &--description {
+    color: gray;
+  }
+}
+
+.ant-row {
+    align-items: center;
+}
+
+.confirm__input--title {
+    margin-bottom: 15px;
+}
+
+.ant-col {
+    max-width: 100%;
+}

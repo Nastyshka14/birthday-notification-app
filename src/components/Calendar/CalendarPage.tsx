@@ -1,8 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react'
 import moment, { Moment } from 'moment'
+import { useNavigate } from 'react-router-dom'
 
 import { Button, Calendar, Col, Row, Select } from 'antd'
-import { DataFromServer, LoginState, Notification } from '@domain/types'
+import { DataFromServer, LoginProps, Notification } from '@domain/types'
 import { EVENTS, EVENTS_OPERATIONS } from '@constants/eventVariants'
 import {
   createEvent,
@@ -11,6 +12,7 @@ import {
   isEventWithIDExist,
   updateEvent,
 } from '@utils/services/http.service'
+import { Auth } from 'aws-amplify'
 import { CalendarCellWithEvents } from '@components/CalendarCellWithEvents'
 import type { DatePickerProps } from 'antd/es/date-picker'
 import { GoogleOut } from '@components/GoogleLogout'
@@ -26,7 +28,7 @@ import './CalendarPage.scss'
 
 moment.updateLocale('en', { week: { dow: 1 } })
 
-export const CalendarPage = ({ setLogin }: LoginState): JSX.Element => {
+export const CalendarPage = ({ userInitials }: { userInitials: string }): JSX.Element => {
   const [data, setData] = useState<DataFromServer | null>(null)
   const [type, setType] = useState<string>('')
   const [title, setTitle] = useState<string>('')
@@ -39,6 +41,7 @@ export const CalendarPage = ({ setLogin }: LoginState): JSX.Element => {
   const [eventID, setEventID] = useState<string>(null)
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   const [clock, setClock] = useState(moment(new Date()).format('MMM D YYYY, HH:mm'))
+  const navigate = useNavigate()
   const operation = eventID ? EVENTS_OPERATIONS.update : EVENTS_OPERATIONS.create
 
   const generateID = (): string => {
@@ -391,6 +394,19 @@ export const CalendarPage = ({ setLogin }: LoginState): JSX.Element => {
         reminderCollection: { items: dataWithNewReminder },
       },
     })
+    clearInput()
+  }
+
+  const clearInput = (): void => {
+    setType('')
+    setTitle('')
+    setEmail('')
+    setTime(0)
+    setDescription('')
+    setDate(new Date())
+    setEnd(new Date())
+    setEventID(null)
+    setTimePicker(null)
   }
 
   const dateCellRender = (dateCell: Moment): JSX.Element | null => {
@@ -407,30 +423,38 @@ export const CalendarPage = ({ setLogin }: LoginState): JSX.Element => {
     )
   }
 
-  const showModal = () => {
+  const showModal = (): void => {
     setIsModalOpen(true)
   }
 
-  const handleOk = () => {
+  const handleOk = (): void => {
     operation === 'update' ? handleUpdateSubmit() : handleCreateEvent()
     setIsModalOpen(false)
   }
 
-  const handleCancel = () => {
+  const handleCancel = (): void => {
     setIsModalOpen(false)
-    setType('')
+    clearInput()
   }
 
-  const onSuccess = () => {
+  const onSuccess = (): void => {
     localStorage.removeItem('login')
-    setLogin(null)
+    navigate('/login')
   }
 
-  const getLogin = () => {
+  const getLogin = (): LoginProps => {
     const login = localStorage.getItem('login')
     return JSON.parse(login)
   }
 
+  const signOut = async (): Promise<void> => {
+    try {
+      await Auth.signOut({ global: true })
+      onSuccess()
+    } catch (e) {
+      alert(e.message)
+    }
+  }
   return (
     <div className='calendar__wrapper'>
       <Calendar
@@ -469,11 +493,11 @@ export const CalendarPage = ({ setLogin }: LoginState): JSX.Element => {
             <div className='calendar'>
               <div className='calendar__clock'>{clock}</div>
               <div className='calendar__buttons'>
-                <Row gutter={8}>
-                  <Col>
+                <Row gutter={8} className='calendar__row'>
+                  <Col className='calendar__col'>
                     <Button onClick={showModal}>Create new</Button>
                   </Col>
-                  <Col>
+                  <Col className='calendar__col'>
                     <Select
                       size='middle'
                       dropdownMatchSelectWidth={false}
@@ -487,7 +511,7 @@ export const CalendarPage = ({ setLogin }: LoginState): JSX.Element => {
                       {options}
                     </Select>
                   </Col>
-                  <Col>
+                  <Col className='calendar__col'>
                     <Select
                       size='middle'
                       dropdownMatchSelectWidth={false}
@@ -500,11 +524,21 @@ export const CalendarPage = ({ setLogin }: LoginState): JSX.Element => {
                       {monthOptions}
                     </Select>
                   </Col>
-                  <Col>
-                    <GoogleOut onSuccess={onSuccess} />
+                  <Col className='calendar__col'>
+                    {getLogin()?.picture ? (
+                      <GoogleOut onSuccess={onSuccess} />
+                    ) : (
+                      <button className='google-logout__btn' onClick={signOut}>
+                        Log out
+                      </button>
+                    )}
                   </Col>
-                  <Col>
-                    <img className='googleout__img' src={getLogin().picture} alt='Avatar' />
+                  <Col className='calendar__col'>
+                    {getLogin().picture ? (
+                      <img className='googleout__img' src={getLogin().picture} alt='Avatar' />
+                    ) : (
+                      <div className='calendar__user--img'>{userInitials}</div>
+                    )}
                   </Col>
                 </Row>
               </div>

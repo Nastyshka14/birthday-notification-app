@@ -1,6 +1,7 @@
 import { Moment } from 'moment'
 
 import type { DatePickerProps } from 'antd/es/date-picker'
+import { GoogleLoginResponse } from 'react-google-login';
 
 
 interface Notification {
@@ -106,16 +107,25 @@ interface ItemFromContentful {
 interface LoginProps {
   email: string;
   name: string;
-  picture: string;
+  lastName?: string;
+  picture?: string;
 }
 
-type LoginState = {
+interface CognitoUser {
+  attributes: {
+    family_name: string;
+    given_name: string;
+    email: string;
+  }
+}
+
+interface LoginState {
   login?: LoginProps;
-  setLogin?: (value: LoginProps) => void;
+  setLogin?:  React.Dispatch<React.SetStateAction<LoginProps>>;
 }
 
 interface OnSuccess {
-  onSuccess  : () => void;
+  (response: GoogleLoginResponse): Promise<void>
 }
 
 export {
@@ -132,7 +142,8 @@ export {
   DefineNotificationsByTime,
   ItemFromContentful,
   Section,
+  CognitoUser,
   LoginProps,
   LoginState,
-  OnSuccess
+  OnSuccess,
 }

@@ -1,10 +1,10 @@
 @import '@scss/variables/mixins';
 @import '@scss/variables/colors';
+@import '@scss/variables/borders';
 
 .calendar {
-  display: flex;
+  @include flex-center;
   justify-content: space-between;
-  align-items: center;
   padding: 10px 20px;
 }
 
@@ -21,11 +21,49 @@
   color: $blue-default;
   padding: 4.3px 10px;
   border-radius: 2px;
-  border: 1px solid $blue-default;
+  border: $border-blue-default;
 }
 
 .googleout__img {
-  width: 32px;
-  height: 32px;
+  @include extra-extra-large-image;
   border-radius: 100px;
+}
+
+.google-logout__btn {
+  background-color: $white;
+  padding: 4.3px 10px;
+  border-radius: 2px;
+  border: $border-blue-default;
+}
+
+.google-logout__btn:hover {
+  color: $blue-default;
+  padding: 4.3px 10px;
+  border-radius: 2px;
+  border: $border-blue-default;
+  cursor: pointer;
+}
+
+.google-logout__btn:active {
+  transition: 0.3s;
+  transform: scale(1.1);
+}
+
+.calendar__user--img {
+  @include flex-center;
+  justify-content: center;
+  @include extra-extra-large-image;
+  font-size: medium;
+  font-weight: 500;
+  color: $white;
+  border-radius: 100px;
+  background-color: $blue-primary;
+}
+
+.calendar__row {
+  justify-content: flex-end;
+}
+
+.calendar__col {
+  padding: 5px 0px;
 }

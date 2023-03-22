@@ -1,10 +1,9 @@
 import React from 'react'
 
 import { GoogleLogout } from 'react-google-login'
-import { OnSuccess } from '../../domain/types'
 import './GoogleLogout.scss'
 
-export const GoogleOut = ({ onSuccess }: OnSuccess) => {
+export const GoogleOut = ({ onSuccess }: { onSuccess: () => void}): JSX.Element => {
   return (
     <GoogleLogout
       className='google-logout'

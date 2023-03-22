@@ -28,6 +28,11 @@
   height: 20px;
 }
 
+@mixin extra-extra-large-image {
+  width: 32px;
+  height: 32px;
+}
+
 @mixin extra-large-image {
   width: 30px;
   height: 30px;

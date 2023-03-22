@@ -1,5 +1,13 @@
 import moment from 'moment'
 
+import {
+  CalendarOutlined,
+  ClockCircleOutlined,
+  EditOutlined,
+  FontSizeOutlined,
+  FormOutlined,
+  UsergroupAddOutlined,
+} from '@ant-design/icons'
 import { DatePicker, DatePickerProps, Input, Modal, Select, TimePicker } from 'antd'
 import { EVENTS, EVENTS_OPERATIONS } from '@constants/eventVariants'
 import { ModalWindowProps, Section } from '@domain/types'
@@ -52,7 +60,9 @@ export const ModalWindow = ({
 
   const titleLayout = (
     <div className='modal__section'>
-      <div className='modal__section-img modal__section--title-img' />
+      <div className='modal__section-img'>
+        <EditOutlined />
+      </div>
       <div className='modal__section--input'>
         <Input
           bordered={false}
@@ -67,7 +77,9 @@ export const ModalWindow = ({
 
   const descriptionLayout = (
     <div className='modal__section'>
-      <div className='modal__section-img modal__section--description-img' />
+      <div className='modal__section-img'>
+        <FormOutlined />
+      </div>
       <div className='modal__section--input'>
         <Input
           bordered={false}
@@ -82,7 +94,9 @@ export const ModalWindow = ({
 
   const timeNotificationLayout = (
     <div className='modal__section'>
-      <div className='modal__section--time-img' />
+      <div className='modal__section-img'>
+        <ClockCircleOutlined />
+      </div>
       <div className='modal__section--time-input'>
         Notify in
         <Select
@@ -103,14 +117,27 @@ export const ModalWindow = ({
 
   const markdownLayout = (
     <div className='modal__section--markdown'>
-      <div className='modal__section-img modal__section--description-img' />
-      <div>
-        <MarkdownEditor value={description} onChange={handleMarkdownInput} style={{ width: '450px' }} />
+      <div className='modal__section-img'>
+        <FormOutlined />
+      </div>
+      <div className='modal__section--input'>
+        <MarkdownEditor
+          value={description}
+          onChange={handleMarkdownInput}
+          style={{ height: '50px' }}
+        />
       </div>
     </div>
   )
 
-  const getDateLayout = (date: Date, handleDateInput: (value: DatePickerProps['value']) => void, option: boolean, time: boolean | {format: string}, format: string, disabledDate) => {
+  const getDateLayout = (
+    date: Date,
+    handleDateInput: (value: DatePickerProps['value']) => void,
+    option: boolean,
+    time: boolean | { format: string },
+    format: string,
+    disabledDate,
+  ) => {
     return (
       <DatePicker
         bordered={false}
@@ -140,14 +167,16 @@ export const ModalWindow = ({
 
   const emailLayout = (
     <div className='modal__section'>
-      <div className='modal__section-img modal__section--email-img' />
+      <div className='modal__section-img'>
+        <UsergroupAddOutlined />
+      </div>
       <div className='modal__section--input'>
         <Input
           bordered={false}
           value={email}
           name='email'
           onChange={handleTextInput}
-          placeholder='Add email'
+          placeholder='Share the event with a friend: enter email'
         />
       </div>
     </div>
@@ -156,7 +185,9 @@ export const ModalWindow = ({
   const getSectionLayout: Section = (date, duration, end) => {
     return (
       <div className='modal__section'>
-        <div className='modal__section-img modal__section--date-img' />
+        <div className='modal__section-img'>
+          <CalendarOutlined />
+        </div>
         <div className='modal__section--input'>
           {date}
           {duration}
@@ -168,7 +199,7 @@ export const ModalWindow = ({
 
   const disabledDate = (current: Date) => {
     return current && current < date
-  };
+  }
 
   return (
     <Modal
@@ -178,7 +209,9 @@ export const ModalWindow = ({
       onOk={handleOk}
     >
       <div className='modal__section'>
-        <div className='modal__section-img modal__section--type-img' />
+        <div className='modal__section-img'>
+          <FontSizeOutlined />
+        </div>
         <div className='modal__section--type-input'>
           {operation === EVENTS_OPERATIONS.update ? getTypeLayout(true) : getTypeLayout(false)}
         </div>
@@ -200,9 +233,23 @@ export const ModalWindow = ({
             {titleLayout}
             {descriptionLayout}
             {getSectionLayout(
-              getDateLayout(date, handleDateInput, false, { format: 'HH:mm' }, 'YYYY-MM-DD HH:mm', false),
+              getDateLayout(
+                date,
+                handleDateInput,
+                false,
+                { format: 'HH:mm' },
+                'YYYY-MM-DD HH:mm',
+                false,
+              ),
               getDurationLayout(false),
-              getDateLayout(end, handleEndInput, true, { format: 'HH:mm' }, 'YYYY-MM-DD HH:mm', false),
+              getDateLayout(
+                end,
+                handleEndInput,
+                true,
+                { format: 'HH:mm' },
+                'YYYY-MM-DD HH:mm',
+                false,
+              ),
             )}
           </div>
         )) ||
@@ -220,7 +267,14 @@ export const ModalWindow = ({
           <div className='modal__main'>
             {titleLayout}
             {getSectionLayout(
-              getDateLayout(date, handleChange, false, { format: 'HH:mm' }, 'YYYY-MM-DD HH:mm', false),
+              getDateLayout(
+                date,
+                handleChange,
+                false,
+                { format: 'HH:mm' },
+                'YYYY-MM-DD HH:mm',
+                false,
+              ),
               null,
               null,
             )}
